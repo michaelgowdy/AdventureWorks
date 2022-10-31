@@ -30,7 +30,7 @@
                     <TextBox x:Name="addId" Grid.Row="0" Grid.Column="1"  Margin="5" Padding="5"  Text="{Binding BusinessEntityID}"/>
 
                     <Label Grid.Row="1" Grid.Column="0" Margin="5" Padding="5" Content="First Name"/>
-                    <TextBox x:Name="addFirstName" Grid.Row="1" Grid.Column="1"  Margin="5" Padding="5"/>
+                    <TextBox x:Name="addFirstName" Grid.Row="1" Grid.Column="1"  Margin="5" Padding="5" Text="{Binding FirstName}"/>
 
                     <Label Grid.Row="2" Grid.Column="0" Margin="5" Padding="5" Content="Last Name"/>
                     <TextBox x:Name="addLastName" Grid.Row="2" Grid.Column="1" Margin="5" Padding="5" Text="{Binding LastName}"/>

@@ -46,7 +46,10 @@ namespace AdventureWorks.Web.Api.Controllers
         [HttpGet("{id}")]
         public Task<FullEmployeeModel> GetEmployee(int id)
         {
-            return _db.GetTable<FullEmployeeModel>().SingleOrDefaultAsync(employee => employee.BusinessEntityID == id);
+            using (AppDataConnection db = _db)
+            {
+                return _db.GetTable<FullEmployeeModel>().SingleOrDefaultAsync(employee => employee.BusinessEntityID == id);
+            }
 
             //(from b in _db.GetTable<BusinessEntityIDModel>()
             // from p in _db.GetTable<PersonModel>().LeftJoin(p => p.BusinessEntityID == b.BusinessEntityID)
@@ -63,46 +66,57 @@ namespace AdventureWorks.Web.Api.Controllers
         [HttpPost]
         public void AddEmployee(FullEmployeeModel employee)
         {
-            //Guid guid = Guid.NewGuid();
-            DateTime dateTime = DateTime.Now;
+            using (AppDataConnection db = _db)
+            {
+                //Guid guid = Guid.NewGuid();
+                DateTime dateTime = DateTime.Now;
 
-            var insert = _db.GetTable<BusinessEntityIDModel>()
-                    .Value(b => b.ModifiedDate, dateTime)
-                    .Insert();
+                var insert = _db.GetTable<BusinessEntityIDModel>()
+                        .Value(b => b.ModifiedDate, dateTime)
+                        .Insert();
 
-            var added = _db.GetTable<BusinessEntityIDModel>().ToList().Last();
+                var added = _db.GetTable<BusinessEntityIDModel>().ToList().Last();
 
-            _db.GetTable<PersonModel>()
-                    .Where(p => p.BusinessEntityID == added.BusinessEntityID)
-                    .Set(p => p.FirstName, employee.FirstName)
-                    .Set(p => p.LastName, employee.LastName)
-                    .Update();
+                _db.GetTable<PersonModel>()
+                        .Where(p => p.BusinessEntityID == added.BusinessEntityID)
+                        .Set(p => p.FirstName, employee.FirstName)
+                        .Set(p => p.LastName, employee.LastName)
+                        .Update();
 
-            _db.GetTable<EmployeeModel>()
-                    .Where(e => e.BusinessEntityID == added.BusinessEntityID)
-                    .Set(e => e.JobTitle, employee.JobTitle)
-                    .Update();
+                _db.GetTable<EmployeeModel>()
+                        .Where(e => e.BusinessEntityID == added.BusinessEntityID)
+                        .Set(e => e.JobTitle, employee.JobTitle)
+                        .Update();
+            }
+                
         }
 
         [HttpPut]
         public void UpdateEmployee(FullEmployeeModel employee)
         {
-            _db.GetTable<PersonModel>()
-                    .Where(p => p.BusinessEntityID == employee.BusinessEntityID)
-                    .Set(p => p.FirstName, employee.FirstName)
-                    .Set(p => p.LastName, employee.LastName)
-                    .Update();
+            using (AppDataConnection db = _db)
+            {
+                _db.GetTable<PersonModel>()
+                   .Where(p => p.BusinessEntityID == employee.BusinessEntityID)
+                   .Set(p => p.FirstName, employee.FirstName)
+                   .Set(p => p.LastName, employee.LastName)
+                   .Update();
 
-            _db.GetTable<EmployeeModel>()
-                    .Where(e => e.BusinessEntityID == employee.BusinessEntityID)
-                    .Set(e => e.JobTitle, employee.JobTitle)
-                    .Update();
+                _db.GetTable<EmployeeModel>()
+                        .Where(e => e.BusinessEntityID == employee.BusinessEntityID)
+                        .Set(e => e.JobTitle, employee.JobTitle)
+                        .Update();
+            }
         }
 
         [HttpDelete("{id}")]
         public async Task<int> DeleteEmployee(int id)
         {
-            return await _db.GetTable<FullEmployeeModel>().Where(employee => employee.BusinessEntityID == id).DeleteAsync();
+            using (AppDataConnection db = _db)
+            {
+                return await _db.GetTable<FullEmployeeModel>().Where(employee => employee.BusinessEntityID == id).DeleteAsync();
+
+            }
         }
     }
 }
