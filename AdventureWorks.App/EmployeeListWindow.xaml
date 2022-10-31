@@ -1,0 +1,38 @@
+﻿<Window x:Class="AdventureWorks.App.EmployeeListWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:AdventureWorks.App"
+        mc:Ignorable="d"
+        Title="EmployeeListWindow" FontSize="20" Height="700" Width="1100">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="60"/>
+            <RowDefinition />
+            <RowDefinition Height="auto"/>
+        </Grid.RowDefinitions>
+
+        <Label Grid.Row="0" FontWeight="Bold" FontSize="20" HorizontalAlignment="Center" VerticalAlignment="Center" Content="CRUD operations using SqlServer"/>
+
+        <DataGrid Grid.Row="1" AutoGenerateColumns="False" Margin="5" Name="EmployeeData">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Business Entity ID" Binding="{Binding BusinessEntityID}" Width="auto"/>
+                <DataGridTextColumn Header="JobTitle" Binding="{Binding JobTitle}" Width="*"/>
+            </DataGrid.Columns>
+        </DataGrid>
+
+        <Grid Grid.Row="2" Margin="15">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <Button Grid.Row="2" Grid.Column="0" Content="Load Products" Click="LoadEmployees_Click"/>
+            <Button Grid.Row="2" Grid.Column="1" Content="Add" Click="AddEmployee_Click"/>
+            <Button Grid.Row="2" Grid.Column="2" Content="Edit" Click="UpdateEmployee_Click"/>
+            <Button Grid.Row="2" Grid.Column="3" Content="Delete" Click="DeleteEmployee_Click"/>
+        </Grid>
+    </Grid>
+</Window>

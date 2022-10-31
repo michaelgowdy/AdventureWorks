@@ -1,0 +1,74 @@
+﻿<Window x:Class="AdventureWorks.App.EmployeeAddEditWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:AdventureWorks.App"
+        mc:Ignorable="d"
+        Title="EmployeeAddEditWindow" FontSize="20" Height="700" Width="1100">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+
+        <Border Grid.Column="0" BorderBrush="Black" BorderThickness="1" Margin="5">
+            <StackPanel Margin="5">
+                <Label Content="Add new employee" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+
+                <Grid Margin="5" x:Name="AddNewEmployeeGrid">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+
+                    <Grid.RowDefinitions>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+
+                    <Label Grid.Row="0" Grid.Column="0" Content="Business Entity ID"/>
+                    <TextBox x:Name="addId" Grid.Row="0" Grid.Column="1" Text="{Binding BusinessEntityID}"/>
+                    
+                    <Label Grid.Row="1" Grid.Column="0" Content="Job Title"/>
+                    <TextBox x:Name="addJobTitle" Grid.Row="1" Grid.Column="1" Text="{Binding JobTitle}"/>
+
+                    <Button Grid.Row="2" Grid.ColumnSpan="2" Content="Add" Margin="5" Click="AddEmployee_Click"/>
+
+                </Grid>
+
+            </StackPanel>
+        </Border>
+
+
+        <Border Grid.Column="1" BorderBrush="Black" BorderThickness="1" Margin="5">
+            <StackPanel Margin="5">
+                <Label Content="Update employee" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+
+                <Grid Margin="5" x:Name="UpdateEmployeeGrid">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+
+                    <Grid.RowDefinitions>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+
+                    <Label Grid.Row="0" Grid.Column="0" Content="Business Entity ID"/>
+                    <TextBox x:Name="updateId" Grid.Row="0" Grid.Column="1" Text="{Binding BusinessEntityID}"/>
+
+                    <Label Grid.Row="1" Grid.Column="0" Content="Job Title"/>
+                    <TextBox x:Name="updateJobTitle" Grid.Row="1" Grid.Column="1" Text="{Binding JobTitle}"/>
+
+                    <Button Grid.Row="2" Grid.ColumnSpan="2" Content="Update" Margin="5" Click="UpdateEmployee_Click"/>
+
+                </Grid>
+
+            </StackPanel>
+        </Border>
+    </Grid>
+</Window>
