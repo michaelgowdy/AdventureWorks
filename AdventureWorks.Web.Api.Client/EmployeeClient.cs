@@ -8,7 +8,7 @@ namespace AdventureWorks.Web.Api.Client
 {
     public class EmployeeClient
     {
-        public static List<EmployeeModel> GetEmployeesClient()
+        public static List<FullEmployeeModel> GetEmployeesClient()
         {
             var serializer = new SystemTextJsonSerializer();
 
@@ -18,10 +18,10 @@ namespace AdventureWorks.Web.Api.Client
 
             var response = client.Get(request);
 
-            return serializer.Deserialize<List<EmployeeModel>>(response);
+            return serializer.Deserialize<List<FullEmployeeModel>>(response);
         }
 
-        public static EmployeeModel GetOneEmployeeClient(int id)
+        public static FullEmployeeModel GetOneEmployeeClient(int id)
         {
             var serializer = new SystemTextJsonSerializer();
 
@@ -31,16 +31,16 @@ namespace AdventureWorks.Web.Api.Client
 
             var response = client.Get(request);
 
-            return serializer.Deserialize<EmployeeModel>(response);
+            return serializer.Deserialize<FullEmployeeModel>(response);
         }
 
-        public static void UpdateEmployeeClient(EmployeeModel employee)
+        public static void UpdateEmployeeClient(FullEmployeeModel employee)
         {
             RestClient client = new RestClient($"https://localhost:44351/employee");
 
             RestRequest request = new RestRequest();
 
-            var body = new EmployeeModel { BusinessEntityID = employee.BusinessEntityID, JobTitle = employee.JobTitle };
+            var body = new FullEmployeeModel { BusinessEntityID = employee.BusinessEntityID, FirstName = employee.FirstName, LastName = employee.LastName, JobTitle = employee.JobTitle };
 
             request.AddJsonBody(body);
 
@@ -49,13 +49,13 @@ namespace AdventureWorks.Web.Api.Client
             System.Console.WriteLine(response.StatusCode);
         }
 
-        public static void AddEmployeeClient(EmployeeModel employee)
+        public static void AddEmployeeClient(FullEmployeeModel employee)
         {
             RestClient client = new RestClient($"https://localhost:44351/employee");
 
             RestRequest request = new RestRequest();
 
-            var body = new EmployeeModel { BusinessEntityID = employee.BusinessEntityID, JobTitle = employee.JobTitle };
+            var body = new FullEmployeeModel { BusinessEntityID = employee.BusinessEntityID, FirstName = employee.FirstName, LastName = employee.LastName, JobTitle = employee.JobTitle };
 
             request.AddJsonBody(body);
 
@@ -64,7 +64,7 @@ namespace AdventureWorks.Web.Api.Client
             System.Console.WriteLine(response.StatusCode);
         }
 
-        public static List<EmployeeModel> DeleteEmployeeClient(int id)
+        public static List<FullEmployeeModel> DeleteEmployeeClient(int id)
         {
             var serializer = new SystemTextJsonSerializer();
 
@@ -74,7 +74,7 @@ namespace AdventureWorks.Web.Api.Client
 
             var response = client.Delete(request);
 
-            return serializer.Deserialize<List<EmployeeModel>>(response);
+            return serializer.Deserialize<List<FullEmployeeModel>>(response);
         }
     }
 }

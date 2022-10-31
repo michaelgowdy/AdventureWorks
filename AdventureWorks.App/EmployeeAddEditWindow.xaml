@@ -5,16 +5,12 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:AdventureWorks.App"
         mc:Ignorable="d"
-        Title="EmployeeAddEditWindow" FontSize="20" Height="700" Width="1100">
+        Title="AddEmployeeWindow" FontSize="20" Height="400" Width="600">
     <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition/>
-            <ColumnDefinition/>
-        </Grid.ColumnDefinitions>
 
         <Border Grid.Column="0" BorderBrush="Black" BorderThickness="1" Margin="5">
             <StackPanel Margin="5">
-                <Label Content="Add new employee" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                <Label x:Name="addUpdateWindow" Content="Add New Employee"  Margin="5" Padding="5" HorizontalAlignment="Center" VerticalAlignment="Center"/>
 
                 <Grid Margin="5" x:Name="AddNewEmployeeGrid">
                     <Grid.ColumnDefinitions>
@@ -26,45 +22,23 @@
                         <RowDefinition/>
                         <RowDefinition/>
                         <RowDefinition/>
-                    </Grid.RowDefinitions>
-
-                    <Label Grid.Row="0" Grid.Column="0" Content="Business Entity ID"/>
-                    <TextBox x:Name="addId" Grid.Row="0" Grid.Column="1" Text="{Binding BusinessEntityID}"/>
-                    
-                    <Label Grid.Row="1" Grid.Column="0" Content="Job Title"/>
-                    <TextBox x:Name="addJobTitle" Grid.Row="1" Grid.Column="1" Text="{Binding JobTitle}"/>
-
-                    <Button Grid.Row="2" Grid.ColumnSpan="2" Content="Add" Margin="5" Click="AddEmployee_Click"/>
-
-                </Grid>
-
-            </StackPanel>
-        </Border>
-
-
-        <Border Grid.Column="1" BorderBrush="Black" BorderThickness="1" Margin="5">
-            <StackPanel Margin="5">
-                <Label Content="Update employee" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-
-                <Grid Margin="5" x:Name="UpdateEmployeeGrid">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition/>
-                        <ColumnDefinition/>
-                    </Grid.ColumnDefinitions>
-
-                    <Grid.RowDefinitions>
-                        <RowDefinition/>
                         <RowDefinition/>
                         <RowDefinition/>
                     </Grid.RowDefinitions>
 
-                    <Label Grid.Row="0" Grid.Column="0" Content="Business Entity ID"/>
-                    <TextBox x:Name="updateId" Grid.Row="0" Grid.Column="1" Text="{Binding BusinessEntityID}"/>
+                    <Label Grid.Row="0" Grid.Column="0" Margin="5" Padding="5" Content="Business Entity ID"/>
+                    <TextBox x:Name="addId" Grid.Row="0" Grid.Column="1"  Margin="5" Padding="5"  Text="{Binding BusinessEntityID}"/>
 
-                    <Label Grid.Row="1" Grid.Column="0" Content="Job Title"/>
-                    <TextBox x:Name="updateJobTitle" Grid.Row="1" Grid.Column="1" Text="{Binding JobTitle}"/>
+                    <Label Grid.Row="1" Grid.Column="0" Margin="5" Padding="5" Content="First Name"/>
+                    <TextBox x:Name="addFirstName" Grid.Row="1" Grid.Column="1"  Margin="5" Padding="5"  Text="{Binding FirstName}"/>
 
-                    <Button Grid.Row="2" Grid.ColumnSpan="2" Content="Update" Margin="5" Click="UpdateEmployee_Click"/>
+                    <Label Grid.Row="2" Grid.Column="0" Margin="5" Padding="5" Content="Last Name"/>
+                    <TextBox x:Name="addLastName" Grid.Row="2" Grid.Column="1" Margin="5" Padding="5" Text="{Binding LastName}"/>
+
+                    <Label Grid.Row="3" Grid.Column="0" Margin="5" Padding="5" Content="Job Title"/>
+                    <TextBox x:Name="addJobTitle" Grid.Row="3" Grid.Column="1" Margin="5" Padding="5" Text="{Binding JobTitle}"/>
+
+                    <Button x:Name="addUpdateButton" Grid.Row="4" Grid.Column="1" Content="Add" Margin="90, 20, 5, 20" Padding="5" Click="AddEmployee_Click"/>
 
                 </Grid>
 

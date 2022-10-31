@@ -1,4 +1,5 @@
 ﻿using AdventureWorks.Models;
+using AdventureWorks.Models.Models;
 using AdventureWorks.Web.Api.Client;
 using System;
 using System.Windows;
@@ -10,37 +11,48 @@ namespace AdventureWorks.App
     /// </summary>
     public partial class EmployeeAddEditWindow : Window
     {
+        FullEmployeeModel newEmployee = new FullEmployeeModel();
+
+
         public EmployeeAddEditWindow()
         {
             InitializeComponent();
+            this.DataContext = newEmployee;
         }
 
         private void AddEmployee_Click(object sender, RoutedEventArgs e)
         {
-            var id = Convert.ToInt32(addId.Text);
-            var job = addJobTitle.Text;
+            //var id = Convert.ToInt32(addId.Text);
+            //var job = addJobTitle.Text;
 
-            EmployeeModel newEmployee = new EmployeeModel
+            //EmployeeModel newEmployee = new EmployeeModel
+            //{
+            //    BusinessEntityID = id,
+            //    JobTitle = job
+            //};
+
+            if (Title == "AddEmployeeWindow")
             {
-                BusinessEntityID = id,
-                JobTitle = job
-            };
-
-            EmployeeClient.AddEmployeeClient(newEmployee);
+                EmployeeClient.AddEmployeeClient(newEmployee);
+            }
+            else
+            {
+                EmployeeClient.UpdateEmployeeClient(newEmployee);
+            }
         }
 
-        private void UpdateEmployee_Click(object sender, RoutedEventArgs e)
-        {
-            var id = Convert.ToInt32(updateId.Text);
-            var job = updateJobTitle.Text;
+        //private void UpdateEmployee_Click(object sender, RoutedEventArgs e)
+        //{
+        //    //var id = Convert.ToInt32(updateId.Text);
+        //    //var job = updateJobTitle.Text;
 
-            EmployeeModel newEmployee = new EmployeeModel
-            {
-                BusinessEntityID = id,
-                JobTitle = job
-            };
+        //    //EmployeeModel newEmployee = new EmployeeModel
+        //    //{
+        //    //    BusinessEntityID = id,
+        //    //    JobTitle = job
+        //    //};
 
-            EmployeeClient.UpdateEmployeeClient(newEmployee);
-        }
+        //    EmployeeClient.UpdateEmployeeClient(newEmployee);
+        //}
     }
 }

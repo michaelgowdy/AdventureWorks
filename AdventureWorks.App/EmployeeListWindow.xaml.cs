@@ -1,6 +1,8 @@
 ﻿using AdventureWorks.Models;
+using AdventureWorks.Models.Models;
 using AdventureWorks.Web.Api.Client;
 using System.Windows;
+using System.Windows.Controls;
 
 namespace AdventureWorks.App
 {
@@ -27,17 +29,19 @@ namespace AdventureWorks.App
 
         private void AddEmployee_Click(object sender, RoutedEventArgs e)
         {
-            var selected = EmployeeData.SelectedItem as EmployeeModel;
             EmployeeAddEditWindow employeeAddEditWindow = new EmployeeAddEditWindow();
-            employeeAddEditWindow.UpdateEmployeeGrid.DataContext = selected;
+            employeeAddEditWindow.addId.IsEnabled = false;
             employeeAddEditWindow.Show();
         }
 
         private void UpdateEmployee_Click(object sender, RoutedEventArgs e)
         {
-            var selected = EmployeeData.SelectedItem as EmployeeModel;
+            var selected = EmployeeData.SelectedItem as FullEmployeeModel;
             EmployeeAddEditWindow employeeAddEditWindow = new EmployeeAddEditWindow();
-            employeeAddEditWindow.UpdateEmployeeGrid.DataContext = selected;
+            employeeAddEditWindow.Title = "EditEmployeeWindow";
+            employeeAddEditWindow.addUpdateWindow.Content = "Edit Employee Data";
+            employeeAddEditWindow.addUpdateButton.Content = "Update";
+            employeeAddEditWindow.AddNewEmployeeGrid.DataContext = selected;
             employeeAddEditWindow.Show();
         }
 

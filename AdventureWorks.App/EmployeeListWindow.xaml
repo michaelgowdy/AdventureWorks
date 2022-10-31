@@ -15,10 +15,12 @@
 
         <Label Grid.Row="0" FontWeight="Bold" FontSize="20" HorizontalAlignment="Center" VerticalAlignment="Center" Content="CRUD operations using SqlServer"/>
 
-        <DataGrid Grid.Row="1" AutoGenerateColumns="False" Margin="5" Name="EmployeeData">
+        <DataGrid Grid.Row="1" AutoGenerateColumns="False" Margin="10" Name="EmployeeData">
             <DataGrid.Columns>
-                <DataGridTextColumn Header="Business Entity ID" Binding="{Binding BusinessEntityID}" Width="auto"/>
-                <DataGridTextColumn Header="JobTitle" Binding="{Binding JobTitle}" Width="*"/>
+                <DataGridTextColumn Header="ID" Binding="{Binding BusinessEntityID}" Width="auto"/>
+                <DataGridTextColumn Header="First Name" Binding="{Binding FirstName}" Width="*"/>
+                <DataGridTextColumn Header="Last Name" Binding="{Binding LastName}" Width="*"/>
+                <DataGridTextColumn Header="Job Title" Binding="{Binding JobTitle}" Width="*"/>
             </DataGrid.Columns>
         </DataGrid>
 

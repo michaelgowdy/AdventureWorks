@@ -3,12 +3,10 @@ using System;
 
 namespace AdventureWorks.Models.Models
 {
-    [Table(Schema = "Person", Name = "Person")]
-    public class PersonModel
+    [Table(Schema = "Person", Name = "BusinessEntity")]
+    public class BusinessEntityIDModel
     {
         [Column(Name = "BusinessEntityID")] public int BusinessEntityID { get; set; }
-        [Column(Name = "FirstName")] public string FirstName { get; set; }
-        [Column(Name = "LastName")] public string LastName { get; set; }
         //[Column(Name = "rowguid")] public Guid rowguid { get; set; }
     }
 }
