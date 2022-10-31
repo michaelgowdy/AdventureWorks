@@ -11,25 +11,18 @@ namespace AdventureWorks.App
     /// </summary>
     public partial class EmployeeAddEditWindow : Window
     {
-        FullEmployeeModel newEmployee = new FullEmployeeModel();
-
-
         public EmployeeAddEditWindow()
         {
             InitializeComponent();
-            this.DataContext = newEmployee;
         }
 
         private void AddEmployee_Click(object sender, RoutedEventArgs e)
         {
-            //var id = Convert.ToInt32(addId.Text);
-            //var job = addJobTitle.Text;
+            var newEmployee = new FullEmployeeModel();
 
-            //EmployeeModel newEmployee = new EmployeeModel
-            //{
-            //    BusinessEntityID = id,
-            //    JobTitle = job
-            //};
+            newEmployee.FirstName = addFirstName.Text;
+            newEmployee.LastName = addLastName.Text;
+            newEmployee.JobTitle = addJobTitle.Text;
 
             if (Title == "AddEmployeeWindow")
             {
@@ -37,6 +30,7 @@ namespace AdventureWorks.App
             }
             else
             {
+                newEmployee.BusinessEntityID = Convert.ToInt32(addId.Text);
                 EmployeeClient.UpdateEmployeeClient(newEmployee);
             }
         }

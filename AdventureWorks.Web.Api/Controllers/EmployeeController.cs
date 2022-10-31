@@ -3,6 +3,7 @@ using AdventureWorks.Models.Models;
 using LinqToDB;
 using Microsoft.AspNetCore.Mvc;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -20,22 +21,26 @@ namespace AdventureWorks.Web.Api.Controllers
         }
 
         [HttpGet]
-        public async Task<FullEmployeeModel[]> GetEmployees()
+        public async Task<IEnumerable<FullEmployeeModel>> GetEmployees()
         {
             //return await _db.GetTable<EmployeeModel>().ToArrayAsync();
 
-            var employees = (from b in _db.GetTable<BusinessEntityIDModel>()
-                             from p in _db.GetTable<PersonModel>().InnerJoin(p => p.BusinessEntityID == b.BusinessEntityID)
-                             from e in _db.GetTable<EmployeeModel>().InnerJoin(e => e.BusinessEntityID == b.BusinessEntityID)
-                             select new FullEmployeeModel
-                             {
-                                 BusinessEntityID = b.BusinessEntityID,
-                                 FirstName = p.FirstName,
-                                 LastName = p.LastName,
-                                 JobTitle = e.JobTitle
-                             }).ToArrayAsync();
+            using (AppDataConnection db = _db)
+            {
+                var employees = (from b in _db.GetTable<BusinessEntityIDModel>()
+                                 from p in _db.GetTable<PersonModel>().InnerJoin(p => p.BusinessEntityID == b.BusinessEntityID)
+                                 from e in _db.GetTable<EmployeeModel>().InnerJoin(e => e.BusinessEntityID == b.BusinessEntityID)
+                                 select new FullEmployeeModel
+                                 {
+                                     BusinessEntityID = b.BusinessEntityID,
+                                     FirstName = p.FirstName,
+                                     LastName = p.LastName,
+                                     JobTitle = e.JobTitle
+                                 }).ToListAsync();
 
-            return await employees;
+                return await employees;
+            }
+
         }
 
         [HttpGet("{id}")]
@@ -59,32 +64,29 @@ namespace AdventureWorks.Web.Api.Controllers
         public void AddEmployee(FullEmployeeModel employee)
         {
             //Guid guid = Guid.NewGuid();
+            DateTime dateTime = DateTime.Now;
 
-            //_db.GetTable<BusinessEntityIDModel>()
-            //        .Value(b => b.rowguid, guid)
-            //        .Insert();
+            var insert = _db.GetTable<BusinessEntityIDModel>()
+                    .Value(b => b.ModifiedDate, dateTime)
+                    .Insert();
+
+            var added = _db.GetTable<BusinessEntityIDModel>().ToList().Last();
 
             _db.GetTable<PersonModel>()
-                    .Value(p => p.FirstName, employee.FirstName)
-                    .Value(p => p.LastName, employee.LastName)
-                    .Insert();
+                    .Where(p => p.BusinessEntityID == added.BusinessEntityID)
+                    .Set(p => p.FirstName, employee.FirstName)
+                    .Set(p => p.LastName, employee.LastName)
+                    .Update();
 
             _db.GetTable<EmployeeModel>()
-                    .Value(e => e.JobTitle, employee.JobTitle)
-                    .Insert();
+                    .Where(e => e.BusinessEntityID == added.BusinessEntityID)
+                    .Set(e => e.JobTitle, employee.JobTitle)
+                    .Update();
         }
 
         [HttpPut]
         public void UpdateEmployee(FullEmployeeModel employee)
         {
-            //Guid guid = Guid.NewGuid();
-
-            //_db.GetTable<FullEmployeeModel>()
-            //        .Where(p => p.BusinessEntityID == employee.BusinessEntityID)
-            //        .Set(p => p.JobTitle, employee.JobTitle)
-            //        .Set(p => p.rowguid, guid)
-            //        .Update();
-
             _db.GetTable<PersonModel>()
                     .Where(p => p.BusinessEntityID == employee.BusinessEntityID)
                     .Set(p => p.FirstName, employee.FirstName)

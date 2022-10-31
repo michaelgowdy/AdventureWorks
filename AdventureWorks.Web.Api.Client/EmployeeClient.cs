@@ -55,7 +55,7 @@ namespace AdventureWorks.Web.Api.Client
 
             RestRequest request = new RestRequest();
 
-            var body = new FullEmployeeModel { BusinessEntityID = employee.BusinessEntityID, FirstName = employee.FirstName, LastName = employee.LastName, JobTitle = employee.JobTitle };
+            var body = new FullEmployeeModel { FirstName = employee.FirstName, LastName = employee.LastName, JobTitle = employee.JobTitle };
 
             request.AddJsonBody(body);
 

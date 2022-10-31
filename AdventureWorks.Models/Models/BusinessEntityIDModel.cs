@@ -7,6 +7,7 @@ namespace AdventureWorks.Models.Models
     public class BusinessEntityIDModel
     {
         [Column(Name = "BusinessEntityID")] public int BusinessEntityID { get; set; }
+        [Column(Name ="ModifiedDate")] public DateTime ModifiedDate { get; set; }
         //[Column(Name = "rowguid")] public Guid rowguid { get; set; }
     }
 }

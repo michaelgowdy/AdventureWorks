@@ -30,7 +30,6 @@ namespace AdventureWorks.App
         private void AddEmployee_Click(object sender, RoutedEventArgs e)
         {
             EmployeeAddEditWindow employeeAddEditWindow = new EmployeeAddEditWindow();
-            employeeAddEditWindow.addId.IsEnabled = false;
             employeeAddEditWindow.Show();
         }
 
