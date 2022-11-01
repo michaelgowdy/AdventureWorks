@@ -23,6 +23,9 @@ namespace AdventureWorks.App
         {
             ProductListWindow productListWindow = new ProductListWindow();
             productListWindow.Show();
+
+            //NEWProductsWindow ProductsWindow = new NEWProductsWindow();
+            //ProductsWindow.Show();
         }
     }
 }

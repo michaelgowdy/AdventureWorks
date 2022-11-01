@@ -11,6 +11,7 @@ namespace AdventureWorks.App
     /// </summary>
     public partial class EmployeeListWindow : Window
     {
+
         public EmployeeListWindow()
         {
             InitializeComponent();
@@ -19,12 +20,12 @@ namespace AdventureWorks.App
 
         private void GetEmployees()
         {
-            EmployeeData.ItemsSource = EmployeeClient.GetEmployeesClient();
+            EmployeeDataGrid.ItemsSource = EmployeeClient.GetEmployeesClient();
         }
 
         private void LoadEmployees_Click(object sender, RoutedEventArgs e)
         {
-            EmployeeData.ItemsSource = EmployeeClient.GetEmployeesClient();
+            EmployeeDataGrid.ItemsSource = EmployeeClient.GetEmployeesClient();
         }
 
         private void AddEmployee_Click(object sender, RoutedEventArgs e)
@@ -35,8 +36,8 @@ namespace AdventureWorks.App
 
         private void UpdateEmployee_Click(object sender, RoutedEventArgs e)
         {
-            var selected = EmployeeData.SelectedItem as FullEmployeeModel;
             EmployeeAddEditWindow employeeAddEditWindow = new EmployeeAddEditWindow();
+            var selected = EmployeeDataGrid.SelectedItem as FullEmployeeModel;
             employeeAddEditWindow.Title = "EditEmployeeWindow";
             employeeAddEditWindow.addUpdateWindow.Content = "Edit Employee Data";
             employeeAddEditWindow.addUpdateButton.Content = "Update";
@@ -46,7 +47,7 @@ namespace AdventureWorks.App
 
         private void DeleteEmployee_Click(object sender, RoutedEventArgs e)
         {
-            EmployeeModel selected = EmployeeData.SelectedItem as EmployeeModel;
+            EmployeeModel selected = EmployeeDataGrid.SelectedItem as EmployeeModel;
 
             var id = selected.BusinessEntityID;
 

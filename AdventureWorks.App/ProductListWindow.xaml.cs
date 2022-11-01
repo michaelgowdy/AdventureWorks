@@ -1,6 +1,10 @@
 ﻿using AdventureWorks.Models.Models;
 using AdventureWorks.Web.Api.Client;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Windows;
+using System.Windows.Documents;
 
 namespace AdventureWorks.App
 {
@@ -10,6 +14,7 @@ namespace AdventureWorks.App
     public partial class ProductListWindow : Window
     {
         int page = 1;
+        int pageSize = 20;
 
         public ProductListWindow()
         {
@@ -19,47 +24,59 @@ namespace AdventureWorks.App
 
         private void GetProducts()
         {
-            ProductData.ItemsSource = ProductClient.GetProductsClient(page);
+            //ProductModel productModel = new ProductModel();
+            //ProductData.DataContext = productModel;
+            ProductDataGrid.ItemsSource = ProductClient.GetProductsClient(page, pageSize);
         }
 
         private void GetOneProduct(object sender, RoutedEventArgs e)
         {
-            ProductModel selected = ProductData.SelectedItem as ProductModel;
+            ProductModel selected = ProductDataGrid.SelectedItem as ProductModel;
 
             var id = selected.ProductID;
 
             ProductClient.GetOneProductClient(id);
         }
 
+        private void PageSizeSelected(object sender, System.EventArgs e)
+        {
+            pageSize = Convert.ToInt32(ComboBox.Text);
+            ProductDataGrid.ItemsSource = ProductClient.GetProductsClient(page, pageSize);
+        }
+
+
+
         private void LoadProducts_Click(object sender, RoutedEventArgs e)
         {
-            ProductData.ItemsSource = ProductClient.GetProductsClient(page);
+            ProductDataGrid.ItemsSource = ProductClient.GetProductsClient(page, pageSize);
         }
 
         private void AddProduct_Click(object sender, RoutedEventArgs e)
         {
-            var selected = ProductData.SelectedItem as ProductModel;
             ProductAddEditWindow productAddEditWindow = new ProductAddEditWindow();
-            productAddEditWindow.UpdateProductGrid.DataContext = selected;
+            productAddEditWindow.addId.IsEnabled = false;
             productAddEditWindow.Show();
         }
 
         private void UpdateProduct_Click(object sender, RoutedEventArgs e)
         {
-            var selected = ProductData.SelectedItem as ProductModel;
             ProductAddEditWindow productAddEditWindow = new ProductAddEditWindow();
-            productAddEditWindow.UpdateProductGrid.DataContext = selected;
+            var selected = ProductDataGrid.SelectedItem as ProductModel;
+            productAddEditWindow.Title = "EditProductWindow";
+            productAddEditWindow.addUpdateWindow.Content = "Edit Product Data";
+            productAddEditWindow.addUpdateButton.Content = "Update";
+            productAddEditWindow.AddNewProductGrid.DataContext = selected;
             productAddEditWindow.Show();
         }
 
         private void DeleteProduct_Click(object sender, RoutedEventArgs e)
         {
-            ProductModel selected = ProductData.SelectedItem as ProductModel;
+            ProductModel selected = ProductDataGrid.SelectedItem as ProductModel;
 
             var id = selected.ProductID;
 
             ProductClient.DeleteProductClient(id);
-            
+
             GetProducts();
         }
 
@@ -69,7 +86,7 @@ namespace AdventureWorks.App
             {
                 previousButton.IsEnabled = true;
                 page--;
-                ProductData.ItemsSource = ProductClient.GetProductsClient(page);
+                ProductDataGrid.ItemsSource = ProductClient.GetProductsClient(page, pageSize);
             }
             else
             {
@@ -79,18 +96,19 @@ namespace AdventureWorks.App
 
         private void NextProducts_Click(object sender, RoutedEventArgs e)
         {
-            page++;
-
             if (page > 1)
             {
                 previousButton.IsEnabled = true;
             }
-            
-            ProductData.ItemsSource = ProductClient.GetProductsClient(page);
 
-            if (!ProductData.HasItems)
+            if (ProductDataGrid.ToString() == "")
             {
                 nextButton.IsEnabled = false;
+            }
+            else
+            {
+                page++;
+                ProductDataGrid.ItemsSource = ProductClient.GetProductsClient(page, pageSize);
             }
         }
     }

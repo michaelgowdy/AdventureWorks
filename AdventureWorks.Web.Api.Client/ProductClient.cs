@@ -1,20 +1,23 @@
 ﻿using AdventureWorks.Models.Models;
-using Newtonsoft.Json.Linq;
 using RestSharp;
 using RestSharp.Serializers.Json;
+using System;
 using System.Collections.Generic;
 
 namespace AdventureWorks.Web.Api.Client
 {
     public class ProductClient
     {
-        public static List<ProductModel> GetProductsClient(int pageNumber)
+        public static RestClient client = new RestClient("https://localhost:44351/product");
+        public static SystemTextJsonSerializer serializer = new SystemTextJsonSerializer();
+
+        public static List<ProductModel> GetProductsClient(int page, int pageSize)
         {
-            var serializer = new SystemTextJsonSerializer();
-
-            RestClient client = new RestClient($"https://localhost:44351/product/page{pageNumber}");
-
+            Convert.ToInt32(pageSize);
             RestRequest request = new RestRequest();
+
+            request.AddQueryParameter("page", page);
+            request.AddQueryParameter("pageSize", pageSize);
 
             var response = client.Get(request);
 
@@ -23,11 +26,9 @@ namespace AdventureWorks.Web.Api.Client
 
         public static List<ProductModel> GetOneProductClient(int id)
         {
-            var serializer = new SystemTextJsonSerializer();
-
-            RestClient client = new RestClient($"https://localhost:44351/product/{id}");
-
             RestRequest request = new RestRequest();
+
+            request.AddParameter("id", id);
 
             var response = client.Get(request);
 
@@ -36,11 +37,9 @@ namespace AdventureWorks.Web.Api.Client
 
         public static void UpdateProductClient(ProductModel product)
         {
-            RestClient client = new RestClient($"https://localhost:44351/product");
+            var body = new ProductModel { ProductID = product.ProductID, Name = product.Name, ProductNumber = product.ProductNumber, Color = product.Color, Size = product.Size, ListPrice = product.ListPrice };
 
             RestRequest request = new RestRequest();
-
-            var body = new ProductModel { ProductID = product.ProductID, Name = product.Name, ProductNumber = product.ProductNumber, Color = product.Color, Size = product.Size, ListPrice = product.ListPrice };
 
             request.AddJsonBody(body);
 
@@ -51,11 +50,9 @@ namespace AdventureWorks.Web.Api.Client
 
         public static void AddProductClient(ProductModel product)
         {
-            RestClient client = new RestClient($"https://localhost:44351/product");
+            var body = new ProductModel { Name = product.Name, ProductNumber = product.ProductNumber, Color = product.Color, Size = product.Size, ListPrice = product.ListPrice };
 
             RestRequest request = new RestRequest();
-            
-            var body = new ProductModel { Name = product.Name, ProductNumber = product.ProductNumber, Color = product.Color, Size = product.Size, ListPrice = product.ListPrice };
 
             request.AddJsonBody(body);
 
@@ -67,11 +64,9 @@ namespace AdventureWorks.Web.Api.Client
 
         public static List<ProductModel> DeleteProductClient(int id)
         {
-            var serializer = new SystemTextJsonSerializer();
-
-            RestClient client = new RestClient($"https://localhost:44351/product/{id}");
-
             RestRequest request = new RestRequest();
+
+            request.AddParameter("id", id);
 
             var response = client.Delete(request);
 

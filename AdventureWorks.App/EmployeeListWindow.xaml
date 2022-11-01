@@ -15,7 +15,7 @@
 
         <Label Grid.Row="0" FontWeight="Bold" FontSize="20" HorizontalAlignment="Center" VerticalAlignment="Center" Content="CRUD operations using SqlServer"/>
 
-        <DataGrid Grid.Row="1" AutoGenerateColumns="False" Margin="10" Name="EmployeeData">
+        <DataGrid x:Name="EmployeeDataGrid" Grid.Row="1" AutoGenerateColumns="False" Margin="10">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="ID" Binding="{Binding BusinessEntityID}" Width="auto"/>
                 <DataGridTextColumn Header="First Name" Binding="{Binding FirstName}" Width="*"/>
@@ -31,10 +31,10 @@
                 <ColumnDefinition/>
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
-            <Button Grid.Row="2" Grid.Column="0" Content="Load Products" Click="LoadEmployees_Click"/>
-            <Button Grid.Row="2" Grid.Column="1" Content="Add" Click="AddEmployee_Click"/>
-            <Button Grid.Row="2" Grid.Column="2" Content="Edit" Click="UpdateEmployee_Click"/>
-            <Button Grid.Row="2" Grid.Column="3" Content="Delete" Click="DeleteEmployee_Click"/>
+            <Button Grid.Row="2" Grid.Column="0" Margin="50, 0" Padding="5" Content="Load Products" Click="LoadEmployees_Click"/>
+            <Button Grid.Row="2" Grid.Column="1" Margin="50, 0" Padding="5" Content="Add" Click="AddEmployee_Click"/>
+            <Button Grid.Row="2" Grid.Column="2" Margin="50, 0" Padding="5" Content="Edit" Click="UpdateEmployee_Click"/>
+            <Button Grid.Row="2" Grid.Column="3" Margin="50, 0" Padding="5" Content="Delete" Click="DeleteEmployee_Click"/>
         </Grid>
     </Grid>
 </Window>

@@ -5,16 +5,11 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:AdventureWorks.App"
         mc:Ignorable="d"
-        Title="ProductAddEditWindow" FontSize="20" Height="700" Width="1100">
+        Title="AddProductWindow" FontSize="20" Height="500" Width="600">
     <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition/>
-            <ColumnDefinition/>
-        </Grid.ColumnDefinitions>
-
         <Border Grid.Column="0" BorderBrush="Black" BorderThickness="1" Margin="5">
             <StackPanel Margin="5">
-                <Label Content="Add new product" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                <Label x:Name="addUpdateWindow" Content="Add new product" Margin="5" Padding="5" HorizontalAlignment="Center" VerticalAlignment="Center"/>
 
                 <Grid Margin="5" x:Name="AddNewProductGrid">
                     <Grid.ColumnDefinitions>
@@ -33,71 +28,26 @@
                         <RowDefinition/>
                     </Grid.RowDefinitions>
 
-                    <Label Grid.Row="0" Grid.Column="0" Content="Name"/>
-                    <TextBox x:Name="addName" Grid.Row="0" Grid.Column="1" Text="{Binding Name}"/>
+                    <Label Grid.Row="0" Grid.Column="0" Margin="5" Padding="5" Content="Product ID"/>
+                    <TextBox x:Name="addId" Grid.Row="0" Grid.Column="1" Margin="5" Padding="5" Text="{Binding ProductID}"/>
 
-                    <Label Grid.Row="1" Grid.Column="0" Content="Product Number"/>
-                    <TextBox x:Name="addNumber" Grid.Row="1" Grid.Column="1" Text="{Binding ProductNumber}"/>
+                    <Label Grid.Row="1" Grid.Column="0" Margin="5" Padding="5" Content="Name"/>
+                    <TextBox x:Name="addName" Grid.Row="1" Grid.Column="1" Margin="5" Padding="5" Text="{Binding Name}"/>
 
-                    <Label Grid.Row="2" Grid.Column="0" Content="Color"/>
-                    <TextBox  x:Name="addColor" Grid.Row="2" Grid.Column="1" Text="{Binding Color}"/>
+                    <Label Grid.Row="2" Grid.Column="0" Margin="5" Padding="5" Content="Product Number"/>
+                    <TextBox x:Name="addNumber" Grid.Row="2" Grid.Column="1" Margin="5" Padding="5" Text="{Binding ProductNumber}"/>
 
-                    <Label Grid.Row="3" Grid.Column="0" Content="Size"/>
-                    <TextBox x:Name="addSize" Grid.Row="3" Grid.Column="1" Text="{Binding Size}"/>
+                    <Label Grid.Row="3" Grid.Column="0" Margin="5" Padding="5" Content="Color"/>
+                    <TextBox  x:Name="addColor" Grid.Row="3" Grid.Column="1" Margin="5" Padding="5" Text="{Binding Color}"/>
 
-                    <Label Grid.Row="4" Grid.Column="0" Content="List Price"/>
-                    <TextBox x:Name="addPrice" Grid.Row="4" Grid.Column="1" Text="{Binding ListPrice}"/>
+                    <Label Grid.Row="4" Grid.Column="0" Margin="5" Padding="5" Content="Size"/>
+                    <TextBox x:Name="addSize" Grid.Row="4" Grid.Column="1" Margin="5" Padding="5" Text="{Binding Size}"/>
 
-                    <Button Grid.Row="5" Grid.Column="1"  Content="Add" Margin="50, 20" Click="AddProduct_Click"/>
-                    <TextBlock x:Name="productAdded" Grid.Row="6" Grid.ColumnSpan="2"  Visibility="Hidden" Text="Product added!" Foreground="Green" HorizontalAlignment="Center" Grid.Column="0"/>
+                    <Label Grid.Row="5" Grid.Column="0" Margin="5" Padding="5" Content="List Price"/>
+                    <TextBox x:Name="addPrice" Grid.Row="5" Grid.Column="1" Margin="5" Padding="5" Text="{Binding ListPrice}"/>
 
-                </Grid>
-
-            </StackPanel>
-        </Border>
-
-
-        <Border Grid.Column="1" BorderBrush="Black" BorderThickness="1" Margin="5">
-            <StackPanel Margin="5">
-                <Label Content="Update product" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-
-                <Grid Margin="5" x:Name="UpdateProductGrid">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition/>
-                        <ColumnDefinition/>
-                    </Grid.ColumnDefinitions>
-
-                    <Grid.RowDefinitions>
-                        <RowDefinition/>
-                        <RowDefinition/>
-                        <RowDefinition/>
-                        <RowDefinition/>
-                        <RowDefinition/>
-                        <RowDefinition/>
-                        <RowDefinition/>
-                        <RowDefinition/>
-                    </Grid.RowDefinitions>
-
-                    <Label Grid.Row="0" Grid.Column="0" Content="Product ID"/>
-                    <TextBox x:Name="updateId" Grid.Row="0" Grid.Column="1" Text="{Binding ProductID}"/>
-
-                    <Label Grid.Row="1" Grid.Column="0" Content="Name"/>
-                    <TextBox x:Name="updateName" Grid.Row="1" Grid.Column="1" Text="{Binding Name}"/>
-
-                    <Label Grid.Row="2" Grid.Column="0" Content="Product Number"/>
-                    <TextBox x:Name="updateNumber" Grid.Row="2" Grid.Column="1" Text="{Binding ProductNumber}"/>
-
-                    <Label Grid.Row="3" Grid.Column="0" Content="Color"/>
-                    <TextBox x:Name="updateColor" Grid.Row="3" Grid.Column="1" Text="{Binding Color}"/>
-
-                    <Label Grid.Row="4" Grid.Column="0" Content="Size"/>
-                    <TextBox x:Name="updateSize" Grid.Row="4" Grid.Column="1" Text="{Binding Size}"/>
-                    
-                    <Label Grid.Row="5" Grid.Column="0" Content="List Price"/>
-                    <TextBox x:Name="updatePrice" Grid.Row="5" Grid.Column="1" Text="{Binding ListPrice}"/>
-
-                    <Button Grid.Row="6" Grid.Column="1" Content="Update" Margin="50, 20" Click="UpdateProduct_Click"/>
-                    <TextBlock x:Name="productUpdated" Grid.Row="7" Grid.ColumnSpan="2" Visibility="Hidden" Text="Product updated!" Foreground="Green" HorizontalAlignment="Center" Grid.Column="0"/>
+                    <Button x:Name="addUpdateButton" Grid.Row="6" Grid.Column="1"  Content="Add" Margin="50, 20" Click="AddProduct_Click"/>
+                    <!--<TextBlock x:Name="productAdded" Grid.Row="6" Grid.ColumnSpan="2"  Visibility="Hidden" Text="Product added!" Foreground="Green" HorizontalAlignment="Center" Grid.Column="0"/>-->
 
                 </Grid>
 

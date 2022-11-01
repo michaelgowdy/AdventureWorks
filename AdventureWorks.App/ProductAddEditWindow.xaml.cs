@@ -1,7 +1,6 @@
 ﻿using AdventureWorks.Models.Models;
 using AdventureWorks.Web.Api.Client;
 using System;
-using System.Threading;
 using System.Windows;
 
 namespace AdventureWorks.App
@@ -16,51 +15,52 @@ namespace AdventureWorks.App
             InitializeComponent();
         }
 
-        private void AddProduct_Click(object sender, RoutedEventArgs e)
+        private void AddProduct()
         {
-            //var name = addName.Text;
-            //var number = addNumber.Text;
-            //var color = addColor.Text;
-            //var size = addSize.Text;
-            //var price = Convert.ToDouble(addPrice.Text);
-
-            //ProductModel newProduct = new ProductModel
-            //{
-            //    Name = name,
-            //    ProductNumber = number,
-            //    Color = color,
-            //    Size = size,
-            //    ListPrice = price
-            //};
-
-           
-
-            //ProductClient.AddProductClient(newProduct);
-
-            productAdded.Visibility = Visibility.Visible;
-        }
-
-        private void UpdateProduct_Click(object sender, RoutedEventArgs e)
-        {
-            var id = Convert.ToInt32(updateId.Text);
-            var name = updateName.Text;
-            var number = updateNumber.Text;
-            var color = updateColor.Text;
-            var size = updateSize.Text;
-            var price = Convert.ToDouble(updatePrice.Text);
-
             ProductModel newProduct = new ProductModel
             {
-                ProductID = id,
-                Name = name,
-                ProductNumber = number,
-                Color = color,
-                Size = size,
-                ListPrice = price
+                Name = addName.Text,
+                ProductNumber = addNumber.Text,
+                Color = addColor.Text,
+                Size = addSize.Text,
+                ListPrice = Convert.ToDouble(addPrice.Text)
             };
 
-            ProductClient.UpdateProductClient(newProduct);
-            productUpdated.Visibility = Visibility.Visible;
+            ProductClient.AddProductClient(newProduct);
+
+            //if (Title == "AddProductWindow")
+            //{
+                
+            //}
+            //else
+            //{
+            //    newProduct.ProductID = Convert.ToInt32(addId.Text);
+            //}
+        }
+
+        private void UpdateProduct()
+        {
+            ProductModel newProduct = new ProductModel
+            {
+                ProductID = Convert.ToInt32(addId.Text),
+                Name = addName.Text,
+                ProductNumber = addNumber.Text,
+                Color = addColor.Text,
+                Size = addSize.Text,
+                ListPrice = Convert.ToDouble(addPrice.Text)
+            };
+        }
+
+        private void AddProduct_Click(object sender, RoutedEventArgs e)
+        {
+            if (Title == "AddProductWindow")
+            {
+                AddProduct();
+            }
+            else
+            {
+                UpdateProduct();
+            };
         }
     }
 }

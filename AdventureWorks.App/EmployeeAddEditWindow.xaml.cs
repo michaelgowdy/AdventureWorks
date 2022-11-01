@@ -1,5 +1,4 @@
-﻿using AdventureWorks.Models;
-using AdventureWorks.Models.Models;
+﻿using AdventureWorks.Models.Models;
 using AdventureWorks.Web.Api.Client;
 using System;
 using System.Windows;
@@ -18,11 +17,12 @@ namespace AdventureWorks.App
 
         private void AddEmployee_Click(object sender, RoutedEventArgs e)
         {
-            var newEmployee = new FullEmployeeModel();
-
-            newEmployee.FirstName = addFirstName.Text;
-            newEmployee.LastName = addLastName.Text;
-            newEmployee.JobTitle = addJobTitle.Text;
+            var newEmployee = new FullEmployeeModel
+            {
+                FirstName = addFirstName.Text,
+                LastName = addLastName.Text,
+                JobTitle = addJobTitle.Text
+            };
 
             if (Title == "AddEmployeeWindow")
             {

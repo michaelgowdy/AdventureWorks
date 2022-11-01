@@ -18,24 +18,18 @@ namespace AdventureWorks.Web.Api.Controllers
             _db = db;
         }
 
-        [HttpGet("page{pageNumber}")]
-        public async Task<ProductModel[]> GetProducts(int pageNumber)
+        [HttpGet()]
+        public async Task<ProductModel[]> GetProducts(int page, int pageSize)
         {
-            var recordsPerPage = 100;
             var products = _db.GetTable<ProductModel>()
-                         .Skip((pageNumber - 1) * recordsPerPage)
-                         .Take(recordsPerPage)
+                         .Skip((page - 1) * pageSize)
+                         .Take(pageSize)
                          .ToArrayAsync();
-
-            //if (products == null)
-            //{
-            //    return await;
-            //}
 
             return await products;
         }
 
-        [HttpGet("{id}")]
+        [HttpGet("/id{id}")]
         public async Task<ProductModel> GetPerson(int id)
         {
             return await _db.GetTable<ProductModel>().SingleOrDefaultAsync(product => product.ProductID == id);
