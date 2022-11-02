@@ -3,9 +3,14 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:AdventureWorks.App"
+        xmlns:local="clr-namespace:AdventureWorks.App" 
+        xmlns:models="clr-namespace:AdventureWorks.Models.Models;assembly=AdventureWorks.Models"
         mc:Ignorable="d"
         Title="AddProductWindow" FontSize="20" Height="500" Width="600">
+    <Window.DataContext>
+        <models:ProductModel/>
+    </Window.DataContext>
+    
     <Grid>
         <Border Grid.Column="0" BorderBrush="Black" BorderThickness="1" Margin="5">
             <StackPanel Margin="5">
@@ -29,22 +34,22 @@
                     </Grid.RowDefinitions>
 
                     <Label Grid.Row="0" Grid.Column="0" Margin="5" Padding="5" Content="Product ID"/>
-                    <TextBox x:Name="addId" Grid.Row="0" Grid.Column="1" Margin="5" Padding="5" Text="{Binding ProductID}"/>
+                    <TextBox x:Name="addId" Grid.Row="0" Grid.Column="1" Margin="5" Padding="5" Text="{Binding ProductID, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
 
                     <Label Grid.Row="1" Grid.Column="0" Margin="5" Padding="5" Content="Name"/>
-                    <TextBox x:Name="addName" Grid.Row="1" Grid.Column="1" Margin="5" Padding="5" Text="{Binding Name}"/>
+                    <TextBox x:Name="addName" Grid.Row="1" Grid.Column="1" Margin="5" Padding="5" Text="{Binding Name, UpdateSourceTrigger=PropertyChanged}"/>
 
                     <Label Grid.Row="2" Grid.Column="0" Margin="5" Padding="5" Content="Product Number"/>
-                    <TextBox x:Name="addNumber" Grid.Row="2" Grid.Column="1" Margin="5" Padding="5" Text="{Binding ProductNumber}"/>
+                    <TextBox x:Name="addNumber" Grid.Row="2" Grid.Column="1" Margin="5" Padding="5" Text="{Binding ProductNumber, UpdateSourceTrigger=PropertyChanged}"/>
 
                     <Label Grid.Row="3" Grid.Column="0" Margin="5" Padding="5" Content="Color"/>
-                    <TextBox  x:Name="addColor" Grid.Row="3" Grid.Column="1" Margin="5" Padding="5" Text="{Binding Color}"/>
+                    <TextBox  x:Name="addColor" Grid.Row="3" Grid.Column="1" Margin="5" Padding="5" Text="{Binding Color, UpdateSourceTrigger=PropertyChanged}"/>
 
                     <Label Grid.Row="4" Grid.Column="0" Margin="5" Padding="5" Content="Size"/>
-                    <TextBox x:Name="addSize" Grid.Row="4" Grid.Column="1" Margin="5" Padding="5" Text="{Binding Size}"/>
+                    <TextBox x:Name="addSize" Grid.Row="4" Grid.Column="1" Margin="5" Padding="5" Text="{Binding Size, UpdateSourceTrigger=PropertyChanged}"/>
 
                     <Label Grid.Row="5" Grid.Column="0" Margin="5" Padding="5" Content="List Price"/>
-                    <TextBox x:Name="addPrice" Grid.Row="5" Grid.Column="1" Margin="5" Padding="5" Text="{Binding ListPrice}"/>
+                    <TextBox x:Name="addPrice" Grid.Row="5" Grid.Column="1" Margin="5" Padding="5" Text="{Binding ListPrice, UpdateSourceTrigger=PropertyChanged}"/>
 
                     <Button x:Name="addUpdateButton" Grid.Row="6" Grid.Column="1"  Content="Add" Margin="50, 20" Click="AddProduct_Click"/>
                     <!--<TextBlock x:Name="productAdded" Grid.Row="6" Grid.ColumnSpan="2"  Visibility="Hidden" Text="Product added!" Foreground="Green" HorizontalAlignment="Center" Grid.Column="0"/>-->

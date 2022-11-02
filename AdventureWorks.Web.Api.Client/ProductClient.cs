@@ -62,7 +62,7 @@ namespace AdventureWorks.Web.Api.Client
         }
 
 
-        public static List<ProductModel> DeleteProductClient(int id)
+        public static void DeleteProductClient(int id)
         {
             RestRequest request = new RestRequest();
 
@@ -70,7 +70,7 @@ namespace AdventureWorks.Web.Api.Client
 
             var response = client.Delete(request);
 
-            return serializer.Deserialize<List<ProductModel>>(response);
+            Console.WriteLine(response.StatusCode);
         }
     }
 }

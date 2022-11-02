@@ -1,10 +1,7 @@
 ﻿using AdventureWorks.Models.Models;
 using AdventureWorks.Web.Api.Client;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Windows;
-using System.Windows.Documents;
 
 namespace AdventureWorks.App
 {
@@ -54,6 +51,8 @@ namespace AdventureWorks.App
         private void AddProduct_Click(object sender, RoutedEventArgs e)
         {
             ProductAddEditWindow productAddEditWindow = new ProductAddEditWindow();
+            //var newProduct = ProductDataGrid.DataContext as ProductModel;
+            //productAddEditWindow.AddNewProductGrid.DataContext = newProduct;
             productAddEditWindow.addId.IsEnabled = false;
             productAddEditWindow.Show();
         }
@@ -77,7 +76,7 @@ namespace AdventureWorks.App
 
             ProductClient.DeleteProductClient(id);
 
-            GetProducts();
+            ProductDataGrid.ItemsSource = ProductClient.GetProductsClient(page, pageSize);
         }
 
         private void PreviousProducts_Click(object sender, RoutedEventArgs e)
@@ -96,6 +95,7 @@ namespace AdventureWorks.App
 
         private void NextProducts_Click(object sender, RoutedEventArgs e)
         {
+            page++;
             if (page > 1)
             {
                 previousButton.IsEnabled = true;
@@ -107,7 +107,6 @@ namespace AdventureWorks.App
             }
             else
             {
-                page++;
                 ProductDataGrid.ItemsSource = ProductClient.GetProductsClient(page, pageSize);
             }
         }

@@ -2,6 +2,9 @@
 using LinqToDB;
 using Microsoft.AspNetCore.Mvc;
 using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -9,10 +12,11 @@ namespace AdventureWorks.Web.Api.Controllers
 {
     [Route("/[controller]")]
     [ApiController]
-    public class ProductController : Controller
+    public class ProductController : Controller, INotifyDataErrorInfo
     {
         private readonly AppDataConnection _db;
 
+        // Queries
         public ProductController(AppDataConnection db)
         {
             _db = db;
@@ -67,9 +71,68 @@ namespace AdventureWorks.Web.Api.Controllers
         }
 
         [HttpDelete("{id}")]
-        public async Task<int> DeletePerson(int id)
+        public void DeletePerson(int id)
         {
-            return await _db.GetTable<ProductModel>().Where(product => product.ProductID == id).DeleteAsync();
+            
+            var delete = _db.GetTable<ProductModel>().Where(product => product.ProductID == id).DeleteAsync();
+
+            if (!delete.IsCompleted)
+            {
+                GetErrors(nameof(delete));
+            }
+        }
+
+        //public IEnumerable GetErrors(string propertyName)
+        //{
+        //    throw new NotImplementedException();
+        //}
+
+        //    if (ambassadors.TryGetValue(code, out var ambassador))
+        //      {
+        //          Console.WriteLine($"The ambassador is {ambassador.Name}");
+        //      }
+        //    else
+        //      {
+        //           Console.WriteLine($"The ambassador with the given code \"{code}\" does not exist in the dictonary");
+        //      }
+
+
+
+        // Error Handling
+         
+        List<string> errors = new List<string>();
+
+        private readonly Dictionary<string, List<string>> propErrors = new Dictionary<string, List<string>>();
+
+        public event EventHandler<DataErrorsChangedEventArgs> ErrorsChanged;
+
+        public IEnumerable GetErrors(string propertyName)
+        {
+            List<string> errors = new List<string>();
+            if (propertyName != null)
+            {
+                propErrors.TryGetValue(propertyName, out errors);
+                return errors;
+            }
+            else
+                return null;
+        }
+
+        public bool HasErrors
+        {
+            get
+            {
+                try
+                {
+                    var propErrorsCount = propErrors.Values.FirstOrDefault(r => r.Count > 0);
+                    if (propErrorsCount != null)
+                        return true;
+                    else
+                        return false;
+                }
+                catch { }
+                return true;
+            }
         }
     }
 }
