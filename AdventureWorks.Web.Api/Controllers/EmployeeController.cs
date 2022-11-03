@@ -1,6 +1,7 @@
 ﻿using AdventureWorks.Models;
 using AdventureWorks.Models.Models;
 using LinqToDB;
+using LinqToDB.Data;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -45,22 +46,21 @@ namespace AdventureWorks.Web.Api.Controllers
         }
 
         [HttpGet("{id}")]
-        public async Task<IEnumerable<FullEmployeeModel>> GetEmployee(int id)
+        public async Task<FullEmployeeModel> GetEmployee(int id)
         {
             using (AppDataConnection db = _db)
             {
-                var employee =
-                    (from b in _db.GetTable<BusinessEntityIDModel>()
+                var employee = (from b in _db.GetTable<BusinessEntityIDModel>()
                      where b.BusinessEntityID == id
-                     from p in _db.GetTable<PersonModel>().InnerJoin(p => p.BusinessEntityID == id)
-                     from e in _db.GetTable<EmployeeModel>().InnerJoin(e => e.BusinessEntityID == id)
+                     from p in _db.GetTable<PersonModel>().InnerJoin(p => p.BusinessEntityID == b.BusinessEntityID)
+                     from e in _db.GetTable<EmployeeModel>().InnerJoin(e => e.BusinessEntityID == b.BusinessEntityID)
                      select new FullEmployeeModel
                      {
                          BusinessEntityID = b.BusinessEntityID,
                          FirstName = p.FirstName,
                          LastName = p.LastName,
                          JobTitle = e.JobTitle
-                     }).ToListAsync();
+                     }).SingleOrDefaultAsync();
 
                 return await employee;
             }
@@ -120,6 +120,24 @@ namespace AdventureWorks.Web.Api.Controllers
                 return await _db.GetTable<FullEmployeeModel>().Where(employee => employee.BusinessEntityID == id).DeleteAsync();
 
             }
+
+            //try
+            //{
+            //    User? user = _dbContext.Users.Find(id);
+            //    if (user != null)
+            //    {
+            //        _dbContext.Users.Remove(user);
+            //        _dbContext.SaveChanges();
+            //    }
+            //    else
+            //    {
+            //        throw new ArgumentNullException();
+            //    }
+            //}
+            //catch
+            //{
+            //    throw;
+            //}
         }
     }
 }

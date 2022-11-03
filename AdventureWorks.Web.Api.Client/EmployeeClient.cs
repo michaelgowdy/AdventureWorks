@@ -9,11 +9,12 @@ namespace AdventureWorks.Web.Api.Client
     public class EmployeeClient
     {
         public static RestClient client = new RestClient("https://localhost:44351/employee");
-        public static RestRequest request = new RestRequest();
         public static SystemTextJsonSerializer serializer = new SystemTextJsonSerializer();
 
         public static List<FullEmployeeModel> GetEmployeesClient()
         {
+            RestRequest request = new RestRequest();
+
             RestResponse response = client.Get(request);
 
             return serializer.Deserialize<List<FullEmployeeModel>>(response);
@@ -21,6 +22,8 @@ namespace AdventureWorks.Web.Api.Client
 
         public static FullEmployeeModel GetOneEmployeeClient(int id)
         {
+            RestRequest request = new RestRequest();
+
             request.AddParameter("id", id);
 
             var response = client.Get(request);
@@ -35,6 +38,8 @@ namespace AdventureWorks.Web.Api.Client
         {
             var body = new FullEmployeeModel { BusinessEntityID = employee.BusinessEntityID, FirstName = employee.FirstName, LastName = employee.LastName, JobTitle = employee.JobTitle };
 
+            RestRequest request = new RestRequest();
+
             request.AddJsonBody(body);
 
             var response = client.Put(request);
@@ -45,7 +50,9 @@ namespace AdventureWorks.Web.Api.Client
         public static void AddEmployeeClient(FullEmployeeModel employee)
         {
             var body = new FullEmployeeModel { FirstName = employee.FirstName, LastName = employee.LastName, JobTitle = employee.JobTitle };
-            
+
+            RestRequest request = new RestRequest();
+
             request.AddJsonBody(body);
 
             var response = client.Post(request);
@@ -55,6 +62,8 @@ namespace AdventureWorks.Web.Api.Client
 
         public static List<FullEmployeeModel> DeleteEmployeeClient(int id)
         {
+            RestRequest request = new RestRequest();
+
             request.AddParameter("id", id);
 
             var response = client.Delete(request);

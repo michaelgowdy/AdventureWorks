@@ -75,7 +75,7 @@ namespace AdventureWorks.Models.Models
             {
                 _productNumber = value;
 
-                if (_productNumber == null)
+                if (_productNumber.Length < 1)
                 {
                     AddError(nameof(ProductNumber), "This field is required.");
                 }
@@ -117,9 +117,9 @@ namespace AdventureWorks.Models.Models
             {
                 _listPrice = value;
 
-                if (_listPrice < 0)
+                if (_listPrice == null)
                 {
-                    AddError(nameof(ListPrice), "Price must be greater than zero.");
+                    AddError(nameof(ListPrice), "This field is required");
                 }
 
                 OnPropertyChanged(nameof(ListPrice));

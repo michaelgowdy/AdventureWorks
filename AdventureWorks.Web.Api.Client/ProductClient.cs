@@ -3,6 +3,7 @@ using RestSharp;
 using RestSharp.Serializers.Json;
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace AdventureWorks.Web.Api.Client
 {

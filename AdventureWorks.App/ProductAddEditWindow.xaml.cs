@@ -20,34 +20,40 @@ namespace AdventureWorks.App
 
         private void AddProduct()
         {
-            if (addName.Text == "")
+            ProductModel newProduct = new ProductModel
             {
-                addUpdateButton.IsEnabled = false;
-            }
+                Name = addName.Text,
+                ProductNumber = addNumber.Text,
+                Color = addColor.Text,
+                Size = addSize.Text,
+                ListPrice = Convert.ToDouble(addPrice.Text)
+            };
 
-            try
-            {
-                ProductModel newProduct = new ProductModel
-                {
-                    Name = addName.Text,
-                    ProductNumber = addNumber.Text,
-                    Color = addColor.Text,
-                    Size = addSize.Text,
-                    ListPrice = Convert.ToDouble(addPrice.Text)
-                };
+            ProductClient.AddProductClient(newProduct);
 
-                ProductClient.AddProductClient(newProduct);
-            }
-            catch (Exception e)
-            {
+            //try
+            //{
+            //    ProductModel newProduct = new ProductModel
+            //    {
+            //        Name = addName.Text,
+            //        ProductNumber = addNumber.Text,
+            //        Color = addColor.Text,
+            //        Size = addSize.Text,
+            //        ListPrice = Convert.ToDouble(addPrice.Text)
+            //    };
 
-                addSize.Text = e.Message;
-            }
-            
+            //    ProductClient.AddProductClient(newProduct);
+            //}
+            //catch (Exception e)
+            //{
+
+            //    addSize.Text = e.Message;
+            //}
+
 
             //if (Title == "AddProductWindow")
             //{
-                
+
             //}
             //else
             //{
@@ -57,6 +63,8 @@ namespace AdventureWorks.App
 
         private void UpdateProduct()
         {
+            addUpdateButton.IsEnabled = true;
+
             ProductModel newProduct = new ProductModel
             {
                 ProductID = Convert.ToInt32(addId.Text),
