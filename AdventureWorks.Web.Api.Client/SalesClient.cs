@@ -37,7 +37,7 @@ namespace AdventureWorks.Web.Api.Client
 
             //request.AddParameter("id", id);
 
-            return serializer.Deserialize<List<SalesOrderHeaderModel>>(response).First();
+            return serializer.Deserialize<SalesOrderHeaderModel>(response);
         }
 
         public static void UpdateSaleClient(SalesOrderHeaderModel newSale)
@@ -51,6 +51,21 @@ namespace AdventureWorks.Web.Api.Client
             request.AddJsonBody(body);
 
             var response = client.Put(request);
+
+            System.Console.WriteLine(response.StatusCode);
+        }
+
+        public static void AddSaleClient(SalesOrderHeaderModel newSale)
+        {
+            RestClient client = new RestClient("https://localhost:44351/sales");
+
+            var body = new SalesOrderHeaderModel { OrderDate = newSale.OrderDate, BillToAddressID = newSale.BillToAddressID, ShipToAddressID = newSale.ShipToAddressID, TotalDue = newSale.TotalDue };
+
+            RestRequest request = new RestRequest();
+
+            request.AddJsonBody(body);
+
+            var response = client.Post(request);
 
             System.Console.WriteLine(response.StatusCode);
         }

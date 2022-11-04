@@ -43,10 +43,13 @@ namespace AdventureWorks.Web.Api.Controllers
             {
                 SalesOrderHeaderModel saleModel = new SalesOrderHeaderModel();
 
-                var sale = (from s in _db.GetTable<SalesOrderHeaderModel>()
-                            where s.SalesOrderID == id
-                            select s).SingleOrDefaultAsync(product => product.SalesOrderID == id);
+                //var sale = (from s in _db.GetTable<SalesOrderHeaderModel>()
+                //            where s.SalesOrderID == id
+                //            select s).SingleOrDefaultAsync(product => product.SalesOrderID == id);
 
+                var sale = (from s in db.GetTable<SalesOrderHeaderModel>()
+                            where s.SalesOrderID == id
+                            select s).SingleOrDefaultAsync();
 
                 return await sale;
             }    
@@ -62,8 +65,19 @@ namespace AdventureWorks.Web.Api.Controllers
                     .Set(s => s.OrderDate, sale.OrderDate)
                     .Set(s => s.BillToAddressID, sale.BillToAddressID)
                     .Set(s => s.ShipToAddressID, sale.ShipToAddressID)
-                    .Set(s => s.TotalDue, sale.TotalDue)
                     .Update();
+        }
+
+        [HttpPut]
+        public void AddSale(SalesOrderHeaderModel sale)
+        {
+            //Guid guid = Guid.NewGuid();
+
+            _db.GetTable<SalesOrderHeaderModel>()
+                    .Value(s => s.OrderDate, sale.OrderDate)
+                    .Value(s => s.BillToAddressID, sale.BillToAddressID)
+                    .Value(s => s.ShipToAddressID, sale.ShipToAddressID)
+                    .Insert();
         }
 
         //public IActionResult Index()
