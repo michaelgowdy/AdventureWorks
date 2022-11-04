@@ -33,7 +33,7 @@ namespace AdventureWorks.Web.Api.Controllers
             return await products;
         }
 
-        [HttpGet("/id{id}")]
+        [HttpGet("id/{id}")]
         public async Task<ProductModel> GetPerson(int id)
         {
             return await _db.GetTable<ProductModel>().SingleOrDefaultAsync(product => product.ProductID == id);

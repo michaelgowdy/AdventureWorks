@@ -1,0 +1,80 @@
+﻿@page "/sales"
+
+@using AdventureWorks.Models.Models
+@using AdventureWorks.Web.Api.Client
+
+@inject NavigationManager NavigationManager
+
+<h3>Sales List</h3>
+
+<div class="row">
+    <div class="col-md-6">
+        <a href='/sale/add' class="btn btn-primary" role="button">
+            <i class="fas fa-sale-plus"></i>
+            Add Sale
+        </a>
+    </div>
+</div>
+
+@if (sales == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Sales Order ID</th>
+                <th>Order Date</th>
+                <th>Bill To Address ID</th>
+                <th>Ship To Address ID</th>
+                <th>Total Due</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var sale in sales)
+            {
+                <tr>
+                    <td>@sale.SalesOrderID</td>
+                    <td>@sale.OrderDate</td>
+                    <td>@sale.BillToAddressID</td>
+                    <td>@sale.ShipToAddressID</td>
+                    <td>@sale.TotalDue</td>
+                    <td>
+                        <button class="btn btn-outline-dark" @onclick="(() => GetSale(sale.SalesOrderID))">
+                            Edit
+                        </button>
+
+                        <button a href='/sales/delete/@sale.SalesOrderID' class="btn btn-outline-danger">
+                            Delete
+                        </button>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+
+@code {
+    protected List<SalesOrderHeaderModel> sales;
+    //protected SalesOrderHeaderModel sale;
+
+
+    protected override async Task OnInitializedAsync()
+    {
+        sales = SalesClient.GetSalesClient(1, 50);
+    }
+
+    protected void GetSale(int id)
+    {
+        NavigationManager.NavigateTo($"sales/edit/{id}");
+        SalesClient.GetOneSaleClient(id);
+    }
+
+    protected void DeleteConfirm(int id)
+    {
+        //SalesClient.DeleteSaleClient(id);
+    }
+}

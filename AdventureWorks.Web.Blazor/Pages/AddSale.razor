@@ -1,5 +1,77 @@
-﻿<h3>AddSale</h3>
+﻿@page "/sales/edit/{salesOrderId:int}"
+@using AdventureWorks.Models
+@using AdventureWorks.Models.Models
+@using AdventureWorks.Web.Api.Client
+
+@inject NavigationManager NavigationManager
+
+<h3>Edit Sale</h3>
+
+<EditForm Model="sale" OnValidSubmit="SaveSale">
+    <DataAnnotationsValidator />
+    <div class="mb-3">
+        <label for="SalesOrderID" class="form-label">Sales Order ID</label>
+        <div class="col-md-4">
+            <InputNumber class="form-control" @bind-Value="sale.SalesOrderID" />
+        </div>
+        <ValidationMessage For="@(() => sale.SalesOrderID)" />
+    </div>
+    <div class="mb-3">
+        <label for="OrderDate" class="form-label">Order Date</label>
+        <div class="col-md-4">
+            <InputDate class="form-control" @bind-Value="sale.OrderDate" />
+        </div>
+        <ValidationMessage For="@(() => sale.OrderDate)" />
+    </div>
+    <div class="mb-3">
+        <label for="BillToAddressID" class="form-label">Bill To Address ID</label>
+        <div class="col-md-4">
+            <InputNumber class="form-control" @bind-Value="sale.BillToAddressID" />
+        </div>
+        <ValidationMessage For="@(() => sale.BillToAddressID)" />
+    </div>
+    <div class="mb-3">
+        <label for="ShipToAddressID" class="form-label">Ship To Address ID</label>
+        <div class="col-md-4">
+            <InputNumber class="form-control" @bind-Value="sale.ShipToAddressID" />
+        </div>
+        <ValidationMessage For="@(() => sale.ShipToAddressID)" />
+    </div>
+    <div class="mb-3">
+        <label for="TotalDue" class="form-label">Total Due</label>
+        <div class="col-md-4">
+            <InputNumber class="form-control" @bind-Value="sale.TotalDue" />
+        </div>
+        <ValidationMessage For="@(() => sale.TotalDue)" />
+    </div>
+    <div class="form-group">
+        <button type="submit" class="btn btn-primary" @onclick="(() => SaveSale())">Save</button>
+        <button class="btn btn-light" @onclick="Cancel">Cancel</button>
+    </div>
+</EditForm>
 
 @code {
+    [Parameter]
+    public int salesOrderId { get; set; }
 
+    protected string Title = "Add";
+    protected SalesOrderHeaderModel sale = new SalesOrderHeaderModel();
+    protected override async Task OnParametersSetAsync()
+    {
+        var getrequest = SalesClient.GetOneSaleClient(salesOrderId);
+        sale.SalesOrderID = getrequest.SalesOrderID;
+        sale.OrderDate = getrequest.OrderDate;
+        sale.BillToAddressID = getrequest.BillToAddressID;
+        sale.ShipToAddressID = getrequest.ShipToAddressID;
+        sale.TotalDue = getrequest.TotalDue;
+    }
+    protected async Task SaveSale()
+    {
+        SalesClient.UpdateSaleClient(sale);
+        Cancel();
+    }
+    public void Cancel()
+    {
+        NavigationManager.NavigateTo("/sales");
+    }
 }

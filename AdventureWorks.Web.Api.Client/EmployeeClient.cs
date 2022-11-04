@@ -1,8 +1,10 @@
 ﻿using AdventureWorks.Models;
 using AdventureWorks.Models.Models;
+using Newtonsoft.Json;
 using RestSharp;
 using RestSharp.Serializers.Json;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace AdventureWorks.Web.Api.Client
 {
@@ -22,17 +24,24 @@ namespace AdventureWorks.Web.Api.Client
 
         public static FullEmployeeModel GetOneEmployeeClient(int id)
         {
+            client = new RestClient($"https://localhost:44351/employee/id/{id}");
+
             RestRequest request = new RestRequest();
 
-            request.AddParameter("id", id);
+            //request.AddParameter("id", id);
 
             var response = client.Get(request);
+            return serializer.Deserialize<List<FullEmployeeModel>>(response).First();
 
-            return serializer.Deserialize<FullEmployeeModel>(response);
+
+            //return (FullEmployeeModel)response;
+
+            //var responseContent = response.Content.ToString();
+            //var employee = JsonConvert.DeserializeObject<FullEmployeeModel>(responseContent);
+            //return employee;
+
+            //return employee.Where(x => x.BusinessEntityID == id).First();
         }
-
-        //var request = new RestRequest("health/{entity}/status")
-        //.AddUrlSegment("entity", "s2");
 
         public static void UpdateEmployeeClient(FullEmployeeModel employee)
         {

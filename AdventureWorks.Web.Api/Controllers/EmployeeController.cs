@@ -1,7 +1,6 @@
 ﻿using AdventureWorks.Models;
 using AdventureWorks.Models.Models;
 using LinqToDB;
-using LinqToDB.Data;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -24,11 +23,9 @@ namespace AdventureWorks.Web.Api.Controllers
         [HttpGet]
         public async Task<IEnumerable<FullEmployeeModel>> GetEmployees()
         {
-            //return await _db.GetTable<EmployeeModel>().ToArrayAsync();
-
             using (AppDataConnection db = _db)
             {
-                var employees = 
+                var employees =
                     (from b in _db.GetTable<BusinessEntityIDModel>()
                      from p in _db.GetTable<PersonModel>().InnerJoin(p => p.BusinessEntityID == b.BusinessEntityID)
                      from e in _db.GetTable<EmployeeModel>().InnerJoin(e => e.BusinessEntityID == b.BusinessEntityID)
@@ -45,22 +42,22 @@ namespace AdventureWorks.Web.Api.Controllers
 
         }
 
-        [HttpGet("{id}")]
-        public async Task<FullEmployeeModel> GetEmployee(int id)
+        [HttpGet("id/{id}")]
+        public async Task<IEnumerable<FullEmployeeModel>> GetEmployee(int id)
         {
             using (AppDataConnection db = _db)
             {
                 var employee = (from b in _db.GetTable<BusinessEntityIDModel>()
-                     where b.BusinessEntityID == id
-                     from p in _db.GetTable<PersonModel>().InnerJoin(p => p.BusinessEntityID == b.BusinessEntityID)
-                     from e in _db.GetTable<EmployeeModel>().InnerJoin(e => e.BusinessEntityID == b.BusinessEntityID)
-                     select new FullEmployeeModel
-                     {
-                         BusinessEntityID = b.BusinessEntityID,
-                         FirstName = p.FirstName,
-                         LastName = p.LastName,
-                         JobTitle = e.JobTitle
-                     }).SingleOrDefaultAsync();
+                                from p in _db.GetTable<PersonModel>().InnerJoin(p => p.BusinessEntityID == b.BusinessEntityID)
+                                from e in _db.GetTable<EmployeeModel>().InnerJoin(e => e.BusinessEntityID == b.BusinessEntityID)
+                                where b.BusinessEntityID == id
+                                select new FullEmployeeModel
+                                {
+                                    BusinessEntityID = b.BusinessEntityID,
+                                    FirstName = p.FirstName,
+                                    LastName = p.LastName,
+                                    JobTitle = e.JobTitle
+                                }).ToListAsync();
 
                 return await employee;
             }
@@ -79,6 +76,10 @@ namespace AdventureWorks.Web.Api.Controllers
                     .Insert();
 
                 var added = _db.GetTable<BusinessEntityIDModel>().ToList().Last();
+                var s = from e in _db.GetTable<EmployeeModel>()
+                        where e.BusinessEntityID == added.BusinessEntityID
+                        select new FullEmployeeModel();
+                        
 
                 _db.GetTable<PersonModel>()
                     .Where(p => p.BusinessEntityID == added.BusinessEntityID)
@@ -91,7 +92,7 @@ namespace AdventureWorks.Web.Api.Controllers
                     .Set(e => e.JobTitle, employee.JobTitle)
                     .Update();
             }
-                
+
         }
 
         [HttpPut]
