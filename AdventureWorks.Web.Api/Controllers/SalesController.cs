@@ -68,7 +68,7 @@ namespace AdventureWorks.Web.Api.Controllers
                     .Update();
         }
 
-        [HttpPut]
+        [HttpPost]
         public void AddSale(SalesOrderHeaderModel sale)
         {
             //Guid guid = Guid.NewGuid();

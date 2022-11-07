@@ -69,6 +69,21 @@ namespace AdventureWorks.Web.Api.Client
             System.Console.WriteLine(response.StatusCode);
         }
 
+        //public static void AddSaleClient(SalesOrderHeaderModel newSale)
+        //{
+        //    RestClient client = new RestClient("https://localhost:44351/sales");
+
+        //    var body = new SalesOrderHeaderModel { OrderDate = newSale.OrderDate, BillToAddressID = newSale.BillToAddressID, ShipToAddressID = newSale.ShipToAddressID, TotalDue = newSale.TotalDue };
+
+        //    RestRequest request = new RestRequest();
+
+        //    request.AddJsonBody(body);
+
+        //    var response = client.Post(request);
+
+        //    System.Console.WriteLine(response.StatusCode);
+        //}
+
         public static List<FullEmployeeModel> DeleteEmployeeClient(int id)
         {
             RestRequest request = new RestRequest();

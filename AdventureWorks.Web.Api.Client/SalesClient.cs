@@ -35,7 +35,7 @@ namespace AdventureWorks.Web.Api.Client
 
             var response = client.Get(request);
 
-            //request.AddParameter("id", id);
+            request.AddQueryParameter("id", id);
 
             return serializer.Deserialize<SalesOrderHeaderModel>(response);
         }

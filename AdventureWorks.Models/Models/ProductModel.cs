@@ -8,25 +8,44 @@ using System.Linq;
 namespace AdventureWorks.Models.Models
 {
     [Table(Schema = "Production", Name = "Product")]
-    public class ProductModel : INotifyDataErrorInfo
+    public class ProductModel : IDataErrorInfo, INotifyPropertyChanged
     {
-        private readonly Dictionary<string, List<string>> _propertyErrors = new Dictionary<string, List<string>>();
+        private readonly Dictionary<string, string> _propertyErrors = new Dictionary<string, string>();
 
-        //[Column(Name = "ProductID")] public int ProductID { get; set; }
-        //[Column(Name = "Name")] public string Name { get; set; }
-        //[Column(Name = "ProductNumber")] public string ProductNumber { get; set; }
-        //[Column(Name = "Color")] public string Color { get; set; }
-        //[Column(Name = "Size")] public string Size { get; set; }
-        //[Column(Name = "ListPrice")] public double ListPrice { get; set; }
-        //[Column(Name = "rowguid")] public Guid rowguid { get; set; }
+        public string this[string columnName] => this._propertyErrors.TryGetValue(columnName, out var error) ? error : null;
 
-        
+        public string Error => null;
 
         public event PropertyChangedEventHandler PropertyChanged;
+
+
+        public IEnumerable GetErrors(string propertyName)
+        {
+            return _propertyErrors.GetValueOrDefault(propertyName, null);
+        }
+
+        private void AddError(string propertyName, string errorMessage)
+        {
+            if (!_propertyErrors.ContainsKey(propertyName))
+            {
+                _propertyErrors.Add(propertyName, errorMessage);
+            }
+            else
+            {
+                _propertyErrors[propertyName] = errorMessage;
+            }
+
+            OnPropertyChanged(propertyName);
+        }
 
         protected void OnPropertyChanged(string propertyName)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+
+        public ProductModel()
+        {
+            this.Validate();
         }
 
         private int _productId;
@@ -34,7 +53,7 @@ namespace AdventureWorks.Models.Models
         private string _productNumber;
         private string _color;
         private string _size;
-        private double _listPrice;
+        private double? _listPrice;
         private Guid _rowguid;
 
 
@@ -57,10 +76,7 @@ namespace AdventureWorks.Models.Models
             {
                 _name = value;
 
-                if (_name.Length < 1)
-                {
-                    AddError(nameof(Name), "This field is required.");
-                }
+                Validate();
 
                 OnPropertyChanged(nameof(Name));
             }
@@ -75,15 +91,11 @@ namespace AdventureWorks.Models.Models
             {
                 _productNumber = value;
 
-                if (_productNumber.Length < 1)
-                {
-                    AddError(nameof(ProductNumber), "This field is required.");
-                }
+                Validate();
 
                 OnPropertyChanged(nameof(ProductNumber));
             }
         }
-
 
         [Column(Name = "Color")]
         public string Color
@@ -110,18 +122,13 @@ namespace AdventureWorks.Models.Models
 
 
         [Column(Name = "ListPrice")]
-        public double ListPrice
+        public double? ListPrice
         {
             get { return _listPrice; }
             set
             {
                 _listPrice = value;
-
-                if (_listPrice == null)
-                {
-                    AddError(nameof(ListPrice), "This field is required");
-                }
-
+                this.Validate();
                 OnPropertyChanged(nameof(ListPrice));
             }
         }
@@ -138,30 +145,42 @@ namespace AdventureWorks.Models.Models
             }
         }
 
-
-        public bool HasErrors => _propertyErrors.Any();
-
-        public event EventHandler<DataErrorsChangedEventArgs> ErrorsChanged;
-
-        public IEnumerable GetErrors(string propertyName)
+        private void Validate()
         {
-            return _propertyErrors.GetValueOrDefault(propertyName, null);
-        }
-
-        private void AddError(string propertyName, string errorMessage)
-        {
-            if (!_propertyErrors.ContainsKey(propertyName))
+            if (string.IsNullOrWhiteSpace(_name))
             {
-                _propertyErrors.Add(propertyName, new List<string>());
+                AddError(nameof(Name), "This field is required.");
+            }
+            else
+            {
+                ClearError(nameof(Name));
             }
 
-            _propertyErrors[propertyName].Add(errorMessage);
-            OnErrorsChanged(propertyName);
+            if (string.IsNullOrWhiteSpace(_productNumber))
+            {
+                AddError(nameof(ProductNumber), "This field is required.");
+            }
+            else
+            {
+                ClearError(nameof(ProductNumber));
+            }
+
+            if (_listPrice == null)
+            {
+                AddError(nameof(ListPrice), "This field is required");
+            }
+            else
+            {
+                ClearError(nameof(ListPrice));
+            }
         }
 
-        private void OnErrorsChanged(string propertyName)
+        private void ClearError(string propertyName)
         {
-            ErrorsChanged?.Invoke(this, new DataErrorsChangedEventArgs(propertyName));
+            if (_propertyErrors.ContainsKey(propertyName))
+            {
+                _propertyErrors.Remove(propertyName);
+            }
         }
     }
 }

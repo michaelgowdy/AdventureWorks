@@ -10,11 +10,12 @@ namespace AdventureWorks.Web.Api.Client
 {
     public class ProductClient
     {
+        public static RestClient client = new RestClient("https://localhost:44351/product");
         public static SystemTextJsonSerializer serializer = new SystemTextJsonSerializer();
 
         public static List<ProductModel> GetProductsClient(int page, int pageSize)
         {
-            RestClient client = new RestClient("https://localhost:44351/product");
+            //RestClient client = new RestClient("https://localhost:44351/product");
             //Convert.ToInt32(pageSize);
             RestRequest request = new RestRequest();
 
@@ -28,7 +29,7 @@ namespace AdventureWorks.Web.Api.Client
 
         public static ProductModel GetOneProductClient(int id)
         {
-            RestClient client = new RestClient($"https://localhost:44351/product/id/{id}");
+            //RestClient client = new RestClient($"https://localhost:44351/product/id/{id}");
             RestRequest request = new RestRequest();
 
             request.AddParameter("id", id);
@@ -40,7 +41,7 @@ namespace AdventureWorks.Web.Api.Client
 
         public static void UpdateProductClient(ProductModel product)
         {
-            RestClient client = new RestClient("https://localhost:44351/product");
+            //RestClient client = new RestClient("https://localhost:44351/product");
 
             var body = new ProductModel { ProductID = product.ProductID, Name = product.Name, ProductNumber = product.ProductNumber, Color = product.Color, Size = product.Size, ListPrice = product.ListPrice };
 
@@ -55,7 +56,7 @@ namespace AdventureWorks.Web.Api.Client
 
         public static void AddProductClient(ProductModel product)
         {
-            RestClient client = new RestClient("https://localhost:44351/product");
+            //RestClient client = new RestClient("https://localhost:44351/product");
 
             var body = new ProductModel { Name = product.Name, ProductNumber = product.ProductNumber, Color = product.Color, Size = product.Size, ListPrice = product.ListPrice };
 
@@ -71,7 +72,7 @@ namespace AdventureWorks.Web.Api.Client
 
         public static void DeleteProductClient(int id)
         {
-            RestClient client = new RestClient("https://localhost:44351/product");
+            //RestClient client = new RestClient("https://localhost:44351/product");
 
             RestRequest request = new RestRequest();
 

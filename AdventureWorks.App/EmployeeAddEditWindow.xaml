@@ -3,9 +3,13 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:AdventureWorks.App"
+        xmlns:local="clr-namespace:AdventureWorks.App" xmlns:models="clr-namespace:AdventureWorks.Models.Models;assembly=AdventureWorks.Models"
         mc:Ignorable="d"
         Title="AddEmployeeWindow" FontSize="20" Height="400" Width="600">
+    <Window.DataContext>
+        <models:FullEmployeeModel/>
+    </Window.DataContext>
+    
     <Grid>
 
         <Border Grid.Column="0" BorderBrush="Black" BorderThickness="1" Margin="5">
@@ -27,16 +31,16 @@
                     </Grid.RowDefinitions>
 
                     <Label Grid.Row="0" Grid.Column="0" Margin="5" Padding="5" Content="Business Entity ID"/>
-                    <TextBox x:Name="addId" Grid.Row="0" Grid.Column="1"  Margin="5" Padding="5"  Text="{Binding BusinessEntityID}"/>
+                    <TextBox x:Name="addId" Grid.Row="0" Grid.Column="1"  Margin="5" Padding="5"  Text="{Binding BusinessEntityID, UpdateSourceTrigger=PropertyChanged}"/>
 
                     <Label Grid.Row="1" Grid.Column="0" Margin="5" Padding="5" Content="First Name"/>
-                    <TextBox x:Name="addFirstName" Grid.Row="1" Grid.Column="1"  Margin="5" Padding="5" Text="{Binding FirstName}"/>
+                    <TextBox x:Name="addFirstName" Grid.Row="1" Grid.Column="1"  Margin="5" Padding="5" Text="{Binding FirstName, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, ValidatesOnDataErrors=True}"/>
 
                     <Label Grid.Row="2" Grid.Column="0" Margin="5" Padding="5" Content="Last Name"/>
-                    <TextBox x:Name="addLastName" Grid.Row="2" Grid.Column="1" Margin="5" Padding="5" Text="{Binding LastName}"/>
+                    <TextBox x:Name="addLastName" Grid.Row="2" Grid.Column="1" Margin="5" Padding="5" Text="{Binding LastName, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, ValidatesOnDataErrors=True}"/>
 
                     <Label Grid.Row="3" Grid.Column="0" Margin="5" Padding="5" Content="Job Title"/>
-                    <TextBox x:Name="addJobTitle" Grid.Row="3" Grid.Column="1" Margin="5" Padding="5" Text="{Binding JobTitle}"/>
+                    <TextBox x:Name="addJobTitle" Grid.Row="3" Grid.Column="1" Margin="5" Padding="5" Text="{Binding JobTitle, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, ValidatesOnDataErrors=True}"/>
 
                     <Button x:Name="addUpdateButton" Grid.Row="4" Grid.Column="1" Content="Add" Margin="90, 20, 5, 20" Padding="5" Click="AddEmployee_Click"/>
 

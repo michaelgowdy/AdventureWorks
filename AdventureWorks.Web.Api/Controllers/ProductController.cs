@@ -12,7 +12,7 @@ namespace AdventureWorks.Web.Api.Controllers
 {
     [Route("/[controller]")]
     [ApiController]
-    public class ProductController : Controller, INotifyDataErrorInfo
+    public class ProductController : Controller//, INotifyDataErrorInfo
     {
         private readonly AppDataConnection _db;
 
@@ -78,7 +78,7 @@ namespace AdventureWorks.Web.Api.Controllers
 
             if (!delete.IsCompleted)
             {
-                GetErrors(nameof(delete));
+                //GetErrors(nameof(delete));
             }
         }
 
@@ -100,39 +100,39 @@ namespace AdventureWorks.Web.Api.Controllers
 
         // Error Handling
          
-        List<string> errors = new List<string>();
+        //List<string> errors = new List<string>();
 
-        private readonly Dictionary<string, List<string>> propErrors = new Dictionary<string, List<string>>();
+        //private readonly Dictionary<string, List<string>> propErrors = new Dictionary<string, List<string>>();
 
-        public event EventHandler<DataErrorsChangedEventArgs> ErrorsChanged;
+        //public event EventHandler<DataErrorsChangedEventArgs> ErrorsChanged;
 
-        public IEnumerable GetErrors(string propertyName)
-        {
-            List<string> errors = new List<string>();
-            if (propertyName != null)
-            {
-                propErrors.TryGetValue(propertyName, out errors);
-                return errors;
-            }
-            else
-                return null;
-        }
+        //public IEnumerable GetErrors(string propertyName)
+        //{
+        //    List<string> errors = new List<string>();
+        //    if (propertyName != null)
+        //    {
+        //        propErrors.TryGetValue(propertyName, out errors);
+        //        return errors;
+        //    }
+        //    else
+        //        return null;
+        //}
 
-        public bool HasErrors
-        {
-            get
-            {
-                try
-                {
-                    var propErrorsCount = propErrors.Values.FirstOrDefault(r => r.Count > 0);
-                    if (propErrorsCount != null)
-                        return true;
-                    else
-                        return false;
-                }
-                catch { }
-                return true;
-            }
-        }
+        //public bool HasErrors
+        //{
+        //    get
+        //    {
+        //        try
+        //        {
+        //            var propErrorsCount = propErrors.Values.FirstOrDefault(r => r.Count > 0);
+        //            if (propErrorsCount != null)
+        //                return true;
+        //            else
+        //                return false;
+        //        }
+        //        catch { }
+        //        return true;
+        //    }
+        //}
     }
 }

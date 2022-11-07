@@ -15,7 +15,7 @@ namespace AdventureWorks.App
             InitializeComponent();
         }
 
-        private void AddEmployee_Click(object sender, RoutedEventArgs e)
+        private void AddEmployee()
         {
             var newEmployee = new FullEmployeeModel
             {
@@ -24,14 +24,35 @@ namespace AdventureWorks.App
                 JobTitle = addJobTitle.Text
             };
 
+            EmployeeClient.AddEmployeeClient(newEmployee);
+        }
+
+        private void UpdateEmployee()
+        {
+            addUpdateButton.IsEnabled = true;
+
+            FullEmployeeModel newEmployee = new FullEmployeeModel
+            {
+                BusinessEntityID = Convert.ToInt32(addId.Text),
+                FirstName = addFirstName.Text,
+                LastName = addLastName.Text,
+                JobTitle = addJobTitle.Text
+            };
+
+            EmployeeClient.UpdateEmployeeClient(newEmployee);
+        }
+
+        private void AddEmployee_Click(object sender, RoutedEventArgs e)
+        {
+            
+
             if (Title == "AddEmployeeWindow")
             {
-                EmployeeClient.AddEmployeeClient(newEmployee);
+                AddEmployee();
             }
             else
             {
-                newEmployee.BusinessEntityID = Convert.ToInt32(addId.Text);
-                EmployeeClient.UpdateEmployeeClient(newEmployee);
+                UpdateEmployee();
             }
         }
 
