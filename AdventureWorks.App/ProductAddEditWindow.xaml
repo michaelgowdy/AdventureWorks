@@ -37,8 +37,8 @@
                     <TextBox x:Name="addId" Grid.Row="0" Grid.Column="1" Margin="5" Padding="5" Text="{Binding ProductID, UpdateSourceTrigger=PropertyChanged}"/>
 
                     <Label Grid.Row="1" Grid.Column="0" Margin="5" Padding="5" Content="Name"/>
-                    <TextBox x:Name="addName" Grid.Row="1" Grid.Column="1" Margin="5" Padding="5" Text="{Binding Name, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, ValidatesOnDataErrors=True}"/>
-                    <!--<TextBox Grid.Row="1" Grid.Column="1" Margin="5" Padding="5" Text="{Binding Name}"/>-->
+                    <TextBox x:Name="addName" Grid.Row="1" Grid.Column="1" Margin="5" Padding="5" Text="{Binding Name, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, ValidatesOnDataErrors=True}" ToolTip="{Binding PropertyErrors[Name]}"/>
+                    <TextBox Grid.Row="1" Grid.Column="1" Margin="5" Padding="5" Text="{Binding _propertyErrors[Name]}"/>
 
                     <Label Grid.Row="2" Grid.Column="0" Margin="5" Padding="5" Content="Product Number"/>
                     <TextBox x:Name="addNumber" Grid.Row="2" Grid.Column="1" Margin="5" Padding="5" Text="{Binding ProductNumber, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, ValidatesOnDataErrors=True}"/>

@@ -11,7 +11,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AdventureWorks.App", "Adven
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AdventureWorks.Web.Api.Client", "AdventureWorks.Web.Api.Client\AdventureWorks.Web.Api.Client.csproj", "{823EF3A2-A73A-4FA9-BBEB-648825F4FA5E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AdventureWorks.Web.Blazor", "AdventureWorks.Web.Blazor\AdventureWorks.Web.Blazor.csproj", "{CB0A36FC-BBE4-48AE-989D-F6457851E091}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AdventureWorks.Web.Blazor", "AdventureWorks.Web.Blazor\AdventureWorks.Web.Blazor.csproj", "{CB0A36FC-BBE4-48AE-989D-F6457851E091}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

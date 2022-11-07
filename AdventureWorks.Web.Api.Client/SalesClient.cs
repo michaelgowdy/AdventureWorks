@@ -69,5 +69,18 @@ namespace AdventureWorks.Web.Api.Client
 
             System.Console.WriteLine(response.StatusCode);
         }
+
+        public static void DeleteSaleClient(int id)
+        {
+            RestClient client = new RestClient("https://localhost:44351/sales/id/{id}");
+
+            RestRequest request = new RestRequest();
+
+            request.AddQueryParameter("id", id);
+
+            var response = client.Delete(request);
+
+            Console.WriteLine(response.StatusCode);
+        }
     }
 }

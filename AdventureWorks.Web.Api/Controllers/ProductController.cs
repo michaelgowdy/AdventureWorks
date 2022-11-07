@@ -5,6 +5,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Data.Common;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -34,7 +35,7 @@ namespace AdventureWorks.Web.Api.Controllers
         }
 
         [HttpGet("id/{id}")]
-        public async Task<ProductModel> GetPerson(int id)
+        public async Task<ProductModel> GetProduct(int id)
         {
             return await _db.GetTable<ProductModel>().SingleOrDefaultAsync(product => product.ProductID == id);
         }
@@ -70,17 +71,26 @@ namespace AdventureWorks.Web.Api.Controllers
                     .Insert();
         }
 
-        [HttpDelete("{id}")]
-        public void DeletePerson(int id)
+        [HttpDelete("id/{id}")]
+        public IActionResult DeleteProduct(int id)
         {
-            
-            var delete = _db.GetTable<ProductModel>().Where(product => product.ProductID == id).DeleteAsync();
+            _db.GetTable<ProductModel>().Where(product => product.ProductID == id).Delete();
+            return Ok();
 
-            if (!delete.IsCompleted)
-            {
-                //GetErrors(nameof(delete));
-            }
+            //var delete = _db.GetTable<ProductModel>().Where(product => product.ProductID == id).DeleteAsync();
+
+            //if (!delete.IsCompleted)
+            //{
+            //    GetErrors(nameof(delete));
+            //}
         }
+
+
+        //[HttpDelete("id/{id}")]
+        //public Task<int> DeleteProduct(int id)
+        //{
+        //    return _db.GetTable<ProductModel>.Where(p => p.ProductID == id).DeleteAsync();
+        //}
 
         //public IEnumerable GetErrors(string propertyName)
         //{
@@ -99,7 +109,7 @@ namespace AdventureWorks.Web.Api.Controllers
 
 
         // Error Handling
-         
+
         //List<string> errors = new List<string>();
 
         //private readonly Dictionary<string, List<string>> propErrors = new Dictionary<string, List<string>>();

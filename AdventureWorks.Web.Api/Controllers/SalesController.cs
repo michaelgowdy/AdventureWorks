@@ -80,6 +80,19 @@ namespace AdventureWorks.Web.Api.Controllers
                     .Insert();
         }
 
+        [HttpDelete("id/{id}")]
+        public IActionResult DeleteSale(int id)
+        {
+
+            _db.GetTable<SalesOrderHeaderModel>().Where(s => s.SalesOrderID == id).Delete();
+            return Ok();
+
+            //if (!delete.IsCompleted)
+            //{
+            //    GetErrors(nameof(delete));
+            //}
+        }
+
         //public IActionResult Index()
         //{
         //    return View();

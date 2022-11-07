@@ -1,0 +1,62 @@
+﻿@page "/sales/delete/{salesOrderId:int}"
+@using AdventureWorks.Models
+@using AdventureWorks.Models.Models
+@using AdventureWorks.Web.Api.Client
+
+@inject NavigationManager NavigationManager
+<h2>Delete User</h2>
+<br />
+<div class="form-group">
+    <h4>Do you want to delete this sale?</h4>
+    <table class="table">
+        <tbody>
+            <tr>
+                <td>Sales Order ID</td>
+                <td>@sale.SalesOrderID</td>
+            </tr>
+            <tr>
+                <td>Order Date</td>
+                <td>@sale.OrderDate</td>
+            </tr>
+            <tr>
+                <td>Bill To Address ID</td>
+                <td>@sale.BillToAddressID</td>
+            </tr>
+            <tr>
+                <td>Ship To Address ID</td>
+                <td>@sale.ShipToAddressID</td>
+            </tr>
+            <tr>
+                <td>Total Due</td>
+                <td>@sale.TotalDue</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+<div class="form-group">
+    <input type="submit" value="Delete" @onclick="(async () => await RemoveUser(sale.SalesOrderID))" class="btn btn-danger" />
+    <input type="submit" value="Cancel" @onclick="(() => Cancel())" class="btn btn-warning" />
+</div>
+@code {
+    [Parameter]
+    public int salesOrderId { get; set; }
+    SalesOrderHeaderModel sale = new SalesOrderHeaderModel();
+    protected override async Task OnInitializedAsync()
+    {
+        var getrequest = SalesClient.GetOneSaleClient(salesOrderId);
+        sale.SalesOrderID = getrequest.SalesOrderID;
+        sale.OrderDate = getrequest.OrderDate;
+        sale.BillToAddressID = getrequest.BillToAddressID;
+        sale.ShipToAddressID = getrequest.ShipToAddressID;
+        sale.TotalDue = getrequest.TotalDue;
+    }
+    protected async Task RemoveUser(int salesOrderId)
+    {
+        SalesClient.DeleteSaleClient(salesOrderId);
+        NavigationManager.NavigateTo("/sales");
+    }
+    void Cancel()
+    {
+        NavigationManager.NavigateTo("/sales");
+    }
+}

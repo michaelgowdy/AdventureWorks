@@ -72,9 +72,9 @@ namespace AdventureWorks.Web.Api.Client
 
         public static void DeleteProductClient(int id)
         {
-            //RestClient client = new RestClient("https://localhost:44351/product");
+            RestClient client = new RestClient("https://localhost:44351/product");
 
-            RestRequest request = new RestRequest();
+            RestRequest request = new RestRequest($"id/{id}", Method.Delete);
 
             request.AddParameter("id", id);
 

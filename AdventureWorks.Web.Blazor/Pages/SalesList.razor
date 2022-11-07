@@ -46,7 +46,7 @@ else
                             Edit
                         </button>
 
-                        <button a href='/sales/delete/@sale.SalesOrderID' class="btn btn-outline-danger">
+                        <button class="btn btn-outline-danger" @onclick="(() => DeleteConfirm(sale.SalesOrderID))">
                             Delete
                         </button>
                     </td>
@@ -75,6 +75,7 @@ else
 
     protected void DeleteConfirm(int id)
     {
-        //SalesClient.DeleteSaleClient(id);
+        NavigationManager.NavigateTo($"sales/delete/{id}");
+        SalesClient.DeleteSaleClient(id);
     }
 }
