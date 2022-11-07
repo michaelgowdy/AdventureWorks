@@ -47,7 +47,7 @@ namespace AdventureWorks.Web.Api.Controllers
                 //            where s.SalesOrderID == id
                 //            select s).SingleOrDefaultAsync(product => product.SalesOrderID == id);
 
-                var sale = (from s in db.GetTable<SalesOrderHeaderModel>()
+                var sale = (from s in _db.GetTable<SalesOrderHeaderModel>()
                             where s.SalesOrderID == id
                             select s).SingleOrDefaultAsync();
 
@@ -65,6 +65,9 @@ namespace AdventureWorks.Web.Api.Controllers
                     .Set(s => s.OrderDate, sale.OrderDate)
                     .Set(s => s.BillToAddressID, sale.BillToAddressID)
                     .Set(s => s.ShipToAddressID, sale.ShipToAddressID)
+                    .Set(s => s.SubTotal, sale.SubTotal)
+                    .Set(s => s.TaxAmt, sale.TaxAmt)
+                    .Set(s => s.Freight, sale.Freight)
                     .Update();
         }
 
@@ -77,20 +80,17 @@ namespace AdventureWorks.Web.Api.Controllers
                     .Value(s => s.OrderDate, sale.OrderDate)
                     .Value(s => s.BillToAddressID, sale.BillToAddressID)
                     .Value(s => s.ShipToAddressID, sale.ShipToAddressID)
+                    .Value(s => s.SubTotal, sale.SubTotal)
+                    .Value(s => s.TaxAmt, sale.TaxAmt)
+                    .Value(s => s.Freight, sale.Freight)
                     .Insert();
         }
 
         [HttpDelete("id/{id}")]
         public IActionResult DeleteSale(int id)
         {
-
             _db.GetTable<SalesOrderHeaderModel>().Where(s => s.SalesOrderID == id).Delete();
             return Ok();
-
-            //if (!delete.IsCompleted)
-            //{
-            //    GetErrors(nameof(delete));
-            //}
         }
 
         //public IActionResult Index()

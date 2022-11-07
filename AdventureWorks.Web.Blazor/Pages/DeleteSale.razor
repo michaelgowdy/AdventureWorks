@@ -1,10 +1,11 @@
 ﻿@page "/sales/delete/{salesOrderId:int}"
+
 @using AdventureWorks.Models
 @using AdventureWorks.Models.Models
 @using AdventureWorks.Web.Api.Client
 
 @inject NavigationManager NavigationManager
-<h2>Delete User</h2>
+<h2>Delete Sale</h2>
 <br />
 <div class="form-group">
     <h4>Do you want to delete this sale?</h4>
@@ -30,16 +31,23 @@
                 <td>Total Due</td>
                 <td>@sale.TotalDue</td>
             </tr>
+            <tr>
+                <td>Sales Order Number</td>
+                <td>@sale.SalesOrderNumber</td>
+            </tr>
         </tbody>
     </table>
 </div>
 <div class="form-group">
-    <input type="submit" value="Delete" @onclick="(async () => await RemoveUser(sale.SalesOrderID))" class="btn btn-danger" />
+    <input type="submit" value="Delete" @onclick="(() => RemoveUser(sale.SalesOrderID))" class="btn btn-danger" />
     <input type="submit" value="Cancel" @onclick="(() => Cancel())" class="btn btn-warning" />
 </div>
 @code {
     [Parameter]
     public int salesOrderId { get; set; }
+
+    //[Parameter]
+    //public string salesOrderNumber { get; set; }
     SalesOrderHeaderModel sale = new SalesOrderHeaderModel();
     protected override async Task OnInitializedAsync()
     {
@@ -49,10 +57,11 @@
         sale.BillToAddressID = getrequest.BillToAddressID;
         sale.ShipToAddressID = getrequest.ShipToAddressID;
         sale.TotalDue = getrequest.TotalDue;
+        sale.SalesOrderNumber = getrequest.SalesOrderNumber;
     }
-    protected async Task RemoveUser(int salesOrderId)
+    protected void RemoveUser(int id)
     {
-        SalesClient.DeleteSaleClient(salesOrderId);
+        SalesClient.DeleteSaleClient(id);
         NavigationManager.NavigateTo("/sales");
     }
     void Cancel()

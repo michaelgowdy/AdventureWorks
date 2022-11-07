@@ -10,12 +10,12 @@ namespace AdventureWorks.Web.Api.Client
 {
     public class SalesClient
     {
-        //public static RestClient client = new RestClient("https://localhost:44351/sales");
+        public static RestClient client = new RestClient("https://localhost:44351/sales");
         public static SystemTextJsonSerializer serializer = new SystemTextJsonSerializer();
 
         public static List<SalesOrderHeaderModel> GetSalesClient(int page, int pageSize)
         {
-            RestClient client = new RestClient("https://localhost:44351/sales");
+            //RestClient client = new RestClient("https://localhost:44351/sales");
             //Convert.ToInt32(pageSize);
             RestRequest request = new RestRequest();
 
@@ -72,11 +72,11 @@ namespace AdventureWorks.Web.Api.Client
 
         public static void DeleteSaleClient(int id)
         {
-            RestClient client = new RestClient("https://localhost:44351/sales/id/{id}");
+            RestClient client = new RestClient("https://localhost:44351/sales");
 
-            RestRequest request = new RestRequest();
+            RestRequest request = new RestRequest($"id/{id}", Method.Delete);
 
-            request.AddQueryParameter("id", id);
+            request.AddParameter("id", id);
 
             var response = client.Delete(request);
 

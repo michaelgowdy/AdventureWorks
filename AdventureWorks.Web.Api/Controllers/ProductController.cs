@@ -77,8 +77,6 @@ namespace AdventureWorks.Web.Api.Controllers
             _db.GetTable<ProductModel>().Where(product => product.ProductID == id).Delete();
             return Ok();
 
-            //var delete = _db.GetTable<ProductModel>().Where(product => product.ProductID == id).DeleteAsync();
-
             //if (!delete.IsCompleted)
             //{
             //    GetErrors(nameof(delete));

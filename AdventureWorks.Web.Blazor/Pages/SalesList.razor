@@ -7,12 +7,19 @@
 
 <h3>Sales List</h3>
 
+<select class="form-control" @onchange="@OnSelect" style="width:150px">
+    @foreach (var size in sizeOptions)
+    {
+        <option value=@size>@size</option>
+    }
+</select>
+
 <div class="row">
     <div class="col-md-6">
-        <a href='/sale/add' class="btn btn-primary" role="button">
+        <button class="btn btn-primary" @onclick="(() => AddSale())">
             <i class="fas fa-sale-plus"></i>
             Add Sale
-        </a>
+        </button>
     </div>
 </div>
 
@@ -30,6 +37,7 @@ else
                 <th>Bill To Address ID</th>
                 <th>Ship To Address ID</th>
                 <th>Total Due</th>
+                <th>Sales Order Number</th>
             </tr>
         </thead>
         <tbody>
@@ -41,6 +49,7 @@ else
                     <td>@sale.BillToAddressID</td>
                     <td>@sale.ShipToAddressID</td>
                     <td>@sale.TotalDue</td>
+                    <td>@sale.SalesOrderNumber</td>
                     <td>
                         <button class="btn btn-outline-dark" @onclick="(() => GetSale(sale.SalesOrderID))">
                             Edit
@@ -59,23 +68,36 @@ else
 
 @code {
     protected List<SalesOrderHeaderModel> sales;
+    protected List<string> sizeOptions = new List<string>() { "25", "50", "100" };
+    protected string selectedSize = "25";
     //protected SalesOrderHeaderModel sale;
 
 
     protected override async Task OnInitializedAsync()
     {
-        sales = SalesClient.GetSalesClient(1, 50);
+        sales = SalesClient.GetSalesClient(1, Convert.ToInt32(selectedSize));
+    }
+
+    protected void OnSelect(ChangeEventArgs e)
+    {
+        selectedSize = e.Value.ToString();
+        sales = SalesClient.GetSalesClient(1, Convert.ToInt32(selectedSize));
+    }
+
+    protected void AddSale()
+    {
+        NavigationManager.NavigateTo($"sales/add");
     }
 
     protected void GetSale(int id)
     {
         NavigationManager.NavigateTo($"sales/edit/{id}");
-        SalesClient.GetOneSaleClient(id);
+        //SalesClient.GetOneSaleClient(id);
     }
 
-    protected void DeleteConfirm(int id)
+    protected void DeleteConfirm(int salesOrderId)
     {
-        NavigationManager.NavigateTo($"sales/delete/{id}");
-        SalesClient.DeleteSaleClient(id);
+        NavigationManager.NavigateTo($"sales/delete/{salesOrderId}");
+        //SalesClient.DeleteSaleClient(id);
     }
 }

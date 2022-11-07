@@ -1,11 +1,13 @@
-﻿@page "/sales/edit/{salesOrderId:int}"
+﻿@page "/sales/add"
+@page "/sales/edit/{salesOrderId:int}"
+
 @using AdventureWorks.Models
 @using AdventureWorks.Models.Models
 @using AdventureWorks.Web.Api.Client
 
 @inject NavigationManager NavigationManager
 
-<h3>Edit Sale</h3>
+<h3>@Title Sale</h3>
 
 <EditForm Model="sale" OnValidSubmit="SaveSale">
     <DataAnnotationsValidator />
@@ -43,17 +45,33 @@
         <ValidationMessage For="@(() => sale.ShipToAddressID)" />
     </div>
     <div class="mb-3">
-        <label for="TotalDue" class="form-label">Total Due</label>
+        <label for="TotalDue" class="form-label">Sub Total</label>
         <div class="col-md-4">
-            <InputNumber class="form-control" @bind-Value="sale.TotalDue" />
+            <InputNumber class="form-control" @bind-Value="sale.SubTotal" />
         </div>
-        <ValidationMessage For="@(() => sale.TotalDue)" />
+        <ValidationMessage For="@(() => sale.SubTotal)" />
+    </div>
+    <div class="mb-3">
+        <label for="TotalDue" class="form-label">Tax Amount</label>
+        <div class="col-md-4">
+            <InputNumber class="form-control" @bind-Value="sale.TaxAmt" />
+        </div>
+        <ValidationMessage For="@(() => sale.TaxAmt)" />
+    </div>
+    <div class="mb-3">
+        <label for="TotalDue" class="form-label">Freight</label>
+        <div class="col-md-4">
+            <InputNumber class="form-control" @bind-Value="sale.Freight" />
+        </div>
+        <ValidationMessage For="@(() => sale.Freight)" />
     </div>
     <div class="form-group">
         <button type="submit" class="btn btn-primary" @onclick="(() => SaveSale())">Save</button>
         <button class="btn btn-light" @onclick="Cancel">Cancel</button>
     </div>
 </EditForm>
+
+
 
 @code {
     [Parameter]
@@ -62,17 +80,31 @@
     protected string Title = "Add";
     protected SalesOrderHeaderModel sale = new SalesOrderHeaderModel();
     protected override async Task OnParametersSetAsync()
-    {
-        var getrequest = SalesClient.GetOneSaleClient(salesOrderId);
-        sale.SalesOrderID = getrequest.SalesOrderID;
-        sale.OrderDate = getrequest.OrderDate;
-        sale.BillToAddressID = getrequest.BillToAddressID;
-        sale.ShipToAddressID = getrequest.ShipToAddressID;
-        sale.TotalDue = getrequest.TotalDue;
+    {   
+        if (salesOrderId != 0)
+        {
+            Title = "Edit";
+
+            var getrequest = SalesClient.GetOneSaleClient(salesOrderId);
+            sale.SalesOrderID = getrequest.SalesOrderID;
+            sale.OrderDate = getrequest.OrderDate;
+            sale.BillToAddressID = getrequest.BillToAddressID;
+            sale.ShipToAddressID = getrequest.ShipToAddressID;
+            sale.SubTotal = getrequest.SubTotal;
+            sale.TaxAmt = getrequest.TaxAmt;
+            sale.Freight = getrequest.Freight;
+        }
     }
     protected async Task SaveSale()
     {
-        SalesClient.UpdateSaleClient(sale);
+        if (salesOrderId != 0) 
+        {
+            SalesClient.UpdateSaleClient(sale);
+        }
+        else
+        {
+            SalesClient.AddSaleClient(sale);
+        }
         Cancel();
     }
     public void Cancel()
