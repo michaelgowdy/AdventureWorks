@@ -79,6 +79,7 @@ namespace AdventureWorks.Models.Models
             set 
             {
                 _billToAddressId = value;
+                Validate();
                 OnPropertyChanged(nameof(BillToAddressID));
             }
         }

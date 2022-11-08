@@ -37,8 +37,8 @@
                     <TextBox x:Name="addId" Grid.Row="0" Grid.Column="1" Margin="5" Padding="5" Text="{Binding ProductID, UpdateSourceTrigger=PropertyChanged}"/>
 
                     <Label Grid.Row="1" Grid.Column="0" Margin="5" Padding="5" Content="Name"/>
-                    <TextBox x:Name="addName" Grid.Row="1" Grid.Column="1" Margin="5" Padding="5" Text="{Binding Name, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, ValidatesOnDataErrors=True}" ToolTip="{Binding PropertyErrors[Name]}"/>
-                    <TextBox Grid.Row="1" Grid.Column="1" Margin="5" Padding="5" Text="{Binding _propertyErrors[Name]}"/>
+                    <TextBox x:Name="addName" Grid.Row="1" Grid.Column="1" Margin="5" Padding="5" Text="{Binding Name, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, ValidatesOnDataErrors=True}" ToolTip="{Binding Name}"/>
+                    <TextBox Grid.Row="1" Grid.Column="1" Margin="5" Padding="5" Text="{Binding Name}"/>
 
                     <Label Grid.Row="2" Grid.Column="0" Margin="5" Padding="5" Content="Product Number"/>
                     <TextBox x:Name="addNumber" Grid.Row="2" Grid.Column="1" Margin="5" Padding="5" Text="{Binding ProductNumber, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, ValidatesOnDataErrors=True}"/>
@@ -52,7 +52,7 @@
                     <Label Grid.Row="5" Grid.Column="0" Margin="5" Padding="5" Content="List Price"/>
                     <TextBox x:Name="addPrice" Grid.Row="5" Grid.Column="1" Margin="5" Padding="5" Text="{Binding ListPrice, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, ValidatesOnDataErrors=True}"/>
 
-                    <Button x:Name="addUpdateButton" Grid.Row="6" Grid.Column="1"  Content="Add" Margin="50, 20" Click="AddProduct_Click" IsEnabled="False"/>
+                    <Button x:Name="addUpdateButton" Grid.Row="6" Grid.Column="1"  Content="Add" Margin="50, 20" Click="AddProduct_Click"/>
                     <!--<TextBlock x:Name="productAdded" Grid.Row="6" Grid.ColumnSpan="2"  Visibility="Hidden" Text="Product added!" Foreground="Green" HorizontalAlignment="Center" Grid.Column="0"/>-->
 
                 </Grid>

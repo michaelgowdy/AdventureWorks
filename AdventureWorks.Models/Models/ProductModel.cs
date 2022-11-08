@@ -1,9 +1,11 @@
-﻿using LinqToDB.Mapping;
+﻿using AdventureWorks.Models.Validation;
+using LinqToDB.Mapping;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
+using System.Windows.Input;
 
 namespace AdventureWorks.Models.Models
 {
@@ -16,15 +18,23 @@ namespace AdventureWorks.Models.Models
 
         public string Error => null;
 
+        //private readonly UserValidation _validation = new UserValidation();
+
+        public bool HasErrors => _propertyErrors.Any();
+
         public event PropertyChangedEventHandler PropertyChanged;
 
+        public ProductModel()
+        {
+            this.Validate();
+        }
 
         public IEnumerable GetErrors(string propertyName)
         {
             return _propertyErrors.GetValueOrDefault(propertyName, null);
         }
 
-        private void AddError(string propertyName, string errorMessage)
+        public void AddError(string propertyName, string errorMessage)
         {
             if (!_propertyErrors.ContainsKey(propertyName))
             {
@@ -38,24 +48,21 @@ namespace AdventureWorks.Models.Models
             OnPropertyChanged(propertyName);
         }
 
+        public void ClearError(string propertyName)
+        {
+            if (_propertyErrors.ContainsKey(propertyName))
+            {
+                _propertyErrors.Remove(propertyName);
+            }
+        }
+
         protected void OnPropertyChanged(string propertyName)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
-        public ProductModel()
-        {
-            this.Validate();
-        }
 
         private int _productId;
-        private string _name;
-        private string _productNumber;
-        private string _color;
-        private string _size;
-        private double? _listPrice;
-        private Guid _rowguid;
-
 
         [Column(Name = "ProductID")]
         public int ProductID
@@ -68,6 +75,9 @@ namespace AdventureWorks.Models.Models
             }
         }
 
+
+        private string _name;
+
         [Column(Name = "Name")]
         public string Name
         {
@@ -75,13 +85,13 @@ namespace AdventureWorks.Models.Models
             set
             {
                 _name = value;
-
                 Validate();
-
                 OnPropertyChanged(nameof(Name));
             }
         }
 
+
+        private string _productNumber;
 
         [Column(Name = "ProductNumber")]
         public string ProductNumber
@@ -90,12 +100,13 @@ namespace AdventureWorks.Models.Models
             set
             {
                 _productNumber = value;
-
                 Validate();
-
                 OnPropertyChanged(nameof(ProductNumber));
             }
         }
+
+
+        private string _color;
 
         [Column(Name = "Color")]
         public string Color
@@ -109,6 +120,8 @@ namespace AdventureWorks.Models.Models
         }
 
 
+        private string _size;
+
         [Column(Name = "Size")]
         public string Size
         {
@@ -121,6 +134,8 @@ namespace AdventureWorks.Models.Models
         }
 
 
+        private double? _listPrice;
+
         [Column(Name = "ListPrice")]
         public double? ListPrice
         {
@@ -128,11 +143,13 @@ namespace AdventureWorks.Models.Models
             set
             {
                 _listPrice = value;
-                this.Validate();
+                Validate();
                 OnPropertyChanged(nameof(ListPrice));
             }
         }
 
+
+        private Guid _rowguid;
 
         [Column(Name = "rowguid")]
         public Guid rowguid
@@ -145,17 +162,9 @@ namespace AdventureWorks.Models.Models
             }
         }
 
+
         private void Validate()
         {
-            if (string.IsNullOrWhiteSpace(_name))
-            {
-                AddError(nameof(Name), "This field is required.");
-            }
-            else
-            {
-                ClearError(nameof(Name));
-            }
-
             if (string.IsNullOrWhiteSpace(_productNumber))
             {
                 AddError(nameof(ProductNumber), "This field is required.");
@@ -175,12 +184,11 @@ namespace AdventureWorks.Models.Models
             }
         }
 
-        private void ClearError(string propertyName)
-        {
-            if (_propertyErrors.ContainsKey(propertyName))
-            {
-                _propertyErrors.Remove(propertyName);
-            }
-        }
+        //public event EventHandler<DataErrorsChangedEventArgs> ErrorsChanged;
+
+        //public IEnumerable GetErrors(string propertyName)
+        //{
+        //    return _validation.GetErrors(propertyName);
+        //}
     }
 }

@@ -10,12 +10,22 @@ namespace AdventureWorks.App
     /// </summary>
     public partial class ProductAddEditWindow : Window
     {
+        ProductModel productModel = new ProductModel();
+
+
 
         public ProductAddEditWindow()
         {
-            //ProductModel productModel = new ProductModel();
-            //AddNewProductGrid.DataContext = new ProductClient();
             InitializeComponent();
+            GetErrors();
+        }
+
+        private void GetErrors()
+        {
+            if (productModel.HasErrors)
+            {
+                addUpdateButton.IsEnabled = false;
+            }
         }
 
         private void AddProduct()
@@ -29,8 +39,9 @@ namespace AdventureWorks.App
                 ListPrice = Convert.ToDouble(addPrice.Text)
             };
 
-            ProductClient.AddProductClient(newProduct);
+            GetErrors();
 
+            ProductClient.AddProductClient(newProduct);
             //try
             //{
             //    ProductModel newProduct = new ProductModel

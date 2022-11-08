@@ -3,9 +3,12 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:AdventureWorks.App"
+        xmlns:local="clr-namespace:AdventureWorks.App" xmlns:models="clr-namespace:AdventureWorks.Models.Models;assembly=AdventureWorks.Models"
         mc:Ignorable="d"
         Title="ProductListWindow" FontSize="20" Height="700" Width="1100">
+    <Window.DataContext>
+        <models:ProductModel/>
+    </Window.DataContext>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="60"/>
