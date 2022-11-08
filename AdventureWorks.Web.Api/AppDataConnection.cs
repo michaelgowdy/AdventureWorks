@@ -8,6 +8,7 @@ namespace AdventureWorks.Web.Api
         public AppDataConnection(LinqToDBConnectionOptions<AppDataConnection> options)
             : base(options)
         {
+            CommandTimeout = 0;
         }
     }
 }

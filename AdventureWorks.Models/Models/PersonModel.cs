@@ -11,5 +11,6 @@ namespace AdventureWorks.Models.Models
         [Column(Name = "BusinessEntityID")] public int BusinessEntityID { get; set; }
         [Column(Name = "FirstName")] public string FirstName { get; set; }
         [Column(Name = "LastName")] public string LastName { get; set; }
+        [Column(Name = "PersonType")] public string PersonType { get; set; }
     }
 }

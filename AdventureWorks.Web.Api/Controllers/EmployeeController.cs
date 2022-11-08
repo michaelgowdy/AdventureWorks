@@ -4,6 +4,7 @@ using LinqToDB;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -11,9 +12,15 @@ namespace AdventureWorks.Web.Api.Controllers
 {
     [Route("/[controller]")]
     [ApiController]
-    public class EmployeeController : Controller
+    public class EmployeeController : Controller, IDataErrorInfo
     {
         private readonly AppDataConnection _db;
+
+        public string Error => throw new NotImplementedException();
+
+        public string this[string columnName] => throw new NotImplementedException();
+
+
 
         public EmployeeController(AppDataConnection db)
         {
@@ -26,9 +33,9 @@ namespace AdventureWorks.Web.Api.Controllers
             using (AppDataConnection db = _db)
             {
                 var employees =
-                    (from b in _db.GetTable<BusinessEntityIDModel>()
-                     from p in _db.GetTable<PersonModel>().InnerJoin(p => p.BusinessEntityID == b.BusinessEntityID)
-                     from e in _db.GetTable<EmployeeModel>().InnerJoin(e => e.BusinessEntityID == b.BusinessEntityID)
+                    (from b in db.GetTable<BusinessEntityIDModel>()
+                     from p in db.GetTable<PersonModel>().InnerJoin(p => p.BusinessEntityID == b.BusinessEntityID)
+                     from e in db.GetTable<EmployeeModel>().InnerJoin(e => e.BusinessEntityID == b.BusinessEntityID)
                      select new FullEmployeeModel
                      {
                          BusinessEntityID = b.BusinessEntityID,
@@ -47,9 +54,9 @@ namespace AdventureWorks.Web.Api.Controllers
         {
             using (AppDataConnection db = _db)
             {
-                var employee = (from b in _db.GetTable<BusinessEntityIDModel>()
-                                from p in _db.GetTable<PersonModel>().InnerJoin(p => p.BusinessEntityID == b.BusinessEntityID)
-                                from e in _db.GetTable<EmployeeModel>().InnerJoin(e => e.BusinessEntityID == b.BusinessEntityID)
+                var employee = (from b in db.GetTable<BusinessEntityIDModel>()
+                                from p in db.GetTable<PersonModel>().InnerJoin(p => p.BusinessEntityID == b.BusinessEntityID)
+                                from e in db.GetTable<EmployeeModel>().InnerJoin(e => e.BusinessEntityID == b.BusinessEntityID)
                                 where b.BusinessEntityID == id
                                 select new FullEmployeeModel
                                 {
@@ -68,31 +75,32 @@ namespace AdventureWorks.Web.Api.Controllers
         {
             using (AppDataConnection db = _db)
             {
-                //Guid guid = Guid.NewGuid();
-                DateTime dateTime = DateTime.Now;
+                Guid guid = Guid.NewGuid();
 
-                var insert = _db.GetTable<BusinessEntityIDModel>()
-                    .Value(b => b.ModifiedDate, dateTime)
+                db.GetTable<BusinessEntityIDModel>()
+                    .Value(b => b.rowguid, guid)
                     .Insert();
 
-                var added = _db.GetTable<BusinessEntityIDModel>().ToList().Last();
-                var s = from e in _db.GetTable<EmployeeModel>()
-                        where e.BusinessEntityID == added.BusinessEntityID
-                        select new FullEmployeeModel();
-                        
+                BusinessEntityIDModel added = db.GetTable<BusinessEntityIDModel>().ToList().Last();
+                //var s = from e in _db.GetTable<EmployeeModel>()
+                //        where e.BusinessEntityID == added.BusinessEntityID
+                //        select new FullEmployeeModel();
 
-                _db.GetTable<PersonModel>()
-                    .Where(p => p.BusinessEntityID == added.BusinessEntityID)
-                    .Set(p => p.FirstName, employee.FirstName)
-                    .Set(p => p.LastName, employee.LastName)
-                    .Update();
+                db.GetTable<PersonModel>()
+                    .Value(p => p.BusinessEntityID, added.BusinessEntityID)
+                    .Value(p => p.FirstName, employee.FirstName)
+                    .Value(p => p.LastName, employee.LastName)
+                    .Value(p => p.PersonType, "EM")
+                    .Insert();
 
-                _db.GetTable<EmployeeModel>()
-                    .Where(e => e.BusinessEntityID == added.BusinessEntityID)
-                    .Set(e => e.JobTitle, employee.JobTitle)
-                    .Update();
+                db.GetTable<EmployeeModel>()
+                    .Value(e => e.BusinessEntityID, added.BusinessEntityID)
+                    .Value(e => e.JobTitle, employee.JobTitle)
+                    .Value(e => e.LoginID, employee.LoginID)
+                    .Value(e => e.NationalIDNumber, employee.NationalIDNumber)
+                    .Value(e => e.rowguid, guid)
+                    .Insert();
             }
-
         }
 
         [HttpPut]
@@ -100,45 +108,58 @@ namespace AdventureWorks.Web.Api.Controllers
         {
             using (AppDataConnection db = _db)
             {
-                _db.GetTable<PersonModel>()
-                   .Where(p => p.BusinessEntityID == employee.BusinessEntityID)
-                   .Set(p => p.FirstName, employee.FirstName)
-                   .Set(p => p.LastName, employee.LastName)
-                   .Update();
+                db.GetTable<PersonModel>()
+                .Where(p => p.BusinessEntityID == employee.BusinessEntityID)
+                .Set(p => p.FirstName, employee.FirstName)
+                .Set(p => p.LastName, employee.LastName)
+                .Update();
 
-                _db.GetTable<EmployeeModel>()
+                db.GetTable<EmployeeModel>()
                     .Where(e => e.BusinessEntityID == employee.BusinessEntityID)
                     .Set(e => e.JobTitle, employee.JobTitle)
                     .Update();
             }
         }
 
-        [HttpDelete("{id}")]
-        public async Task<int> DeleteEmployee(int id)
+        [HttpDelete("id/{id}")]
+        public IActionResult DeleteEmployee(int id)
         {
-            using (AppDataConnection db = _db)
+            //_db.GetTable<FullEmployeeModel>().Where(e => e.BusinessEntityID == id).Delete();
+            //return Ok();
+
+            using(AppDataConnection db = _db)
             {
-                return await _db.GetTable<FullEmployeeModel>().Where(employee => employee.BusinessEntityID == id).DeleteAsync();
+                var employee = _db.GetTable<BusinessEntityIDModel>().Where(e => e.BusinessEntityID == id).ToList();
 
+                if (employee != null)
+                {
+                    try
+                    {
+                        (from b in db.GetTable<BusinessEntityIDModel>()
+                         from p in db.GetTable<PersonModel>().InnerJoin(p => p.BusinessEntityID == b.BusinessEntityID)
+                         from e in db.GetTable<EmployeeModel>().InnerJoin(e => e.BusinessEntityID == b.BusinessEntityID)
+                         where b.BusinessEntityID == id
+                         select new FullEmployeeModel
+                         {
+                             BusinessEntityID = b.BusinessEntityID,
+                             FirstName = p.FirstName,
+                             LastName = p.LastName,
+                             JobTitle = e.JobTitle
+                         }).Delete();
+
+                        return Ok();
+                    }
+                    catch (Exception ex)
+                    {
+                        return BadRequest(ex.Message);
+                    }
+                }
+                else
+                {
+                    throw new ArgumentNullException();
+                }
             }
-
-            //try
-            //{
-            //    User? user = _dbContext.Users.Find(id);
-            //    if (user != null)
-            //    {
-            //        _dbContext.Users.Remove(user);
-            //        _dbContext.SaveChanges();
-            //    }
-            //    else
-            //    {
-            //        throw new ArgumentNullException();
-            //    }
-            //}
-            //catch
-            //{
-            //    throw;
-            //}
         }
     }
 }
+

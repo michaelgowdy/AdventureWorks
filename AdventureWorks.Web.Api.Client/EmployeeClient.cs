@@ -58,7 +58,7 @@ namespace AdventureWorks.Web.Api.Client
 
         public static void AddEmployeeClient(FullEmployeeModel employee)
         {
-            var body = new FullEmployeeModel { FirstName = employee.FirstName, LastName = employee.LastName, JobTitle = employee.JobTitle };
+            var body = new FullEmployeeModel { FirstName = employee.FirstName, LastName = employee.LastName, JobTitle = employee.JobTitle, LoginID = employee.LoginID, NationalIDNumber = employee.NationalIDNumber };
 
             RestRequest request = new RestRequest();
 
@@ -84,15 +84,15 @@ namespace AdventureWorks.Web.Api.Client
         //    System.Console.WriteLine(response.StatusCode);
         //}
 
-        public static List<FullEmployeeModel> DeleteEmployeeClient(int id)
+        public static void DeleteEmployeeClient(int id)
         {
-            RestRequest request = new RestRequest();
+            RestRequest request = new RestRequest($"id/{id}", Method.Delete);
 
             request.AddParameter("id", id);
 
             var response = client.Delete(request);
 
-            return serializer.Deserialize<List<FullEmployeeModel>>(response);
+            System.Console.WriteLine(response.StatusCode);
         }
     }
 }

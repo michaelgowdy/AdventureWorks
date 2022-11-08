@@ -13,14 +13,14 @@
             <RowDefinition Height="auto"/>
         </Grid.RowDefinitions>
 
-        <Label Grid.Row="0" FontWeight="Bold" FontSize="20" HorizontalAlignment="Center" VerticalAlignment="Center" Content="CRUD operations using SqlServer"/>
+        <Label Grid.Row="0" FontWeight="Bold" FontSize="20" HorizontalAlignment="Center" VerticalAlignment="Center" Content="Final Project - WPF"/>
 
         <DataGrid x:Name="EmployeeDataGrid" Grid.Row="1" AutoGenerateColumns="False" Margin="10">
             <DataGrid.Columns>
-                <DataGridTextColumn Header="ID" Binding="{Binding BusinessEntityID}" Width="auto"/>
-                <DataGridTextColumn Header="First Name" Binding="{Binding FirstName}" Width="*"/>
-                <DataGridTextColumn Header="Last Name" Binding="{Binding LastName}" Width="*"/>
-                <DataGridTextColumn Header="Job Title" Binding="{Binding JobTitle}" Width="*"/>
+                <DataGridTextColumn Header="ID" Binding="{Binding BusinessEntityID, UpdateSourceTrigger=PropertyChanged}" Width="auto"/>
+                <DataGridTextColumn Header="First Name" Binding="{Binding FirstName, UpdateSourceTrigger=PropertyChanged}" Width="*"/>
+                <DataGridTextColumn Header="Last Name" Binding="{Binding LastName, UpdateSourceTrigger=PropertyChanged}" Width="*"/>
+                <DataGridTextColumn Header="Job Title" Binding="{Binding JobTitle, UpdateSourceTrigger=PropertyChanged}" Width="*"/>
             </DataGrid.Columns>
         </DataGrid>
 

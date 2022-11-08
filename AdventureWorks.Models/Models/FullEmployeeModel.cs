@@ -103,7 +103,35 @@ namespace AdventureWorks.Models.Models
             }
         }
 
+        private string _loginId;
 
+        public string LoginID
+        {
+            get { return _loginId; }
+            set 
+            { 
+                _loginId = value;
+
+                Validate();
+
+                OnPropertyChanged(nameof(LoginID));
+            }
+        }
+
+        private string _nationalIdNumber;
+
+        public string NationalIDNumber
+        {
+            get { return _nationalIdNumber; }
+            set 
+            { 
+                _nationalIdNumber = value;
+
+                Validate();
+
+                OnPropertyChanged(nameof(NationalIDNumber));
+            }
+        }
 
         private void Validate()
         {
@@ -132,6 +160,24 @@ namespace AdventureWorks.Models.Models
             else
             {
                 ClearError(nameof(JobTitle));
+            }
+
+            if (string.IsNullOrWhiteSpace(_loginId))
+            {
+                AddError(nameof(LoginID), "This field is required.");
+            }
+            else
+            {
+                ClearError(nameof(LoginID));
+            }
+
+            if (string.IsNullOrWhiteSpace(_nationalIdNumber))
+            {
+                AddError(nameof(NationalIDNumber), "This field is required.");
+            }
+            else
+            {
+                ClearError(nameof(NationalIDNumber));
             }
         }
 

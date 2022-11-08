@@ -47,11 +47,21 @@ namespace AdventureWorks.App
 
         private void DeleteEmployee_Click(object sender, RoutedEventArgs e)
         {
-            EmployeeModel selected = EmployeeDataGrid.SelectedItem as EmployeeModel;
+            FullEmployeeModel selected = EmployeeDataGrid.SelectedItem as FullEmployeeModel;
 
             var id = selected.BusinessEntityID;
 
-            EmployeeClient.DeleteEmployeeClient(id);
+            try
+            {
+                EmployeeClient.DeleteEmployeeClient(id);
+
+                EmployeeDataGrid.ItemsSource = EmployeeClient.GetEmployeesClient();
+            }
+            catch
+            {
+                MessageBox.Show("Delete cannot process. That employee record is being used elsewhere.", "Final Project", MessageBoxButton.OK, MessageBoxImage.Error);
+
+            }
         }
 
     }

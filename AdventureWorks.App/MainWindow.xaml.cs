@@ -12,14 +12,14 @@ namespace AdventureWorks.App
             InitializeComponent();
         }
 
-        private void employeesButton_Click(object sender, RoutedEventArgs e)
+        private void EmployeesButton_Click(object sender, RoutedEventArgs e)
         {
             EmployeeListWindow employeeListWindow = new EmployeeListWindow();
             employeeListWindow.Show();
 
         }
 
-        private void productsButton_Click(object sender, RoutedEventArgs e)
+        private void ProductsButton_Click(object sender, RoutedEventArgs e)
         {
             ProductListWindow productListWindow = new ProductListWindow();
             productListWindow.Show();

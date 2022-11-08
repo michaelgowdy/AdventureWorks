@@ -12,8 +12,8 @@
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
         <StackPanel Grid.Row="1" Orientation="Vertical" HorizontalAlignment="Center">
-            <Button x:Name="employeesButton" Padding="15" Margin="15" Click="employeesButton_Click">Employees</Button>
-            <Button x:Name="productsButton" Padding="15" Margin="15" Click="productsButton_Click">Products</Button>
+            <Button x:Name="employeesButton" Padding="15" Margin="15" Click="EmployeesButton_Click">Employees</Button>
+            <Button x:Name="productsButton" Padding="15" Margin="15" Click="ProductsButton_Click">Products</Button>
         </StackPanel>
     </Grid>
 </Window>
