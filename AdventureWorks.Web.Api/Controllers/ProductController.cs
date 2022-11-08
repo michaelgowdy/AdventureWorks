@@ -43,7 +43,6 @@ namespace AdventureWorks.Web.Api.Controllers
         [HttpPut]
         public void UpdateProduct(ProductModel product)
         {
-            Guid guid = Guid.NewGuid();
 
             _db.GetTable<ProductModel>()
                     .Where(p => p.ProductID == product.ProductID)
@@ -52,7 +51,6 @@ namespace AdventureWorks.Web.Api.Controllers
                     .Set(p => p.Color, product.Color)
                     .Set(p => p.Size, product.Size)
                     .Set(p => p.ListPrice, product.ListPrice)
-                    .Set(p => p.rowguid, guid)
                     .Update();
         }
 
@@ -74,13 +72,32 @@ namespace AdventureWorks.Web.Api.Controllers
         [HttpDelete("id/{id}")]
         public IActionResult DeleteProduct(int id)
         {
-            _db.GetTable<ProductModel>().Where(product => product.ProductID == id).Delete();
-            return Ok();
+            using (AppDataConnection db = _db)
+            {
+                var product = _db.GetTable<ProductModel>().Where(p => p.ProductID == id).ToList();
 
-            //if (!delete.IsCompleted)
-            //{
-            //    GetErrors(nameof(delete));
-            //}
+                if (product != null)
+                {
+                    try
+                    {
+                        (from p in db.GetTable<ProductModel>()
+                         where p.ProductID == id
+                         select p).Delete();
+
+                        return Ok();
+                    }
+                    catch(Exception ex)
+                    {
+                        return BadRequest(ex.Message);
+                    }
+                }
+                else
+                {
+                    throw new ArgumentNullException();
+                }
+            }
+
+           
         }
 
 

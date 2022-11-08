@@ -74,9 +74,18 @@ namespace AdventureWorks.App
 
             var id = selected.ProductID;
 
-            ProductClient.DeleteProductClient(id);
+            try
+            {
+                ProductClient.DeleteProductClient(id);
 
-            ProductDataGrid.ItemsSource = ProductClient.GetProductsClient(page, pageSize);
+                ProductDataGrid.ItemsSource = ProductClient.GetProductsClient(page, pageSize);
+            }
+            catch
+            {
+                MessageBox.Show("Delete cannot process. That employee record is being used elsewhere.", "Final Project", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+
+
         }
 
         private void PreviousProducts_Click(object sender, RoutedEventArgs e)

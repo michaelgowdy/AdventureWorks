@@ -10,22 +10,9 @@ namespace AdventureWorks.App
     /// </summary>
     public partial class ProductAddEditWindow : Window
     {
-        ProductModel productModel = new ProductModel();
-
-
-
         public ProductAddEditWindow()
         {
             InitializeComponent();
-            GetErrors();
-        }
-
-        private void GetErrors()
-        {
-            if (productModel.HasErrors)
-            {
-                addUpdateButton.IsEnabled = false;
-            }
         }
 
         private void AddProduct()
@@ -38,8 +25,6 @@ namespace AdventureWorks.App
                 Size = addSize.Text,
                 ListPrice = Convert.ToDouble(addPrice.Text)
             };
-
-            GetErrors();
 
             ProductClient.AddProductClient(newProduct);
             //try
@@ -74,8 +59,6 @@ namespace AdventureWorks.App
 
         private void UpdateProduct()
         {
-            addUpdateButton.IsEnabled = true;
-
             ProductModel newProduct = new ProductModel
             {
                 ProductID = Convert.ToInt32(addId.Text),
@@ -85,6 +68,8 @@ namespace AdventureWorks.App
                 Size = addSize.Text,
                 ListPrice = Convert.ToDouble(addPrice.Text)
             };
+
+            ProductClient.UpdateProductClient(newProduct);
         }
 
         private void AddProduct_Click(object sender, RoutedEventArgs e)
@@ -92,6 +77,8 @@ namespace AdventureWorks.App
             if (Title == "AddProductWindow")
             {
                 AddProduct();
+                ProductAddEditWindow productAddEditWindow = new ProductAddEditWindow();
+                productAddEditWindow.Close();
             }
             else
             {
