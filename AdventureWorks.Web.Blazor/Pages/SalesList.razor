@@ -6,20 +6,23 @@
 @inject NavigationManager NavigationManager
 
 <h3>Sales List</h3>
-
-<select class="form-control" @onchange="@OnSelect" style="width:150px">
-    @foreach (var size in sizeOptions)
-    {
-        <option value=@size>@size</option>
-    }
-</select>
-
+@*
+<div>
+    <button style="float:right" class="btn btn-primary" @onclick="(() => AddSale())">
+        <i class="fas fa-sale-plus"></i>
+        Add Sale
+    </button>
+</div>*@
 <div class="row">
     <div class="col-md-6">
-        <button class="btn btn-primary" @onclick="(() => AddSale())">
-            <i class="fas fa-sale-plus"></i>
-            Add Sale
-        </button>
+        <button class="btn btn-outline-primary" style="margin:0px, 5px, 2px, 5px" @onclick="DecreasePage">Previous Page</button>
+        <button class="btn btn-outline-primary" style="margin:0px, 5px, 2px, 5px" @onclick="IncreasePage">Next Page</button>
+        <select class="form-control" size="margin:0px, 5px, 2px, 5px" @onchange="@OnSelect" style="width:150px">
+            @foreach (var size in sizeOptions)
+            {
+                <option value=@size>@size</option>
+            }
+        </select>
     </div>
 </div>
 
@@ -38,6 +41,12 @@ else
                 <th>Ship To Address ID</th>
                 <th>Total Due</th>
                 <th>Sales Order Number</th>
+                <th>
+                    <button style="float:right" class="btn btn-primary" @onclick="(() => AddSale())">
+                        <i class="fas fa-sale-plus"></i>
+                        Add Sale
+                    </button>
+                </th>
             </tr>
         </thead>
         <tbody>
@@ -68,21 +77,35 @@ else
 
 @code {
     protected List<SalesOrderHeaderModel> sales;
-    protected List<string> sizeOptions = new List<string>() { "25", "50", "100" };
+    protected List<string> sizeOptions = new List<string>() { "25", "50", "100", "1000" };
     protected string selectedSize = "25";
+    private int currentPage = 1;
     //protected SalesOrderHeaderModel sale;
 
 
     protected override async Task OnInitializedAsync()
     {
-        sales = SalesClient.GetSalesClient(1, Convert.ToInt32(selectedSize));
+        sales = SalesClient.GetSalesClient(currentPage, Convert.ToInt32(selectedSize));
     }
 
     protected void OnSelect(ChangeEventArgs e)
     {
         selectedSize = e.Value.ToString();
-        sales = SalesClient.GetSalesClient(1, Convert.ToInt32(selectedSize));
+        sales = SalesClient.GetSalesClient(currentPage, Convert.ToInt32(selectedSize));
     }
+
+    private void IncreasePage()
+    {
+        currentPage++;
+        sales = SalesClient.GetSalesClient(currentPage, Convert.ToInt32(selectedSize));
+    }
+
+    private void DecreasePage()
+    {
+        currentPage--;
+        sales = SalesClient.GetSalesClient(currentPage, Convert.ToInt32(selectedSize));
+    }
+
 
     protected void AddSale()
     {
