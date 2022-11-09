@@ -41,7 +41,9 @@ namespace AdventureWorks.Web.Api.Controllers
                          BusinessEntityID = b.BusinessEntityID,
                          FirstName = p.FirstName,
                          LastName = p.LastName,
-                         JobTitle = e.JobTitle
+                         JobTitle = e.JobTitle,
+                         LoginID = e.LoginID,
+                         NationalIDNumber = e.NationalIDNumber
                      }).ToListAsync();
 
                 return await employees;

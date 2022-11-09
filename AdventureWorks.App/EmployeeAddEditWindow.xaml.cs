@@ -53,10 +53,12 @@ namespace AdventureWorks.App
             if (Title == "AddEmployeeWindow")
             {
                 AddEmployee();
+                this.Close();
             }
             else
             {
                 UpdateEmployee();
+                this.Close();
             }
         }
 

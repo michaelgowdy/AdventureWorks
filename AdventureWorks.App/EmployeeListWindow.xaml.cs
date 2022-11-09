@@ -23,7 +23,7 @@ namespace AdventureWorks.App
             EmployeeDataGrid.ItemsSource = EmployeeClient.GetEmployeesClient();
         }
 
-        private void LoadEmployees_Click(object sender, RoutedEventArgs e)
+        private void Refresh_Click(object sender, RoutedEventArgs e)
         {
             EmployeeDataGrid.ItemsSource = EmployeeClient.GetEmployeesClient();
         }

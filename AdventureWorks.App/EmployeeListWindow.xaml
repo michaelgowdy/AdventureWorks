@@ -3,19 +3,37 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:AdventureWorks.App"
+        xmlns:local="clr-namespace:AdventureWorks.App" 
+        xmlns:models="clr-namespace:AdventureWorks.Models.Models;assembly=AdventureWorks.Models"
         mc:Ignorable="d"
         Title="EmployeeListWindow" FontSize="20" Height="700" Width="1100">
+    <Window.DataContext>
+        <models:FullEmployeeModel/>
+    </Window.DataContext>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="60"/>
-            <RowDefinition />
-            <RowDefinition Height="auto"/>
+            <RowDefinition/>
         </Grid.RowDefinitions>
 
-        <Label Grid.Row="0" FontWeight="Bold" FontSize="20" HorizontalAlignment="Center" VerticalAlignment="Center" Content="Final Project - WPF"/>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="200"/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
 
-        <DataGrid x:Name="EmployeeDataGrid" Grid.Row="1" AutoGenerateColumns="False" Margin="10">
+        <TextBlock 
+                Grid.Row="0" 
+                Grid.Column="0"
+                HorizontalAlignment="Center" 
+                VerticalAlignment="Center" 
+                Margin="5"
+                FontSize="25" 
+                FontWeight="SemiBold" 
+                Text="Final Project"/>
+
+       
+
+        <DataGrid Name="EmployeeDataGrid" Grid.Row="1" Grid.Column="1" AutoGenerateColumns="False" Margin="10" FontSize="16" Background="GhostWhite">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="ID" Binding="{Binding BusinessEntityID, UpdateSourceTrigger=PropertyChanged}" Width="auto"/>
                 <DataGridTextColumn Header="First Name" Binding="{Binding FirstName, UpdateSourceTrigger=PropertyChanged}" Width="*"/>
@@ -24,17 +42,264 @@
             </DataGrid.Columns>
         </DataGrid>
 
-        <Grid Grid.Row="2" Margin="15">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition/>
-                <ColumnDefinition/>
-                <ColumnDefinition/>
-                <ColumnDefinition/>
-            </Grid.ColumnDefinitions>
-            <Button Grid.Row="2" Grid.Column="0" Margin="50, 0" Padding="5" Content="Load Products" Click="LoadEmployees_Click"/>
-            <Button Grid.Row="2" Grid.Column="1" Margin="50, 0" Padding="5" Content="Add" Click="AddEmployee_Click"/>
-            <Button Grid.Row="2" Grid.Column="2" Margin="50, 0" Padding="5" Content="Edit" Click="UpdateEmployee_Click"/>
-            <Button Grid.Row="2" Grid.Column="3" Margin="50, 0" Padding="5" Content="Delete" Click="DeleteEmployee_Click"/>
+        <Grid Grid.Row="1" Margin="15">
+            <StackPanel>
+                <Button 
+                    x:Name="RefreshButton"
+                    Grid.Row="0"
+                    Grid.Column="2"  
+                    Content="Refresh" 
+                    Margin="0, 20, 0, 10"
+                    Padding="5"
+                    HorizontalAlignment="Center"
+                    Click="Refresh_Click" Width="110">
+                    <Button.Style>
+                        <Style TargetType="Button">
+                            <Setter Property="Background" Value="SkyBlue"/>
+                            <Setter Property="Foreground" Value="White" />
+                            <Setter Property="Cursor" Value="Hand" />
+                            <Setter Property="Template">
+                                <Setter.Value>
+                                    <ControlTemplate TargetType="Button">
+                                        <Border
+                                                Padding="{TemplateBinding Padding}"
+                                                Background="{TemplateBinding Background}"
+                                                BorderBrush="SteelBlue"
+                                                BorderThickness="1.5"
+                                                CornerRadius="5"
+                                                TextBlock.Foreground="{TemplateBinding Foreground}">
+                                            <Grid>
+                                                <ContentPresenter Content="{TemplateBinding Content}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                            </Grid>
+                                        </Border>
+                                    </ControlTemplate>
+                                </Setter.Value>
+                            </Setter>
+                            <Style.Triggers>
+                                <!--<Trigger Property="IsEnabled" Value="False">
+                                        <Setter Property="Opacity" Value="0.6"/>
+                                        <Setter Property="Cursor" Value="No"/>
+                                    </Trigger>-->
+                                <EventTrigger RoutedEvent="MouseEnter">
+                                    <EventTrigger.Actions>
+                                        <BeginStoryboard>
+                                            <Storyboard>
+                                                <ColorAnimation
+                                                        Storyboard.TargetProperty="(Background).(SolidColorBrush.Color)"
+                                                        To="DeepSkyBlue"
+                                                        Duration="0:0:0.1"/>
+                                            </Storyboard>
+                                        </BeginStoryboard>
+                                    </EventTrigger.Actions>
+                                </EventTrigger>
+                                <EventTrigger RoutedEvent="MouseLeave">
+                                    <EventTrigger.Actions>
+                                        <BeginStoryboard>
+                                            <Storyboard>
+                                                <ColorAnimation
+                                                        Storyboard.TargetProperty="(Background).(SolidColorBrush.Color)"
+                                                        To="SkyBlue"
+                                                        Duration="0:0:0.1"/>
+                                            </Storyboard>
+                                        </BeginStoryboard>
+                                    </EventTrigger.Actions>
+                                </EventTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Button.Style>
+                </Button>
+
+                <Button 
+                        x:Name="AddButton"
+                        Grid.Row="1"
+                        Content="Add" 
+                        Margin="0, 40, 0, 10"
+                        Padding="5"
+                        HorizontalAlignment="center"
+                        Click="AddEmployee_Click" Width="110">
+                    <Button.Style>
+                        <Style TargetType="Button">
+                            <Setter Property="Background" Value="SkyBlue"/>
+                            <Setter Property="Foreground" Value="White" />
+                            <Setter Property="Cursor" Value="Hand" />
+                            <Setter Property="Template">
+                                <Setter.Value>
+                                    <ControlTemplate TargetType="Button">
+                                        <Border
+                                                Padding="{TemplateBinding Padding}"
+                                                Background="{TemplateBinding Background}"
+                                                BorderBrush="SteelBlue"
+                                                BorderThickness="1.5"
+                                                CornerRadius="5"
+                                                TextBlock.Foreground="{TemplateBinding Foreground}">
+                                            <Grid>
+                                                <ContentPresenter Content="{TemplateBinding Content}" HorizontalAlignment="Center"/>
+                                            </Grid>
+                                        </Border>
+                                    </ControlTemplate>
+                                </Setter.Value>
+                            </Setter>
+                            <Style.Triggers>
+                                <!--<Trigger Property="IsEnabled" Value="False">
+                                        <Setter Property="Opacity" Value="0.6"/>
+                                        <Setter Property="Cursor" Value="No"/>
+                                    </Trigger>-->
+                                <EventTrigger RoutedEvent="MouseEnter">
+                                    <EventTrigger.Actions>
+                                        <BeginStoryboard>
+                                            <Storyboard>
+                                                <ColorAnimation
+                                                        Storyboard.TargetProperty="(Background).(SolidColorBrush.Color)"
+                                                        To="DeepSkyBlue"
+                                                        Duration="0:0:0.1"/>
+                                            </Storyboard>
+                                        </BeginStoryboard>
+                                    </EventTrigger.Actions>
+                                </EventTrigger>
+                                <EventTrigger RoutedEvent="MouseLeave">
+                                    <EventTrigger.Actions>
+                                        <BeginStoryboard>
+                                            <Storyboard>
+                                                <ColorAnimation
+                                                        Storyboard.TargetProperty="(Background).(SolidColorBrush.Color)"
+                                                        To="SkyBlue"
+                                                        Duration="0:0:0.1"/>
+                                            </Storyboard>
+                                        </BeginStoryboard>
+                                    </EventTrigger.Actions>
+                                </EventTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Button.Style>
+                </Button>
+                <Button 
+                        x:Name="EditButton"
+                        Grid.Row="1"
+                        Content="Edit" 
+                        Margin="0, 40, 0, 10"
+                        Padding="5"
+                        HorizontalAlignment="center"
+                        Click="UpdateEmployee_Click" Width="110">
+                    <Button.Style>
+                        <Style TargetType="Button">
+                            <Setter Property="Background" Value="SkyBlue"/>
+                            <Setter Property="Foreground" Value="White" />
+                            <Setter Property="Cursor" Value="Hand" />
+                            <Setter Property="Template">
+                                <Setter.Value>
+                                    <ControlTemplate TargetType="Button">
+                                        <Border
+                                                Padding="{TemplateBinding Padding}"
+                                                Background="{TemplateBinding Background}"
+                                                BorderBrush="SteelBlue"
+                                                BorderThickness="1.5"
+                                                CornerRadius="5"
+                                                TextBlock.Foreground="{TemplateBinding Foreground}">
+                                            <Grid>
+                                                <ContentPresenter Content="{TemplateBinding Content}" HorizontalAlignment="Center"/>
+                                            </Grid>
+                                        </Border>
+                                    </ControlTemplate>
+                                </Setter.Value>
+                            </Setter>
+                            <Style.Triggers>
+                                <!--<Trigger Property="IsEnabled" Value="False">
+                                        <Setter Property="Opacity" Value="0.6"/>
+                                        <Setter Property="Cursor" Value="No"/>
+                                    </Trigger>-->
+                                <EventTrigger RoutedEvent="MouseEnter">
+                                    <EventTrigger.Actions>
+                                        <BeginStoryboard>
+                                            <Storyboard>
+                                                <ColorAnimation
+                                                        Storyboard.TargetProperty="(Background).(SolidColorBrush.Color)"
+                                                        To="DeepSkyBlue"
+                                                        Duration="0:0:0.1"/>
+                                            </Storyboard>
+                                        </BeginStoryboard>
+                                    </EventTrigger.Actions>
+                                </EventTrigger>
+                                <EventTrigger RoutedEvent="MouseLeave">
+                                    <EventTrigger.Actions>
+                                        <BeginStoryboard>
+                                            <Storyboard>
+                                                <ColorAnimation
+                                                        Storyboard.TargetProperty="(Background).(SolidColorBrush.Color)"
+                                                        To="SkyBlue"
+                                                        Duration="0:0:0.1"/>
+                                            </Storyboard>
+                                        </BeginStoryboard>
+                                    </EventTrigger.Actions>
+                                </EventTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Button.Style>
+                </Button>
+                <Button 
+                        x:Name="DeleteButton"
+                        Grid.Row="0"
+                        Grid.Column="0"  
+                        Content="Delete" 
+                        Margin="0, 40, 0, 10"
+                        Padding="5"
+                        HorizontalAlignment="center"
+                        Click="DeleteEmployee_Click" Width="110">
+                    <Button.Style>
+                        <Style TargetType="Button">
+                            <Setter Property="Background" Value="Tomato"/>
+                            <Setter Property="Foreground" Value="White" />
+                            <Setter Property="Cursor" Value="Hand" />
+                            <Setter Property="Template">
+                                <Setter.Value>
+                                    <ControlTemplate TargetType="Button">
+                                        <Border
+                                                Padding="{TemplateBinding Padding}"
+                                                Background="{TemplateBinding Background}"
+                                                BorderBrush="IndianRed"
+                                                BorderThickness="1.5"
+                                                CornerRadius="5"
+                                                TextBlock.Foreground="{TemplateBinding Foreground}">
+                                            <Grid>
+                                                <ContentPresenter Content="{TemplateBinding Content}" HorizontalAlignment="Center"/>
+                                            </Grid>
+                                        </Border>
+                                    </ControlTemplate>
+                                </Setter.Value>
+                            </Setter>
+                            <Style.Triggers>
+                                <!--<Trigger Property="IsEnabled" Value="False">
+                                        <Setter Property="Opacity" Value="0.6"/>
+                                        <Setter Property="Cursor" Value="No"/>
+                                    </Trigger>-->
+                                <EventTrigger RoutedEvent="MouseEnter">
+                                    <EventTrigger.Actions>
+                                        <BeginStoryboard>
+                                            <Storyboard>
+                                                <ColorAnimation
+                                                        Storyboard.TargetProperty="(Background).(SolidColorBrush.Color)"
+                                                        To="Red"
+                                                        Duration="0:0:0.1"/>
+                                            </Storyboard>
+                                        </BeginStoryboard>
+                                    </EventTrigger.Actions>
+                                </EventTrigger>
+                                <EventTrigger RoutedEvent="MouseLeave">
+                                    <EventTrigger.Actions>
+                                        <BeginStoryboard>
+                                            <Storyboard>
+                                                <ColorAnimation
+                                                        Storyboard.TargetProperty="(Background).(SolidColorBrush.Color)"
+                                                        To="Tomato"
+                                                        Duration="0:0:0.1"/>
+                                            </Storyboard>
+                                        </BeginStoryboard>
+                                    </EventTrigger.Actions>
+                                </EventTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Button.Style>
+                </Button>
+            </StackPanel>
         </Grid>
     </Grid>
 </Window>

@@ -49,8 +49,71 @@
 
                     <Label Grid.Row="5" Grid.Column="0" Margin="5" Padding="5" Content="National ID Number"/>
                     <TextBox x:Name="addNationalIDNumber" Grid.Row="5" Grid.Column="1" Margin="5" Padding="5" Text="{Binding NationalIDNumber, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, ValidatesOnDataErrors=True}"/>
-
-                    <Button x:Name="addUpdateButton" Grid.Row="6" Grid.Column="1" Content="Add" Margin="90, 20, 5, 20" Padding="5" Click="AddEmployee_Click"/>
+                    <Button 
+                        x:Name="addUpdateButton" 
+                        Grid.Row="7" 
+                        Grid.Column="1"  
+                        Content="Add" 
+                        Margin="0,8,0,-38"
+                        Padding="5"
+                        HorizontalAlignment="Right"
+                        Click="AddEmployee_Click" Width="110">
+                        <Button.Style>
+                            <Style TargetType="Button">
+                                <Setter Property="Background" Value="SkyBlue"/>
+                                <Setter Property="Foreground" Value="White" />
+                                <Setter Property="Cursor" Value="Hand" />
+                                <Setter Property="Template">
+                                    <Setter.Value>
+                                        <ControlTemplate TargetType="Button">
+                                            <Border
+                                                Padding="{TemplateBinding Padding}"
+                                                Background="{TemplateBinding Background}"
+                                                BorderBrush="SteelBlue"
+                                                BorderThickness="1.5"
+                                                CornerRadius="5"
+                                                TextBlock.Foreground="{TemplateBinding Foreground}">
+                                                <Grid>
+                                                    <ContentPresenter Content="{TemplateBinding Content}" HorizontalAlignment="Center"/>
+                                                </Grid>
+                                            </Border>
+                                        </ControlTemplate>
+                                    </Setter.Value>
+                                </Setter>
+                                <Style.Triggers>
+                                    <!--<Trigger Property="IsEnabled" Value="False">
+                                        <Setter Property="Opacity" Value="0.6"/>
+                                        <Setter Property="Cursor" Value="No"/>
+                                    </Trigger>-->
+                                    <EventTrigger RoutedEvent="MouseEnter">
+                                        <EventTrigger.Actions>
+                                            <BeginStoryboard>
+                                                <Storyboard>
+                                                    <ColorAnimation
+                                                        Storyboard.TargetProperty="(Background).(SolidColorBrush.Color)"
+                                                        To="DeepSkyBlue"
+                                                        Duration="0:0:0.1"/>
+                                                </Storyboard>
+                                            </BeginStoryboard>
+                                        </EventTrigger.Actions>
+                                    </EventTrigger>
+                                    <EventTrigger RoutedEvent="MouseLeave">
+                                        <EventTrigger.Actions>
+                                            <BeginStoryboard>
+                                                <Storyboard>
+                                                    <ColorAnimation
+                                                        Storyboard.TargetProperty="(Background).(SolidColorBrush.Color)"
+                                                        To="SkyBlue"
+                                                        Duration="0:0:0.1"/>
+                                                </Storyboard>
+                                            </BeginStoryboard>
+                                        </EventTrigger.Actions>
+                                    </EventTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Button.Style>
+                    </Button>
+                    <!--<Button x:Name="addUpdateButton" Grid.Row="6" Grid.Column="1" Content="Add" Margin="90, 20, 5, 20" Padding="5" Click="AddEmployee_Click"/>-->
 
                 </Grid>
 
