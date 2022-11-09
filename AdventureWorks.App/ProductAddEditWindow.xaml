@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:AdventureWorks.App" 
         xmlns:models="clr-namespace:AdventureWorks.Models.Models;assembly=AdventureWorks.Models"
         mc:Ignorable="d"
-        Title="AddProductWindow" FontSize="20" Height="500" Width="600">
+        Title="AddProductWindow" FontSize="20" Height="500" Width="600" Background="LightSkyBlue">
     <Window.DataContext>
         <models:ProductModel/>
     </Window.DataContext>
@@ -34,25 +34,32 @@
                     </Grid.RowDefinitions>
 
                     <Label Grid.Row="0" Grid.Column="0" Margin="5" Padding="5" Content="Product ID"/>
-                    <TextBox x:Name="addId" Grid.Row="0" Grid.Column="1" Margin="5" Padding="5" Text="{Binding ProductID, UpdateSourceTrigger=PropertyChanged}"/>
+                    <TextBox x:Name="addId" Grid.Row="0" Grid.Column="1" Margin="5" Padding="5" Background="WhiteSmoke" Text="{Binding ProductID, UpdateSourceTrigger=PropertyChanged}"/>
 
                     <Label Grid.Row="1" Grid.Column="0" Margin="5" Padding="5" Content="Name"/>
-                    <TextBox x:Name="addName" Grid.Row="1" Grid.Column="1" Margin="5" Padding="5" Text="{Binding Name, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, ValidatesOnDataErrors=True}" ToolTip="{Binding Name}"/>
+                    <TextBox x:Name="addName" Grid.Row="1" Grid.Column="1" Margin="5" Padding="5" Background="WhiteSmoke" Text="{Binding Name, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, ValidatesOnDataErrors=True}" ToolTip="{Binding Name}"/>
                     <TextBox Grid.Row="1" Grid.Column="1" Margin="5" Padding="5" Text="{Binding Name}"/>
+                    <ItemsControl>
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <TextBlock Foreground="Red" Text="{Binding ErrorContent}"/>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
 
                     <Label Grid.Row="2" Grid.Column="0" Margin="5" Padding="5" Content="Product Number"/>
-                    <TextBox x:Name="addNumber" Grid.Row="2" Grid.Column="1" Margin="5" Padding="5" Text="{Binding ProductNumber, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, ValidatesOnDataErrors=True}"/>
+                    <TextBox x:Name="addNumber" Grid.Row="2" Grid.Column="1" Margin="5" Padding="5" Background="WhiteSmoke" Text="{Binding ProductNumber, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, ValidatesOnDataErrors=True}"/>
 
                     <Label Grid.Row="3" Grid.Column="0" Margin="5" Padding="5" Content="Color"/>
-                    <TextBox  x:Name="addColor" Grid.Row="3" Grid.Column="1" Margin="5" Padding="5" Text="{Binding Color, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
+                    <TextBox  x:Name="addColor" Grid.Row="3" Grid.Column="1" Margin="5" Padding="5" Background="WhiteSmoke" Text="{Binding Color, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
 
                     <Label Grid.Row="4" Grid.Column="0" Margin="5" Padding="5" Content="Size"/>
-                    <TextBox x:Name="addSize" Grid.Row="4" Grid.Column="1" Margin="5" Padding="5" Text="{Binding Size, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
+                    <TextBox x:Name="addSize" Grid.Row="4" Grid.Column="1" Margin="5" Padding="5" Background="WhiteSmoke" Text="{Binding Size, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
 
                     <Label Grid.Row="5" Grid.Column="0" Margin="5" Padding="5" Content="List Price"/>
-                    <TextBox x:Name="addPrice" Grid.Row="5" Grid.Column="1" Margin="5" Padding="5" Text="{Binding ListPrice, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, ValidatesOnDataErrors=True}"/>
+                    <TextBox x:Name="addPrice" Grid.Row="5" Grid.Column="1" Margin="5" Padding="5" Background="WhiteSmoke" Text="{Binding ListPrice, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, ValidatesOnDataErrors=True}"/>
 
-                    <Button x:Name="addUpdateButton" Grid.Row="6" Grid.Column="1"  Content="Add" Margin="50, 20" Click="AddProduct_Click"/>
+                    <Button x:Name="addUpdateButton" Grid.Row="6" Grid.Column="1"  Content="Add" Margin="50, 20" Background="Gold" Click="AddProduct_Click"/>
                     <!--<TextBlock x:Name="productAdded" Grid.Row="6" Grid.ColumnSpan="2"  Visibility="Hidden" Text="Product added!" Foreground="Green" HorizontalAlignment="Center" Grid.Column="0"/>-->
 
                 </Grid>
