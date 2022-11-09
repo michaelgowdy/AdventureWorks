@@ -4,7 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:AdventureWorks.App"
-        mc:Ignorable="d" FontSize="22" Height="450" Width="800">
+        mc:Ignorable="d" FontSize="22" Height="450" Width="800" Background="LightSkyBlue">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="*" />
@@ -12,8 +12,8 @@
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
         <StackPanel Grid.Row="1" Orientation="Vertical" HorizontalAlignment="Center">
-            <Button x:Name="employeesButton" Padding="15" Margin="15" Click="EmployeesButton_Click">Employees</Button>
-            <Button x:Name="productsButton" Padding="15" Margin="15" Click="ProductsButton_Click">Products</Button>
+            <Button x:Name="employeesButton" Padding="15" Margin="15" Background="Gold" BorderThickness="2" Click="EmployeesButton_Click">Employees</Button>
+            <Button x:Name="productsButton" Padding="15" Margin="15" Background="Coral" BorderThickness="2" Click="ProductsButton_Click">Products</Button>
         </StackPanel>
     </Grid>
 </Window>

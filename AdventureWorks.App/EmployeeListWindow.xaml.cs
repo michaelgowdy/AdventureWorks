@@ -59,7 +59,7 @@ namespace AdventureWorks.App
             }
             catch
             {
-                MessageBox.Show("Delete cannot process. That employee record is being used elsewhere.", "Final Project", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show("Delete cannot process. That product record is being used elsewhere.", "Final Project", MessageBoxButton.OK, MessageBoxImage.Error);
 
             }
         }
