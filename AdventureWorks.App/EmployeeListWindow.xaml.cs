@@ -51,16 +51,21 @@ namespace AdventureWorks.App
 
             var id = selected.BusinessEntityID;
 
-            try
-            {
-                EmployeeClient.DeleteEmployeeClient(id);
+            MessageBoxResult result = MessageBox.Show("Are you sure you want to delete this record?", "Final Project", MessageBoxButton.YesNo, MessageBoxImage.Warning);
 
-                EmployeeDataGrid.ItemsSource = EmployeeClient.GetEmployeesClient();
-            }
-            catch
+            if (result == MessageBoxResult.Yes)
             {
-                MessageBox.Show("Delete cannot process. That product record is being used elsewhere.", "Final Project", MessageBoxButton.OK, MessageBoxImage.Error);
+                try
+                {
+                    EmployeeClient.DeleteEmployeeClient(id);
 
+                    EmployeeDataGrid.ItemsSource = EmployeeClient.GetEmployeesClient();
+                }
+                catch
+                {
+                    MessageBox.Show("Delete cannot process. That product record is being used elsewhere.", "Final Project", MessageBoxButton.OK, MessageBoxImage.Error);
+
+                }
             }
         }
 

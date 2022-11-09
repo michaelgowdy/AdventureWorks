@@ -74,18 +74,21 @@ namespace AdventureWorks.App
 
             var id = selected.ProductID;
 
-            try
+            MessageBoxResult result = MessageBox.Show("Are you sure you want to delete this record?", "Final Project", MessageBoxButton.YesNo, MessageBoxImage.Warning);
+
+            if (result == MessageBoxResult.Yes)
             {
-                ProductClient.DeleteProductClient(id);
+                try
+                {
+                    ProductClient.DeleteProductClient(id);
 
-                ProductDataGrid.ItemsSource = ProductClient.GetProductsClient(page, pageSize);
+                    ProductDataGrid.ItemsSource = ProductClient.GetProductsClient(page, pageSize);
+                }
+                catch
+                {
+                    MessageBox.Show("Delete cannot process. That employee record is being used elsewhere.", "Final Project", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
             }
-            catch
-            {
-                MessageBox.Show("Delete cannot process. That employee record is being used elsewhere.", "Final Project", MessageBoxButton.OK, MessageBoxImage.Error);
-            }
-
-
         }
 
         private void PreviousProducts_Click(object sender, RoutedEventArgs e)

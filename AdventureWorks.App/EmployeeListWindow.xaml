@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:AdventureWorks.App" 
         xmlns:models="clr-namespace:AdventureWorks.Models.Models;assembly=AdventureWorks.Models"
         mc:Ignorable="d"
-        Title="EmployeeListWindow" FontSize="20" Height="700" Width="1100">
+        Title="EmployeeListWindow" FontSize="20" Height="700" Width="900">
     <Window.DataContext>
         <models:FullEmployeeModel/>
     </Window.DataContext>
@@ -17,7 +17,7 @@
         </Grid.RowDefinitions>
 
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="200"/>
+            <ColumnDefinition Width="160"/>
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
 
@@ -42,14 +42,14 @@
             </DataGrid.Columns>
         </DataGrid>
 
-        <Grid Grid.Row="1" Margin="15">
+        <Grid Grid.Row="1" Margin="10, 0, 0, 0">
             <StackPanel>
                 <Button 
                     x:Name="RefreshButton"
                     Grid.Row="0"
                     Grid.Column="2"  
                     Content="Refresh" 
-                    Margin="0, 20, 0, 10"
+                    Margin="0, 30, 0, 0"
                     Padding="5"
                     HorizontalAlignment="Center"
                     Click="Refresh_Click" Width="110">
@@ -113,7 +113,7 @@
                         x:Name="AddButton"
                         Grid.Row="1"
                         Content="Add" 
-                        Margin="0, 40, 0, 10"
+                        Margin="0, 30, 0, 0"
                         Padding="5"
                         HorizontalAlignment="center"
                         Click="AddEmployee_Click" Width="110">
@@ -176,7 +176,7 @@
                         x:Name="EditButton"
                         Grid.Row="1"
                         Content="Edit" 
-                        Margin="0, 40, 0, 10"
+                        Margin="0, 30, 0, 0"
                         Padding="5"
                         HorizontalAlignment="center"
                         Click="UpdateEmployee_Click" Width="110">
@@ -240,7 +240,7 @@
                         Grid.Row="0"
                         Grid.Column="0"  
                         Content="Delete" 
-                        Margin="0, 40, 0, 10"
+                        Margin="0, 30, 0, 0"
                         Padding="5"
                         HorizontalAlignment="center"
                         Click="DeleteEmployee_Click" Width="110">
