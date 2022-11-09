@@ -6,11 +6,11 @@
         xmlns:local="clr-namespace:AdventureWorks.App" 
         xmlns:models="clr-namespace:AdventureWorks.Models.Models;assembly=AdventureWorks.Models"
         mc:Ignorable="d"
-        Title="AddProductWindow" FontSize="20" Height="500" Width="600" Background="LightSkyBlue">
+        Title="AddProductWindow" FontSize="20" Height="500" Width="600">
     <Window.DataContext>
         <models:ProductModel/>
     </Window.DataContext>
-    
+
     <Grid>
         <Border Grid.Column="0" BorderBrush="Black" BorderThickness="1" Margin="5">
             <StackPanel Margin="5">
@@ -34,10 +34,10 @@
                     </Grid.RowDefinitions>
 
                     <Label Grid.Row="0" Grid.Column="0" Margin="5" Padding="5" Content="Product ID"/>
-                    <TextBox x:Name="addId" Grid.Row="0" Grid.Column="1" Margin="5" Padding="5" Background="WhiteSmoke" Text="{Binding ProductID, UpdateSourceTrigger=PropertyChanged}"/>
+                    <TextBox x:Name="addId" Grid.Row="0" Grid.Column="1" Margin="5" Padding="5" Text="{Binding ProductID, UpdateSourceTrigger=PropertyChanged}"/>
 
                     <Label Grid.Row="1" Grid.Column="0" Margin="5" Padding="5" Content="Name"/>
-                    <TextBox x:Name="addName" Grid.Row="1" Grid.Column="1" Margin="5" Padding="5" Background="WhiteSmoke" Text="{Binding Name, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, ValidatesOnDataErrors=True}" ToolTip="{Binding Name}"/>
+                    <TextBox x:Name="addName" Grid.Row="1" Grid.Column="1" Margin="5" Padding="5" Text="{Binding Name, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, ValidatesOnDataErrors=True}" ToolTip="{Binding Name}"/>
                     <TextBox Grid.Row="1" Grid.Column="1" Margin="5" Padding="5" Text="{Binding Name}"/>
                     <ItemsControl>
                         <ItemsControl.ItemTemplate>
@@ -48,22 +48,82 @@
                     </ItemsControl>
 
                     <Label Grid.Row="2" Grid.Column="0" Margin="5" Padding="5" Content="Product Number"/>
-                    <TextBox x:Name="addNumber" Grid.Row="2" Grid.Column="1" Margin="5" Padding="5" Background="WhiteSmoke" Text="{Binding ProductNumber, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, ValidatesOnDataErrors=True}"/>
+                    <TextBox x:Name="addNumber" Grid.Row="2" Grid.Column="1" Margin="5" Padding="5" Text="{Binding ProductNumber, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, ValidatesOnDataErrors=True}"/>
 
                     <Label Grid.Row="3" Grid.Column="0" Margin="5" Padding="5" Content="Color"/>
-                    <TextBox  x:Name="addColor" Grid.Row="3" Grid.Column="1" Margin="5" Padding="5" Background="WhiteSmoke" Text="{Binding Color, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
+                    <TextBox  x:Name="addColor" Grid.Row="3" Grid.Column="1" Margin="5" Padding="5" Text="{Binding Color, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
 
                     <Label Grid.Row="4" Grid.Column="0" Margin="5" Padding="5" Content="Size"/>
-                    <TextBox x:Name="addSize" Grid.Row="4" Grid.Column="1" Margin="5" Padding="5" Background="WhiteSmoke" Text="{Binding Size, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
+                    <TextBox x:Name="addSize" Grid.Row="4" Grid.Column="1" Margin="5" Padding="5" Text="{Binding Size, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
 
                     <Label Grid.Row="5" Grid.Column="0" Margin="5" Padding="5" Content="List Price"/>
-                    <TextBox x:Name="addPrice" Grid.Row="5" Grid.Column="1" Margin="5" Padding="5" Background="WhiteSmoke" Text="{Binding ListPrice, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, ValidatesOnDataErrors=True}"/>
+                    <TextBox x:Name="addPrice" Grid.Row="5" Grid.Column="1" Margin="5" Padding="5" Text="{Binding ListPrice, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, ValidatesOnDataErrors=True}"/>
 
-                    <Button x:Name="addUpdateButton" Grid.Row="6" Grid.Column="1"  Content="Add" Margin="50, 20" Background="Gold" Click="AddProduct_Click"/>
+                    <Button 
+                        x:Name="addUpdateButton" 
+                        Grid.Row="7" 
+                        Grid.Column="1"  
+                        Content="Add" 
+                        Margin="0,8,0,-38"
+                        Padding="10 5"
+                        HorizontalAlignment="Right"
+                        Click="AddProduct_Click" Width="110">
+                        <Button.Style>
+                            <Style TargetType="Button">
+                                <Setter Property="Background" Value="LightSeaGreen"/>
+                                <Setter Property="Foreground" Value="White" />
+                                <Setter Property="Cursor" Value="Hand" />
+                                <Setter Property="Template">
+                                    <Setter.Value>
+                                        <ControlTemplate TargetType="Button">
+                                            <Border
+                                                Padding="{TemplateBinding Padding}"
+                                                Background="{TemplateBinding Background}"
+                                                CornerRadius="5"
+                                                TextBlock.Foreground="{TemplateBinding Foreground}">
+                                                <Grid>
+                                                    <ContentPresenter Content="{TemplateBinding Content}" HorizontalAlignment="Center"/>
+                                                </Grid>
+                                            </Border>
+                                        </ControlTemplate>
+                                    </Setter.Value>
+                                </Setter>
+                                <Style.Triggers>
+                                    <!--<Trigger Property="IsEnabled" Value="False">
+                                        <Setter Property="Opacity" Value="0.6"/>
+                                        <Setter Property="Cursor" Value="No"/>
+                                    </Trigger>-->
+                                    <EventTrigger RoutedEvent="MouseEnter">
+                                        <EventTrigger.Actions>
+                                            <BeginStoryboard>
+                                                <Storyboard>
+                                                    <ColorAnimation
+                                                        Storyboard.TargetProperty="(Background).(SolidColorBrush.Color)"
+                                                        To="#27753c"
+                                                        Duration="0:0:0.1"/>
+                                                </Storyboard>
+                                            </BeginStoryboard>
+                                        </EventTrigger.Actions>
+                                    </EventTrigger>
+                                    <EventTrigger RoutedEvent="MouseLeave">
+                                        <EventTrigger.Actions>
+                                            <BeginStoryboard>
+                                                <Storyboard>
+                                                    <ColorAnimation
+                                                        Storyboard.TargetProperty="(Background).(SolidColorBrush.Color)"
+                                                        To="#32a852"
+                                                        Duration="0:0:0.1"/>
+                                                </Storyboard>
+                                            </BeginStoryboard>
+                                        </EventTrigger.Actions>
+                                    </EventTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Button.Style>
+                    </Button>
                     <!--<TextBlock x:Name="productAdded" Grid.Row="6" Grid.ColumnSpan="2"  Visibility="Hidden" Text="Product added!" Foreground="Green" HorizontalAlignment="Center" Grid.Column="0"/>-->
 
                 </Grid>
-
             </StackPanel>
         </Border>
     </Grid>
