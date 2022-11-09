@@ -70,7 +70,7 @@
                         Click="AddProduct_Click" Width="110">
                         <Button.Style>
                             <Style TargetType="Button">
-                                <Setter Property="Background" Value="LightSeaGreen"/>
+                                <Setter Property="Background" Value="SkyBlue"/>
                                 <Setter Property="Foreground" Value="White" />
                                 <Setter Property="Cursor" Value="Hand" />
                                 <Setter Property="Template">
@@ -99,7 +99,7 @@
                                                 <Storyboard>
                                                     <ColorAnimation
                                                         Storyboard.TargetProperty="(Background).(SolidColorBrush.Color)"
-                                                        To="#27753c"
+                                                        To="DeepSkyBlue"
                                                         Duration="0:0:0.1"/>
                                                 </Storyboard>
                                             </BeginStoryboard>
@@ -111,7 +111,7 @@
                                                 <Storyboard>
                                                     <ColorAnimation
                                                         Storyboard.TargetProperty="(Background).(SolidColorBrush.Color)"
-                                                        To="#32a852"
+                                                        To="SkyBlue"
                                                         Duration="0:0:0.1"/>
                                                 </Storyboard>
                                             </BeginStoryboard>

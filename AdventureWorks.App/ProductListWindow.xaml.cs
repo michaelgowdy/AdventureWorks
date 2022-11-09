@@ -92,13 +92,13 @@ namespace AdventureWorks.App
         {
             if (page > 1)
             {
-                previousButton.IsEnabled = true;
+                PreviousButton.IsEnabled = true;
                 page--;
                 ProductDataGrid.ItemsSource = ProductClient.GetProductsClient(page, pageSize);
             }
             else
             {
-                previousButton.IsEnabled = false;
+                PreviousButton.IsEnabled = false;
             }
         }
 
@@ -107,12 +107,12 @@ namespace AdventureWorks.App
             page++;
             if (page > 1)
             {
-                previousButton.IsEnabled = true;
+                PreviousButton.IsEnabled = true;
             }
 
             if (ProductDataGrid.ToString() == "")
             {
-                nextButton.IsEnabled = false;
+                NextButton.IsEnabled = false;
             }
             else
             {
