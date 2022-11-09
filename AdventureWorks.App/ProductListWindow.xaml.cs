@@ -43,7 +43,7 @@ namespace AdventureWorks.App
 
 
 
-        private void LoadProducts_Click(object sender, RoutedEventArgs e)
+        private void Refresh_Click(object sender, RoutedEventArgs e)
         {
             ProductDataGrid.ItemsSource = ProductClient.GetProductsClient(page, pageSize);
         }

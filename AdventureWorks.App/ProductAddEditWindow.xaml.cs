@@ -27,34 +27,6 @@ namespace AdventureWorks.App
             };
 
             ProductClient.AddProductClient(newProduct);
-            //try
-            //{
-            //    ProductModel newProduct = new ProductModel
-            //    {
-            //        Name = addName.Text,
-            //        ProductNumber = addNumber.Text,
-            //        Color = addColor.Text,
-            //        Size = addSize.Text,
-            //        ListPrice = Convert.ToDouble(addPrice.Text)
-            //    };
-
-            //    ProductClient.AddProductClient(newProduct);
-            //}
-            //catch (Exception e)
-            //{
-
-            //    addSize.Text = e.Message;
-            //}
-
-
-            //if (Title == "AddProductWindow")
-            //{
-
-            //}
-            //else
-            //{
-            //    newProduct.ProductID = Convert.ToInt32(addId.Text);
-            //}
         }
 
         private void UpdateProduct()
@@ -77,12 +49,12 @@ namespace AdventureWorks.App
             if (Title == "AddProductWindow")
             {
                 AddProduct();
-                ProductAddEditWindow productAddEditWindow = new ProductAddEditWindow();
-                productAddEditWindow.Close();
+                this.Close();
             }
             else
             {
                 UpdateProduct();
+                this.Close();
             };
         }
     }

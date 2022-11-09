@@ -4,7 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:AdventureWorks.App"
-        mc:Ignorable="d" FontSize="22" Height="450" Width="800" Background="LightSkyBlue">
+        mc:Ignorable="d" FontSize="22" Height="450" Width="600">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="*" />
@@ -12,8 +12,132 @@
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
         <StackPanel Grid.Row="1" Orientation="Vertical" HorizontalAlignment="Center">
-            <Button x:Name="employeesButton" Padding="15" Margin="15" Background="Gold" BorderThickness="2" Click="EmployeesButton_Click">Employees</Button>
-            <Button x:Name="productsButton" Padding="15" Margin="15" Background="Coral" BorderThickness="2" Click="ProductsButton_Click">Products</Button>
+            <Button 
+                        x:Name="EmployeesButton"
+                        Content="Employees" 
+                        Margin="15"
+                        Padding="15"
+                        HorizontalAlignment="center"
+                        Click="EmployeesButton_Click" Width="140">
+                <Button.Style>
+                    <Style TargetType="Button">
+                        <Setter Property="Background" Value="SkyBlue"/>
+                        <Setter Property="Foreground" Value="White" />
+                        <Setter Property="Cursor" Value="Hand" />
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="Button">
+                                    <Border
+                                                Padding="{TemplateBinding Padding}"
+                                                Background="{TemplateBinding Background}"
+                                                BorderBrush="SteelBlue"
+                                                BorderThickness="1.5"
+                                                CornerRadius="5"
+                                                TextBlock.Foreground="{TemplateBinding Foreground}">
+                                        <Grid>
+                                            <ContentPresenter Content="{TemplateBinding Content}" HorizontalAlignment="Center"/>
+                                        </Grid>
+                                    </Border>
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                        <Style.Triggers>
+                            <!--<Trigger Property="IsEnabled" Value="False">
+                                        <Setter Property="Opacity" Value="0.6"/>
+                                        <Setter Property="Cursor" Value="No"/>
+                                    </Trigger>-->
+                            <EventTrigger RoutedEvent="MouseEnter">
+                                <EventTrigger.Actions>
+                                    <BeginStoryboard>
+                                        <Storyboard>
+                                            <ColorAnimation
+                                                        Storyboard.TargetProperty="(Background).(SolidColorBrush.Color)"
+                                                        To="DeepSkyBlue"
+                                                        Duration="0:0:0.1"/>
+                                        </Storyboard>
+                                    </BeginStoryboard>
+                                </EventTrigger.Actions>
+                            </EventTrigger>
+                            <EventTrigger RoutedEvent="MouseLeave">
+                                <EventTrigger.Actions>
+                                    <BeginStoryboard>
+                                        <Storyboard>
+                                            <ColorAnimation
+                                                        Storyboard.TargetProperty="(Background).(SolidColorBrush.Color)"
+                                                        To="SkyBlue"
+                                                        Duration="0:0:0.1"/>
+                                        </Storyboard>
+                                    </BeginStoryboard>
+                                </EventTrigger.Actions>
+                            </EventTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Button.Style>
+            </Button>
+            <!--<Button x:Name="employeesButton" Padding="15" Margin="15" Background="Gold" BorderThickness="2" Click="EmployeesButton_Click">Employees</Button>-->
+            <Button 
+                        x:Name="ProductsButton"
+                        Content="Products" 
+                        Margin="15"
+                        Padding="15"
+                        HorizontalAlignment="center"
+                        Click="ProductsButton_Click" Width="140">
+                <Button.Style>
+                    <Style TargetType="Button">
+                        <Setter Property="Background" Value="SkyBlue"/>
+                        <Setter Property="Foreground" Value="White" />
+                        <Setter Property="Cursor" Value="Hand" />
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="Button">
+                                    <Border
+                                                Padding="{TemplateBinding Padding}"
+                                                Background="{TemplateBinding Background}"
+                                                BorderBrush="SteelBlue"
+                                                BorderThickness="1.5"
+                                                CornerRadius="5"
+                                                TextBlock.Foreground="{TemplateBinding Foreground}">
+                                        <Grid>
+                                            <ContentPresenter Content="{TemplateBinding Content}" HorizontalAlignment="Center"/>
+                                        </Grid>
+                                    </Border>
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                        <Style.Triggers>
+                            <!--<Trigger Property="IsEnabled" Value="False">
+                                        <Setter Property="Opacity" Value="0.6"/>
+                                        <Setter Property="Cursor" Value="No"/>
+                                    </Trigger>-->
+                            <EventTrigger RoutedEvent="MouseEnter">
+                                <EventTrigger.Actions>
+                                    <BeginStoryboard>
+                                        <Storyboard>
+                                            <ColorAnimation
+                                                        Storyboard.TargetProperty="(Background).(SolidColorBrush.Color)"
+                                                        To="DeepSkyBlue"
+                                                        Duration="0:0:0.1"/>
+                                        </Storyboard>
+                                    </BeginStoryboard>
+                                </EventTrigger.Actions>
+                            </EventTrigger>
+                            <EventTrigger RoutedEvent="MouseLeave">
+                                <EventTrigger.Actions>
+                                    <BeginStoryboard>
+                                        <Storyboard>
+                                            <ColorAnimation
+                                                        Storyboard.TargetProperty="(Background).(SolidColorBrush.Color)"
+                                                        To="SkyBlue"
+                                                        Duration="0:0:0.1"/>
+                                        </Storyboard>
+                                    </BeginStoryboard>
+                                </EventTrigger.Actions>
+                            </EventTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Button.Style>
+            </Button>
+            <!--<Button x:Name="productsButton" Padding="15" Margin="15" Background="Coral" BorderThickness="2" Click="ProductsButton_Click">Products</Button>-->
         </StackPanel>
     </Grid>
 </Window>

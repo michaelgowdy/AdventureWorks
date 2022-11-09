@@ -65,7 +65,7 @@
                         Grid.Column="1"  
                         Content="Add" 
                         Margin="0,8,0,-38"
-                        Padding="10 5"
+                        Padding="5"
                         HorizontalAlignment="Right"
                         Click="AddProduct_Click" Width="110">
                         <Button.Style>
@@ -79,6 +79,8 @@
                                             <Border
                                                 Padding="{TemplateBinding Padding}"
                                                 Background="{TemplateBinding Background}"
+                                                BorderBrush="SteelBlue"
+                                                BorderThickness="1.5"
                                                 CornerRadius="5"
                                                 TextBlock.Foreground="{TemplateBinding Foreground}">
                                                 <Grid>
