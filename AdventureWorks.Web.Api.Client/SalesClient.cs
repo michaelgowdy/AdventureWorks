@@ -11,7 +11,7 @@ namespace AdventureWorks.Web.Api.Client
         public static RestClient client = new RestClient("https://localhost:44351/sales");
         public static SystemTextJsonSerializer serializer = new SystemTextJsonSerializer();
 
-        public static List<SalesOrderHeaderModel> GetSalesClient(int page, int pageSize)
+        public static List<FullSalesModel> GetSalesClient(int page, int pageSize)
         {
             //RestClient client = new RestClient("https://localhost:44351/sales");
             //Convert.ToInt32(pageSize);
@@ -22,10 +22,10 @@ namespace AdventureWorks.Web.Api.Client
 
             var response = client.Get(request);
 
-            return serializer.Deserialize<List<SalesOrderHeaderModel>>(response);
+            return serializer.Deserialize<List<FullSalesModel>>(response);
         }
 
-        public static SalesOrderHeaderModel GetOneSaleClient(int id)
+        public static FullSalesModel GetOneSaleClient(int id)
         {
             RestClient client = new RestClient($"https://localhost:44351/sales/id/{id}");
 
@@ -35,14 +35,14 @@ namespace AdventureWorks.Web.Api.Client
 
             request.AddQueryParameter("id", id);
 
-            return serializer.Deserialize<SalesOrderHeaderModel>(response);
+            return serializer.Deserialize<FullSalesModel>(response);
         }
 
-        public static void UpdateSaleClient(SalesOrderHeaderModel newSale)
+        public static void UpdateSaleClient(FullSalesModel newSale)
         {
             RestClient client = new RestClient("https://localhost:44351/sales");
 
-            var body = new SalesOrderHeaderModel 
+            var body = new FullSalesModel
             { 
                 SalesOrderID = newSale.SalesOrderID, 
                 OrderDate = newSale.OrderDate, 
@@ -63,11 +63,11 @@ namespace AdventureWorks.Web.Api.Client
             System.Console.WriteLine(response.StatusCode);
         }
 
-        public static void AddSaleClient(SalesOrderHeaderModel newSale)
+        public static void AddSaleClient(FullSalesModel newSale)
         {
             RestClient client = new RestClient("https://localhost:44351/sales");
 
-            var body = new SalesOrderHeaderModel 
+            var body = new FullSalesModel
             { 
                 OrderDate = newSale.OrderDate, 
                 BillToAddressID = newSale.BillToAddressID, 

@@ -36,6 +36,7 @@ else
         <thead>
             <tr>
                 <th>Sales Order ID</th>
+                <th>Sales Order Detail ID</th>
                 <th>Order Date</th>
                 <th>Bill To Address ID</th>
                 <th>Ship To Address ID</th>
@@ -54,17 +55,18 @@ else
             {
                 <tr>
                     <td>@sale.SalesOrderID</td>
+                    <td>@sale.SalesOrderDetailID</td>
                     <td>@sale.OrderDate</td>
                     <td>@sale.BillToAddressID</td>
                     <td>@sale.ShipToAddressID</td>
                     <td>@sale.TotalDue</td>
                     <td>@sale.SalesOrderNumber</td>
                     <td>
-                        <button class="btn btn-outline-dark" @onclick="(() => GetSale(sale.SalesOrderID))">
+                        <button class="btn btn-outline-dark" @onclick="(() => GetSale(sale.SalesOrderDetailID))">
                             Edit
                         </button>
 
-                        <button class="btn btn-outline-danger" @onclick="(() => DeleteConfirm(sale.SalesOrderID))">
+                        <button class="btn btn-outline-danger" @onclick="(() => DeleteConfirm(sale.SalesOrderDetailID))">
                             Delete
                         </button>
                     </td>
@@ -76,7 +78,7 @@ else
 
 
 @code {
-    protected List<SalesOrderHeaderModel> sales;
+    protected List<FullSalesModel> sales;
     protected List<string> sizeOptions = new List<string>() { "25", "50", "100", "1000" };
     protected string selectedSize = "25";
     private int currentPage = 1;
@@ -118,9 +120,9 @@ else
         //SalesClient.GetOneSaleClient(id);
     }
 
-    protected void DeleteConfirm(int salesOrderId)
+    protected void DeleteConfirm(int id)
     {
-        NavigationManager.NavigateTo($"sales/delete/{salesOrderId}");
+        NavigationManager.NavigateTo($"sales/delete/{id}");
         //SalesClient.DeleteSaleClient(id);
     }
 }

@@ -22,91 +22,91 @@ namespace AdventureWorks.Web.Api.Controllers
             _db = db;
         }
 
-        //[HttpGet()]
-        //public async Task<IEnumerable<FullSalesModel>> GetSales(int page, int pageSize)
-        //{
-        //    using (AppDataConnection db = _db)
-        //    {            
-        //        var sales =
-        //            (from h in db.GetTable<SalesOrderHeaderModel>()
-        //             from d in db.GetTable<SalesOrderDetailModel>().InnerJoin(d => d.SalesOrderID == h.SalesOrderID)
-        //             select new FullSalesModel
-        //             {
-        //                 SalesOrderID = h.SalesOrderID,
-        //                 OrderDate = h.OrderDate,
-        //                 BillToAddressID = h.BillToAddressID,
-        //                 ShipToAddressID = h.ShipToAddressID,
-        //                 TotalDue = h.TotalDue,
-        //                 SalesOrderNumber = h.SalesOrderNumber,
-        //                 SubTotal = h.SubTotal,
-        //                 TaxAmt = h.TaxAmt,
-        //                 Freight = h.Freight,
-        //                 SalesOrderDetailID = d.SalesOrderDetailID,
-        //                 CarrierTrackingNumber = d.CarrierTrackingNumber,
-        //                 OrderQty = d.OrderQty,
-        //                 ProductID = d.ProductID,
-        //                 SpecialOfferID = d.SpecialOfferID,
-        //                 UnitPrice = d.UnitPrice,
-        //                 UnitPriceDiscount = d.UnitPriceDiscount,
-        //                 ModifiedDate = d.ModifiedDate
-        //             }).Skip((page - 1) * pageSize).Take(pageSize).ToListAsync();
-
-        //        return await sales;
-        //    }
-        //}
-
         [HttpGet()]
-        public async Task<SalesOrderHeaderModel[]> GetSales(int page, int pageSize)
+        public async Task<IEnumerable<FullSalesModel>> GetSales(int page, int pageSize)
         {
             using (AppDataConnection db = _db)
             {
-                var sales = db.GetTable<SalesOrderHeaderModel>()
-                         .Skip((page - 1) * pageSize)
-                         .Take(pageSize)
-                         .ToArrayAsync();
+                var sales =
+                    (from h in db.GetTable<SalesOrderHeaderModel>()
+                     from d in db.GetTable<SalesOrderDetailModel>().InnerJoin(d => d.SalesOrderID == h.SalesOrderID)
+                     select new FullSalesModel
+                     {
+                         SalesOrderID = h.SalesOrderID,
+                         OrderDate = h.OrderDate,
+                         BillToAddressID = h.BillToAddressID,
+                         ShipToAddressID = h.ShipToAddressID,
+                         TotalDue = h.TotalDue,
+                         SalesOrderNumber = h.SalesOrderNumber,
+                         SubTotal = h.SubTotal,
+                         TaxAmt = h.TaxAmt,
+                         Freight = h.Freight,
+                         SalesOrderDetailID = d.SalesOrderDetailID,
+                         CarrierTrackingNumber = d.CarrierTrackingNumber,
+                         OrderQty = d.OrderQty,
+                         ProductID = d.ProductID,
+                         SpecialOfferID = d.SpecialOfferID,
+                         UnitPrice = d.UnitPrice,
+                         UnitPriceDiscount = d.UnitPriceDiscount,
+                         ModifiedDate = d.ModifiedDate
+                     }).Skip((page - 1) * pageSize).Take(pageSize).ToListAsync();
 
                 return await sales;
             }
         }
 
-        [HttpGet("id/{id}")]
-        public async Task<SalesOrderHeaderModel> GetSale(int id)
-        {
-            return await _db.GetTable<SalesOrderHeaderModel>().SingleOrDefaultAsync(sale => sale.SalesOrderID == id);
-        }
-
-        //[HttpGet("id/{id}")]
-        //public async Task<IEnumerable<FullSalesModel>> GetSale(int id)
+        //[HttpGet()]
+        //public async Task<SalesOrderHeaderModel[]> GetSales(int page, int pageSize)
         //{
         //    using (AppDataConnection db = _db)
         //    {
-        //        var sale =
-        //            (from h in db.GetTable<SalesOrderHeaderModel>().Where(h => h.SalesOrderID == id)
-        //             from d in db.GetTable<SalesOrderDetailModel>().InnerJoin(d => d.SalesOrderID == id)
-        //             select new FullSalesModel
-        //             {
-        //                 SalesOrderID = h.SalesOrderID,
-        //                 OrderDate = h.OrderDate,
-        //                 BillToAddressID = h.BillToAddressID,
-        //                 ShipToAddressID = h.ShipToAddressID,
-        //                 TotalDue = h.TotalDue,
-        //                 SalesOrderNumber = h.SalesOrderNumber,
-        //                 SubTotal = h.SubTotal,
-        //                 TaxAmt = h.TaxAmt,
-        //                 Freight = h.Freight,
-        //                 SalesOrderDetailID = d.SalesOrderDetailID,
-        //                 CarrierTrackingNumber = d.CarrierTrackingNumber,
-        //                 OrderQty = d.OrderQty,
-        //                 ProductID = d.ProductID,
-        //                 SpecialOfferID = d.SpecialOfferID,
-        //                 UnitPrice = d.UnitPrice,
-        //                 UnitPriceDiscount = d.UnitPriceDiscount,
-        //                 ModifiedDate = d.ModifiedDate
-        //             }).ToListAsync();
+        //        var sales = db.GetTable<SalesOrderHeaderModel>()
+        //                 .Skip((page - 1) * pageSize)
+        //                 .Take(pageSize)
+        //                 .ToArrayAsync();
 
-        //        return await sale;
+        //        return await sales;
         //    }
         //}
+
+        //[HttpGet("id/{id}")]
+        //public async Task<SalesOrderHeaderModel> GetSale(int id)
+        //{
+        //    return await _db.GetTable<SalesOrderHeaderModel>().SingleOrDefaultAsync(sale => sale.SalesOrderID == id);
+        //}
+
+        [HttpGet("id/{id}")]
+        public async Task<FullSalesModel> GetSale(int id)
+        {
+            using (AppDataConnection db = _db)
+            {
+                var sale =
+                    (from d in db.GetTable<SalesOrderDetailModel>().Where(d => d.SalesOrderDetailID == id)
+                     from h in db.GetTable<SalesOrderHeaderModel>().InnerJoin(h => h.SalesOrderID == d.SalesOrderID)
+                     select new FullSalesModel
+                     {
+                         SalesOrderID = h.SalesOrderID,
+                         OrderDate = h.OrderDate,
+                         BillToAddressID = h.BillToAddressID,
+                         ShipToAddressID = h.ShipToAddressID,
+                         TotalDue = h.TotalDue,
+                         SalesOrderNumber = h.SalesOrderNumber,
+                         SubTotal = h.SubTotal,
+                         TaxAmt = h.TaxAmt,
+                         Freight = h.Freight,
+                         SalesOrderDetailID = d.SalesOrderDetailID,
+                         CarrierTrackingNumber = d.CarrierTrackingNumber,
+                         OrderQty = d.OrderQty,
+                         ProductID = d.ProductID,
+                         SpecialOfferID = d.SpecialOfferID,
+                         UnitPrice = d.UnitPrice,
+                         UnitPriceDiscount = d.UnitPriceDiscount,
+                         ModifiedDate = d.ModifiedDate
+                     }).SingleOrDefaultAsync();
+
+                return await sale;
+            }
+        }
 
         [HttpPut]
         public void UpdateSale(SalesOrderHeaderModel sale)

@@ -1,5 +1,5 @@
 ﻿@page "/sales/add"
-@page "/sales/edit/{salesOrderId:int}"
+@page "/sales/edit/{salesOrderDetailId:int}"
 
 @using AdventureWorks.Models
 @using AdventureWorks.Models.Models
@@ -19,6 +19,13 @@
         <div class="col-md-4">
             <InputNumber class="form-control" @bind-Value="sale.SalesOrderID" id="SalesOrderID" />
             <ValidationMessage For="@(() => sale.SalesOrderID)" />
+        </div>
+    </div>
+    <div class="mb-3">
+        <label for="SalesOrderDetailID" class="form-label">Sales Order Detail ID</label>
+        <div class="col-md-4">
+            <InputNumber class="form-control" @bind-Value="sale.SalesOrderDetailID" id="SalesOrderDetailID" />
+            <ValidationMessage For="@(() => sale.SalesOrderDetailID)" />
         </div>
     </div>
     <div class="mb-3">
@@ -80,18 +87,20 @@
 
 @code {
     [Parameter]
-    public int salesOrderId { get; set; }
+    public int salesOrderDetailId { get; set; }
 
     protected string Title = "Add";
-    protected SalesOrderHeaderModel sale = new SalesOrderHeaderModel();
+    protected FullSalesModel sale = new FullSalesModel();
     protected override async Task OnParametersSetAsync()
     {
-        if (salesOrderId != 0)
+        if (salesOrderDetailId != 0)
         {
             Title = "Edit";
 
-            var getrequest = SalesClient.GetOneSaleClient(salesOrderId);
+            var getrequest = SalesClient.GetOneSaleClient(salesOrderDetailId);
+
             sale.SalesOrderID = getrequest.SalesOrderID;
+            sale.SalesOrderDetailID = getrequest.SalesOrderDetailID;
             sale.OrderDate = getrequest.OrderDate;
             sale.BillToAddressID = getrequest.BillToAddressID;
             sale.ShipToAddressID = getrequest.ShipToAddressID;
@@ -103,7 +112,7 @@
     }
     protected async Task SaveSale()
     {
-        if (salesOrderId != 0)
+        if (salesOrderDetailId != 0)
         {
             SalesClient.UpdateSaleClient(sale);
         }
