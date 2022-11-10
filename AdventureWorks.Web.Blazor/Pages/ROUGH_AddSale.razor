@@ -1,5 +1,5 @@
-﻿@page "/sales/add"
-@page "/sales/edit/{salesOrderId:int}"
+﻿@page "/sales/add/rough"
+@page "/sales/edit/{salesOrderDetailId:int}/rough"
 
 @using AdventureWorks.Models
 @using AdventureWorks.Models.Models
@@ -14,11 +14,18 @@
 
     <ValidationSummary />
 
-    <div class="mb-3">
+    <div class="mb-3" >
         <label for="SalesOrderID" class="form-label">Sales Order ID</label>
         <div class="col-md-4">
             <InputNumber disabled="@IsDisabled" class="form-control" @bind-Value="sale.SalesOrderID" id="SalesOrderID" />
             <ValidationMessage For="@(() => sale.SalesOrderID)" />
+        </div>
+    </div>
+    <div class="mb-3">
+        <label for="SalesOrderDetailID" class="form-label">Sales Order Detail ID</label>
+        <div class="col-md-4">
+            <InputNumber disabled="@IsDisabled" class="form-control" @bind-Value="sale.SalesOrderDetailID" id="SalesOrderDetailID" />
+            <ValidationMessage For="@(() => sale.SalesOrderDetailID)" />
         </div>
     </div>
     <div class="mb-3">
@@ -45,29 +52,71 @@
     <div class="mb-3">
         <label for="SalesOrderNumber" class="form-label">Sales Order Number</label>
         <div class="col-md-4">
-            <InputText class="form-control" @bind-Value="sale.SalesOrderNumber" />
+            <InputText disabled="@IsDisabled" class="form-control" @bind-Value="sale.SalesOrderNumber" />
             <ValidationMessage For=@(() => sale.SalesOrderNumber) />
         </div>
     </div>
     <div class="mb-3">
-        <label for="TotalDue" class="form-label">Sub Total</label>
+        <label for="SubTotal" class="form-label">Sub Total</label>
         <div class="col-md-4">
             <InputNumber class="form-control" @bind-Value="sale.SubTotal" />
             <ValidationMessage For=@(() => sale.SubTotal) />
         </div>
     </div>
     <div class="mb-3">
-        <label for="TotalDue" class="form-label">Tax Amount</label>
+        <label for="TaxAmt" class="form-label">Tax Amount</label>
         <div class="col-md-4">
             <InputNumber class="form-control" @bind-Value="sale.TaxAmt" />
             <ValidationMessage For=@(() => sale.TaxAmt) />
         </div>
     </div>
     <div class="mb-3">
-        <label for="TotalDue" class="form-label">Freight</label>
+        <label for="Freight" class="form-label">Freight</label>
         <div class="col-md-4">
             <InputNumber class="form-control" @bind-Value="sale.Freight" />
             <ValidationMessage For=@(() => sale.Freight) />
+        </div>
+    </div>
+    @*   <div class="mb-3">
+        <label for="CarrierTrackingNumber" class="form-label">Carrier Tracking Number</label>
+        <div class="col-md-4">
+            <InputNumber class="form-control" @bind-Value="sale.CarrierTrackingNumber" />
+            <ValidationMessage For=@(() => sale.CarrierTrackingNumber) />
+        </div>
+    </div>*@
+    <div class="mb-3">
+        <label for="OrderQty" class="form-label">Order Qty</label>
+        <div class="col-md-4">
+            <InputNumber class="form-control" @bind-Value="sale.OrderQty" />
+            <ValidationMessage For=@(() => sale.OrderQty) />
+        </div>
+    </div>
+    <div class="mb-3">
+        <label for="ProductID" class="form-label">Product ID</label>
+        <div class="col-md-4">
+            <InputNumber class="form-control" @bind-Value="sale.ProductID" />
+            <ValidationMessage For=@(() => sale.ProductID) />
+        </div>
+    </div>
+    <div class="mb-3">
+        <label for="SpecialOfferID" class="form-label">Special Offer ID</label>
+        <div class="col-md-4">
+            <InputNumber class="form-control" @bind-Value="sale.SpecialOfferID" />
+            <ValidationMessage For=@(() => sale.SpecialOfferID) />
+        </div>
+    </div>
+    <div class="mb-3">
+        <label for="UnitPrice" class="form-label">Unit Price</label>
+        <div class="col-md-4">
+            <InputNumber class="form-control" @bind-Value="sale.UnitPrice" />
+            <ValidationMessage For=@(() => sale.UnitPrice) />
+        </div>
+    </div>
+    <div class="mb-3">
+        <label for="UnitPriceDiscount" class="form-label">Unit Price Discount</label>
+        <div class="col-md-4">
+            <InputNumber class="form-control" @bind-Value="sale.UnitPriceDiscount" />
+            <ValidationMessage For=@(() => sale.UnitPriceDiscount) />
         </div>
     </div>
     <div class="form-group">
@@ -80,19 +129,24 @@
 
 @code {
     [Parameter]
-    public int salesOrderId { get; set; }
+    public int salesOrderDetailId { get; set; }
+
     protected bool IsDisabled { get; set; }
 
     protected string Title = "Add";
     protected FullSalesModel sale = new FullSalesModel();
     protected override async Task OnParametersSetAsync()
     {
-        if (salesOrderId != 0)
+        if (salesOrderDetailId != 0)
         {
             Title = "Edit";
 
-            var getrequest = SalesClient.GetOneSaleClient(salesOrderId);
+            IsDisabled = false;
+
+            var getrequest = SalesClient.GetOneSaleClient(salesOrderDetailId);
+
             sale.SalesOrderID = getrequest.SalesOrderID;
+            sale.SalesOrderDetailID = getrequest.SalesOrderDetailID;
             sale.OrderDate = getrequest.OrderDate;
             sale.BillToAddressID = getrequest.BillToAddressID;
             sale.ShipToAddressID = getrequest.ShipToAddressID;
@@ -100,8 +154,12 @@
             sale.SubTotal = getrequest.SubTotal;
             sale.TaxAmt = getrequest.TaxAmt;
             sale.Freight = getrequest.Freight;
-
-            IsDisabled = false;
+            //sale.CarrierTrackingNumber = getrequest.CarrierTrackingNumber;
+            sale.OrderQty = getrequest.OrderQty;
+            sale.ProductID = getrequest.ProductID;
+            sale.SpecialOfferID = getrequest.SpecialOfferID;
+            sale.UnitPrice = getrequest.UnitPrice;
+            sale.UnitPriceDiscount = getrequest.UnitPriceDiscount;
         }
         else
         {
@@ -110,7 +168,7 @@
     }
     protected async Task SaveSale()
     {
-        if (salesOrderId != 0)
+        if (salesOrderDetailId != 0)
         {
             SalesClient.UpdateSaleClient(sale);
         }
@@ -120,7 +178,7 @@
         }
         Cancel();
     }
-    public void Cancel()
+    protected void Cancel()
     {
         NavigationManager.NavigateTo("/sales");
     }

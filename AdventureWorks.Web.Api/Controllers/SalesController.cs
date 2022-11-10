@@ -170,6 +170,9 @@ namespace AdventureWorks.Web.Api.Controllers
             {
                 db.GetTable<SalesOrderHeaderModel>().Where(s => s.SalesOrderID == id).Delete();
                 return Ok();
+
+                //db.GetTable<SalesOrderDetailModel>().Where(s => s.SalesOrderDetailID == id).Delete();
+                //return Ok();
             }
         }
 
