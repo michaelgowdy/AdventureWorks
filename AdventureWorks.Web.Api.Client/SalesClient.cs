@@ -51,7 +51,13 @@ namespace AdventureWorks.Web.Api.Client
                 SalesOrderNumber = newSale.SalesOrderNumber,
                 SubTotal = newSale.SubTotal,
                 TaxAmt = newSale.TaxAmt,
-                Freight = newSale.Freight 
+                Freight = newSale.Freight,
+                SalesOrderDetailID = newSale.SalesOrderDetailID,
+                OrderQty = newSale.OrderQty,
+                ProductID = newSale.ProductID,
+                SpecialOfferID = newSale.SpecialOfferID,
+                UnitPrice = newSale.UnitPrice,
+                UnitPriceDiscount = newSale.UnitPriceDiscount
             };
 
             RestRequest request = new RestRequest();
@@ -72,10 +78,14 @@ namespace AdventureWorks.Web.Api.Client
                 OrderDate = newSale.OrderDate, 
                 BillToAddressID = newSale.BillToAddressID, 
                 ShipToAddressID = newSale.ShipToAddressID,
-                SalesOrderNumber = newSale.SalesOrderNumber,
                 SubTotal = newSale.SubTotal,
                 TaxAmt = newSale.TaxAmt,
-                Freight = newSale.Freight
+                Freight = newSale.Freight,
+                OrderQty = newSale.OrderQty,
+                ProductID = newSale.ProductID,
+                SpecialOfferID = newSale.SpecialOfferID,
+                UnitPrice = newSale.UnitPrice,
+                UnitPriceDiscount = newSale.UnitPriceDiscount
             };
 
             RestRequest request = new RestRequest();

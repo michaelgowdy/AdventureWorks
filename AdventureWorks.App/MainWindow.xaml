@@ -21,7 +21,7 @@
                         Click="EmployeesButton_Click" Width="140">
                 <Button.Style>
                     <Style TargetType="Button">
-                        <Setter Property="Background" Value="SkyBlue"/>
+                        <Setter Property="Background" Value="DodgerBlue"/>
                         <Setter Property="Foreground" Value="White" />
                         <Setter Property="Cursor" Value="Hand" />
                         <Setter Property="Template">
@@ -30,8 +30,6 @@
                                     <Border
                                                 Padding="{TemplateBinding Padding}"
                                                 Background="{TemplateBinding Background}"
-                                                BorderBrush="SteelBlue"
-                                                BorderThickness="1.5"
                                                 CornerRadius="5"
                                                 TextBlock.Foreground="{TemplateBinding Foreground}">
                                         <Grid>
@@ -64,7 +62,7 @@
                                         <Storyboard>
                                             <ColorAnimation
                                                         Storyboard.TargetProperty="(Background).(SolidColorBrush.Color)"
-                                                        To="SkyBlue"
+                                                        To="DodgerBlue"
                                                         Duration="0:0:0.1"/>
                                         </Storyboard>
                                     </BeginStoryboard>
@@ -84,7 +82,7 @@
                         Click="ProductsButton_Click" Width="140">
                 <Button.Style>
                     <Style TargetType="Button">
-                        <Setter Property="Background" Value="SkyBlue"/>
+                        <Setter Property="Background" Value="DodgerBlue"/>
                         <Setter Property="Foreground" Value="White" />
                         <Setter Property="Cursor" Value="Hand" />
                         <Setter Property="Template">
@@ -93,8 +91,6 @@
                                     <Border
                                                 Padding="{TemplateBinding Padding}"
                                                 Background="{TemplateBinding Background}"
-                                                BorderBrush="SteelBlue"
-                                                BorderThickness="1.5"
                                                 CornerRadius="5"
                                                 TextBlock.Foreground="{TemplateBinding Foreground}">
                                         <Grid>
@@ -127,7 +123,7 @@
                                         <Storyboard>
                                             <ColorAnimation
                                                         Storyboard.TargetProperty="(Background).(SolidColorBrush.Color)"
-                                                        To="SkyBlue"
+                                                        To="DodgerBlue"
                                                         Duration="0:0:0.1"/>
                                         </Storyboard>
                                     </BeginStoryboard>

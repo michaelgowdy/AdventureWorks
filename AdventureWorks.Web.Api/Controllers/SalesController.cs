@@ -109,11 +109,12 @@ namespace AdventureWorks.Web.Api.Controllers
         }
 
         [HttpPut]
-        public void UpdateSale(SalesOrderHeaderModel sale)
+        public void UpdateSale(FullSalesModel sale)
         {
             //Guid guid = Guid.NewGuid();
-
-            _db.GetTable<SalesOrderHeaderModel>()
+            using (AppDataConnection db = _db)
+            {
+                db.GetTable<SalesOrderHeaderModel>()
                     .Where(s => s.SalesOrderID == sale.SalesOrderID)
                     .Set(s => s.OrderDate, sale.OrderDate)
                     .Set(s => s.BillToAddressID, sale.BillToAddressID)
@@ -122,10 +123,22 @@ namespace AdventureWorks.Web.Api.Controllers
                     .Set(s => s.TaxAmt, sale.TaxAmt)
                     .Set(s => s.Freight, sale.Freight)
                     .Update();
+
+                db.GetTable<SalesOrderDetailModel>()
+                    .Where(s => s.SalesOrderDetailID == sale.SalesOrderDetailID)
+                    //.Set(s => s.CarrierTrackingNumber, sale.CarrierTrackingNumber)
+                    .Set(s => s.OrderQty, sale.OrderQty)
+                    .Set(s => s.ProductID, sale.ProductID)
+                    .Set(s => s.SpecialOfferID, sale.SpecialOfferID)
+                    .Set(s => s.UnitPrice, sale.UnitPrice)
+                    .Set(s => s.UnitPriceDiscount, sale.UnitPriceDiscount)
+                    .Update();
+            }
+
         }
 
         [HttpPost]
-        public void AddSale(SalesOrderHeaderModel sale)
+        public void AddSale(FullSalesModel sale)
         {
             //Guid guid = Guid.NewGuid();
 
@@ -138,6 +151,14 @@ namespace AdventureWorks.Web.Api.Controllers
                     .Value(s => s.SubTotal, sale.SubTotal)
                     .Value(s => s.TaxAmt, sale.TaxAmt)
                     .Value(s => s.Freight, sale.Freight)
+                    .Insert();
+
+                db.GetTable<SalesOrderDetailModel>()
+                    .Value(s => s.OrderQty, sale.OrderQty)
+                    .Value(s => s.ProductID, sale.ProductID)
+                    .Value(s => s.SpecialOfferID, sale.SpecialOfferID)
+                    .Value(s => s.UnitPrice, sale.UnitPrice)
+                    .Value(s => s.UnitPriceDiscount, sale.UnitPriceDiscount)
                     .Insert();
             }
         }

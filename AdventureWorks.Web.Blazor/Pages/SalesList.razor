@@ -6,23 +6,11 @@
 @inject NavigationManager NavigationManager
 
 <h3>Sales List</h3>
-@*
-<div>
-    <button style="float:right" class="btn btn-primary" @onclick="(() => AddSale())">
-        <i class="fas fa-sale-plus"></i>
-        Add Sale
-    </button>
-</div>*@
+
 <div class="row">
     <div class="col-md-6">
-        <button class="btn btn-outline-primary" style="margin:0px, 5px, 2px, 5px" @onclick="DecreasePage">Previous Page</button>
-        <button class="btn btn-outline-primary" style="margin:0px, 5px, 2px, 5px" @onclick="IncreasePage">Next Page</button>
-        <select class="form-control" size="margin:0px, 5px, 2px, 5px" @onchange="@OnSelect" style="width:150px">
-            @foreach (var size in sizeOptions)
-            {
-                <option value=@size>@size</option>
-            }
-        </select>
+        <button class="btn btn-outline-primary" @onclick="DecreasePage">Previous Page</button>
+        <button class="btn btn-outline-primary" @onclick="IncreasePage">Next Page</button>
     </div>
 </div>
 
@@ -37,11 +25,17 @@ else
             <tr>
                 <th>Sales Order ID</th>
                 <th>Sales Order Detail ID</th>
-                <th>Order Date</th>
                 <th>Bill To Address ID</th>
                 <th>Ship To Address ID</th>
-                <th>Total Due</th>
                 <th>Sales Order Number</th>
+                <th>
+                    <select class="form-control" @onchange="@OnSelect" style="width:90px">
+                        @foreach (var size in sizeOptions)
+                        {
+                            <option value=@size>@size</option>
+                        }
+                    </select>
+                </th>
                 <th>
                     <button style="float:right" class="btn btn-primary" @onclick="(() => AddSale())">
                         <i class="fas fa-sale-plus"></i>
@@ -56,11 +50,10 @@ else
                 <tr>
                     <td>@sale.SalesOrderID</td>
                     <td>@sale.SalesOrderDetailID</td>
-                    <td>@sale.OrderDate</td>
                     <td>@sale.BillToAddressID</td>
                     <td>@sale.ShipToAddressID</td>
-                    <td>@sale.TotalDue</td>
                     <td>@sale.SalesOrderNumber</td>
+                    <td></td>
                     <td>
                         <button class="btn btn-outline-dark" @onclick="(() => GetSale(sale.SalesOrderDetailID))">
                             Edit
