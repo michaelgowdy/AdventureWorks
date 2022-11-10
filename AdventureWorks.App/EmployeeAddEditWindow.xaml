@@ -33,22 +33,84 @@
                     </Grid.RowDefinitions>
 
                     <Label Grid.Row="0" Grid.Column="0" Margin="5" Padding="5" Content="Business Entity ID"/>
-                    <TextBox x:Name="addId" Grid.Row="0" Grid.Column="1"  Margin="5" Padding="5"  Text="{Binding BusinessEntityID, UpdateSourceTrigger=PropertyChanged}"/>
+                    <TextBox x:Name="addId" 
+                             Grid.Row="0" 
+                             Grid.Column="1"  
+                             Margin="5" 
+                             Padding="5"  
+                             Text="{Binding BusinessEntityID, UpdateSourceTrigger=PropertyChanged}">
+                    </TextBox>
 
                     <Label Grid.Row="1" Grid.Column="0" Margin="5" Padding="5" Content="First Name"/>
-                    <TextBox x:Name="addFirstName" Grid.Row="1" Grid.Column="1"  Margin="5" Padding="5" Text="{Binding FirstName, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, ValidatesOnDataErrors=True}"/>
+                    <TextBox x:Name="addFirstName" 
+                             Grid.Row="1" 
+                             Grid.Column="1" 
+                             Margin="5" 
+                             Padding="5" 
+                             Text="{Binding FirstName, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, ValidatesOnDataErrors=True}">
+                        <TextBox.ToolTip>
+                            <ToolTip>
+                                Insert Employee's First Name
+                            </ToolTip>
+                        </TextBox.ToolTip>
+                    </TextBox>
 
                     <Label Grid.Row="2" Grid.Column="0" Margin="5" Padding="5" Content="Last Name"/>
-                    <TextBox x:Name="addLastName" Grid.Row="2" Grid.Column="1" Margin="5" Padding="5" Text="{Binding LastName, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, ValidatesOnDataErrors=True}"/>
+                    <TextBox x:Name="addLastName" 
+                             Grid.Row="2" 
+                             Grid.Column="1" 
+                             Margin="5" 
+                             Padding="5" 
+                             Text="{Binding LastName, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, ValidatesOnDataErrors=True}">
+                        <TextBox.ToolTip>
+                            <ToolTip>
+                                Insert Employee's Last Name
+                            </ToolTip>
+                        </TextBox.ToolTip>
+                    </TextBox>
 
                     <Label Grid.Row="3" Grid.Column="0" Margin="5" Padding="5" Content="Job Title"/>
-                    <TextBox x:Name="addJobTitle" Grid.Row="3" Grid.Column="1" Margin="5" Padding="5" Text="{Binding JobTitle, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, ValidatesOnDataErrors=True}"/>
+                    <TextBox x:Name="addJobTitle" 
+                             Grid.Row="3" 
+                             Grid.Column="1" 
+                             Margin="5" 
+                             Padding="5"
+                             Text="{Binding JobTitle, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, ValidatesOnDataErrors=True}">
+                        <TextBox.ToolTip>
+                            <ToolTip>
+                                Insert Employee's Job Title
+                            </ToolTip>
+                        </TextBox.ToolTip>
+                    </TextBox>
 
                     <Label Grid.Row="4" Grid.Column="0" Margin="5" Padding="5" Content="Login ID"/>
-                    <TextBox x:Name="addLoginID" Grid.Row="4" Grid.Column="1" Margin="5" Padding="5" Text="{Binding LoginID, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, ValidatesOnDataErrors=True}"/>
+                    <TextBox x:Name="addLoginID" 
+                             Grid.Row="4" 
+                             Grid.Column="1" 
+                             Margin="5" 
+                             Padding="5" 
+                             Text="{Binding LoginID, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, ValidatesOnDataErrors=True}">
+                        <TextBox.ToolTip>
+                            <ToolTip>
+                                Insert Employee's Login ID
+                            </ToolTip>
+                        </TextBox.ToolTip>
+                    </TextBox>
 
                     <Label Grid.Row="5" Grid.Column="0" Margin="5" Padding="5" Content="National ID Number"/>
-                    <TextBox x:Name="addNationalIDNumber" Grid.Row="5" Grid.Column="1" Margin="5" Padding="5" Text="{Binding NationalIDNumber, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, ValidatesOnDataErrors=True}"/>
+                    <TextBox x:Name="addNationalIDNumber" 
+                             Grid.Row="5" 
+                             Grid.Column="1" 
+                             Margin="5" 
+                             Padding="5" 
+                             Text="{Binding NationalIDNumber, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, ValidatesOnDataErrors=True}">
+                        <TextBox.ToolTip>
+                            <ToolTip>
+                                Insert Employee's National ID Number
+                            </ToolTip>
+                        </TextBox.ToolTip>
+                    </TextBox>
+                    
                     <Button 
                         x:Name="addUpdateButton" 
                         Grid.Row="7" 

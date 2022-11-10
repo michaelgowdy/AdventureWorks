@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:AdventureWorks.App" 
         xmlns:models="clr-namespace:AdventureWorks.Models.Models;assembly=AdventureWorks.Models"
         mc:Ignorable="d"
-        Title="ProductListWindow" FontSize="20" Height="700" Width="1300">
+        Title="ProductListWindow" FontSize="20" Height="700" Width="1100">
     <Window.DataContext>
         <models:ProductModel/>
     </Window.DataContext>
@@ -43,9 +43,9 @@
                     Grid.Row="0"
                     Grid.Column="2"  
                     Content="Previous" 
-                    Margin="0, 10, 10, 10"
+                    Margin="40, 10, 10, 5"
                     Padding="5"
-                    HorizontalAlignment="Center"
+                    HorizontalAlignment="Left"
                     Click="PreviousProducts_Click" Width="110">
                 <Button.Style>
                     <Style TargetType="Button">
@@ -116,7 +116,7 @@
                         Grid.Row="0"
                         Grid.Column="2"
                         Content="Next" 
-                        Margin="0, 10, 10, 10"
+                        Margin="0, 10, 10, 5"
                         Padding="5"
                         HorizontalAlignment="Right"
                         Click="NextProducts_Click" Width="110">

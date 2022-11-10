@@ -1,5 +1,4 @@
-﻿using AdventureWorks.Models.Validation;
-using LinqToDB.Mapping;
+﻿using LinqToDB.Mapping;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -18,16 +17,17 @@ namespace AdventureWorks.Models.Models
 
         public string Error => null;
 
-        //private readonly UserValidation _validation = new UserValidation();
-
-        public bool HasErrors => _propertyErrors.Any();
-
-        public event PropertyChangedEventHandler PropertyChanged;
 
         public ProductModel()
         {
             this.Validate();
         }
+
+        public bool HasErrors => _propertyErrors.Any();
+
+        public bool CanCreate => !HasErrors;
+
+        public event PropertyChangedEventHandler PropertyChanged;
 
         public IEnumerable GetErrors(string propertyName)
         {
@@ -54,6 +54,7 @@ namespace AdventureWorks.Models.Models
             {
                 _propertyErrors.Remove(propertyName);
             }
+            OnPropertyChanged(propertyName);
         }
 
         protected void OnPropertyChanged(string propertyName)

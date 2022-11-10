@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:AdventureWorks.App" 
         xmlns:models="clr-namespace:AdventureWorks.Models.Models;assembly=AdventureWorks.Models"
         mc:Ignorable="d"
-        Title="EmployeeListWindow" FontSize="20" Height="700" Width="900">
+        Title="EmployeeListWindow" FontSize="20" Height="700" Width="1000">
     <Window.DataContext>
         <models:FullEmployeeModel/>
     </Window.DataContext>
@@ -38,7 +38,7 @@
                 <DataGridTextColumn Header="ID" Binding="{Binding BusinessEntityID, UpdateSourceTrigger=PropertyChanged}" Width="auto"/>
                 <DataGridTextColumn Header="First Name" Binding="{Binding FirstName, UpdateSourceTrigger=PropertyChanged}" Width="*"/>
                 <DataGridTextColumn Header="Last Name" Binding="{Binding LastName, UpdateSourceTrigger=PropertyChanged}" Width="*"/>
-                <DataGridTextColumn Header="Job Title" Binding="{Binding JobTitle, UpdateSourceTrigger=PropertyChanged}" Width="*"/>
+                <DataGridTextColumn Header="Job Title" Binding="{Binding JobTitle, UpdateSourceTrigger=PropertyChanged}" Width="2*"/>
             </DataGrid.Columns>
         </DataGrid>
 

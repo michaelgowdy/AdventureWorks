@@ -31,34 +31,93 @@
                         <RowDefinition/>
                         <RowDefinition/>
                         <RowDefinition/>
+                        <RowDefinition/>
                     </Grid.RowDefinitions>
 
                     <Label Grid.Row="0" Grid.Column="0" Margin="5" Padding="5" Content="Product ID"/>
-                    <TextBox x:Name="addId" Grid.Row="0" Grid.Column="1" Margin="5" Padding="5" Text="{Binding ProductID, UpdateSourceTrigger=PropertyChanged}"/>
+                    <TextBox x:Name="addId"
+                             Grid.Row="0" 
+                             Grid.Column="1" 
+                             Margin="5" 
+                             Padding="5" 
+                             Text="{Binding ProductID, UpdateSourceTrigger=PropertyChanged}"/>
 
                     <Label Grid.Row="1" Grid.Column="0" Margin="5" Padding="5" Content="Name"/>
-                    <TextBox x:Name="addName" Grid.Row="1" Grid.Column="1" Margin="5" Padding="5" Text="{Binding Name, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, ValidatesOnDataErrors=True}" ToolTip="{Binding Name}"/>
-                    <TextBox Grid.Row="1" Grid.Column="1" Margin="5" Padding="5" Text="{Binding Name}"/>
-                    <ItemsControl>
-                        <ItemsControl.ItemTemplate>
-                            <DataTemplate>
-                                <TextBlock Foreground="Red" Text="{Binding ErrorContent}"/>
-                            </DataTemplate>
-                        </ItemsControl.ItemTemplate>
-                    </ItemsControl>
-
+                    <TextBox x:Name="addName" 
+                             Grid.Row="1" 
+                             Grid.Column="1" 
+                             Margin="5" 
+                             Padding="5" 
+                             Text="{Binding Name, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, ValidatesOnDataErrors=True}">
+                        <TextBox.ToolTip>
+                            <ToolTip>
+                                Insert Product Name
+                            </ToolTip>
+                        </TextBox.ToolTip>
+                    </TextBox>
+                    
                     <Label Grid.Row="2" Grid.Column="0" Margin="5" Padding="5" Content="Product Number"/>
-                    <TextBox x:Name="addNumber" Grid.Row="2" Grid.Column="1" Margin="5" Padding="5" Text="{Binding ProductNumber, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, ValidatesOnDataErrors=True}"/>
+                    <TextBox x:Name="addNumber" 
+                             Grid.Row="2" 
+                             Grid.Column="1" 
+                             Margin="5" 
+                             Padding="5" 
+                             Text="{Binding ProductNumber, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, ValidatesOnDataErrors=True}">
+                        <TextBox.ToolTip>
+                            <ToolTip>
+                                Insert Product Number
+                            </ToolTip>
+                        </TextBox.ToolTip>
+                    </TextBox>
+                    <!--<TextBox Grid.Row="3" 
+                             Grid.Column="1" 
+                             Margin="5" 
+                             Padding="5" 
+                             BorderThickness="0"/>-->
 
                     <Label Grid.Row="3" Grid.Column="0" Margin="5" Padding="5" Content="Color"/>
-                    <TextBox  x:Name="addColor" Grid.Row="3" Grid.Column="1" Margin="5" Padding="5" Text="{Binding Color, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
+                    <TextBox  x:Name="addColor" 
+                              Grid.Row="3" 
+                              Grid.Column="1" 
+                              Margin="5" 
+                              Padding="5" 
+                              Text="{Binding Color, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}">
+                        <TextBox.ToolTip>
+                            <ToolTip>
+                                Insert Product Color - not required
+                            </ToolTip>
+                        </TextBox.ToolTip>
+                    </TextBox>
 
                     <Label Grid.Row="4" Grid.Column="0" Margin="5" Padding="5" Content="Size"/>
-                    <TextBox x:Name="addSize" Grid.Row="4" Grid.Column="1" Margin="5" Padding="5" Text="{Binding Size, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
+                    <TextBox x:Name="addSize" 
+                             Grid.Row="4" 
+                             Grid.Column="1" 
+                             Margin="5" 
+                             Padding="5" 
+                             Text="{Binding Size, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}">
+                        <TextBox.ToolTip>
+                            <ToolTip>
+                                Insert Product Size - not required
+                            </ToolTip>
+                        </TextBox.ToolTip>
+                    </TextBox>
 
                     <Label Grid.Row="5" Grid.Column="0" Margin="5" Padding="5" Content="List Price"/>
-                    <TextBox x:Name="addPrice" Grid.Row="5" Grid.Column="1" Margin="5" Padding="5" Text="{Binding ListPrice, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, ValidatesOnDataErrors=True}"/>
+                    <TextBox x:Name="addPrice" 
+                             Grid.Row="5" 
+                             Grid.Column="1"
+                             Margin="5" 
+                             Padding="5" 
+                             Text="{Binding ListPrice, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, ValidatesOnDataErrors=True}">
+                        <TextBox.ToolTip>
+                            <ToolTip>
+                                Insert Product List Price
+                            </ToolTip>
+                        </TextBox.ToolTip>
+                    </TextBox>
 
+                    
                     <Button 
                         x:Name="addUpdateButton" 
                         Grid.Row="7" 
@@ -67,6 +126,7 @@
                         Margin="0,8,0,-38"
                         Padding="5"
                         HorizontalAlignment="Right"
+                        IsEnabled="{Binding CanCreate, UpdateSourceTrigger=PropertyChanged}"
                         Click="AddProduct_Click" Width="110">
                         <Button.Style>
                             <Style TargetType="Button">
@@ -91,10 +151,11 @@
                                     </Setter.Value>
                                 </Setter>
                                 <Style.Triggers>
-                                    <!--<Trigger Property="IsEnabled" Value="False">
+                                    <MultiDataTrigger>
+                                        <Setter Property="IsEnabled" Value="False"/>
                                         <Setter Property="Opacity" Value="0.6"/>
                                         <Setter Property="Cursor" Value="No"/>
-                                    </Trigger>-->
+                                    </MultiDataTrigger>
                                     <EventTrigger RoutedEvent="MouseEnter">
                                         <EventTrigger.Actions>
                                             <BeginStoryboard>

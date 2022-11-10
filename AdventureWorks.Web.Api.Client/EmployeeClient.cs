@@ -24,11 +24,11 @@ namespace AdventureWorks.Web.Api.Client
 
         public static FullEmployeeModel GetOneEmployeeClient(int id)
         {
-            client = new RestClient($"https://localhost:44351/employee/id/{id}");
+            //client = new RestClient($"https://localhost:44351/employee/id/{id}");
 
             RestRequest request = new RestRequest();
 
-            //request.AddParameter("id", id);
+            request.AddParameter("id", id);
 
             var response = client.Get(request);
             return serializer.Deserialize<List<FullEmployeeModel>>(response).First();

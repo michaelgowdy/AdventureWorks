@@ -3,8 +3,6 @@ using RestSharp;
 using RestSharp.Serializers.Json;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace AdventureWorks.Web.Api.Client
 {
@@ -44,7 +42,17 @@ namespace AdventureWorks.Web.Api.Client
         {
             RestClient client = new RestClient("https://localhost:44351/sales");
 
-            var body = new SalesOrderHeaderModel { SalesOrderID = newSale.SalesOrderID, OrderDate = newSale.OrderDate, BillToAddressID = newSale.BillToAddressID, ShipToAddressID = newSale.ShipToAddressID, TotalDue = newSale.TotalDue };
+            var body = new SalesOrderHeaderModel 
+            { 
+                SalesOrderID = newSale.SalesOrderID, 
+                OrderDate = newSale.OrderDate, 
+                BillToAddressID = newSale.BillToAddressID, 
+                ShipToAddressID = newSale.ShipToAddressID, 
+                SalesOrderNumber = newSale.SalesOrderNumber,
+                SubTotal = newSale.SubTotal,
+                TaxAmt = newSale.TaxAmt,
+                Freight = newSale.Freight 
+            };
 
             RestRequest request = new RestRequest();
 
@@ -59,7 +67,16 @@ namespace AdventureWorks.Web.Api.Client
         {
             RestClient client = new RestClient("https://localhost:44351/sales");
 
-            var body = new SalesOrderHeaderModel { OrderDate = newSale.OrderDate, BillToAddressID = newSale.BillToAddressID, ShipToAddressID = newSale.ShipToAddressID, TotalDue = newSale.TotalDue };
+            var body = new SalesOrderHeaderModel 
+            { 
+                OrderDate = newSale.OrderDate, 
+                BillToAddressID = newSale.BillToAddressID, 
+                ShipToAddressID = newSale.ShipToAddressID,
+                SalesOrderNumber = newSale.SalesOrderNumber,
+                SubTotal = newSale.SubTotal,
+                TaxAmt = newSale.TaxAmt,
+                Freight = newSale.Freight
+            };
 
             RestRequest request = new RestRequest();
 
