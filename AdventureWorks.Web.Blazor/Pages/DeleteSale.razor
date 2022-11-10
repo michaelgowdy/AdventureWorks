@@ -16,6 +16,10 @@
                 <td>@sale.SalesOrderID</td>
             </tr>
             <tr>
+                <td>Sales Order Detail ID</td>
+                <td>@sale.SalesOrderDetailID</td>
+            </tr>
+            <tr>
                 <td>Order Date</td>
                 <td>@sale.OrderDate</td>
             </tr>
@@ -39,7 +43,7 @@
     </table>
 </div>
 <div class="form-group">
-    <input type="submit" value="Delete" @onclick="(() => RemoveUser(sale.SalesOrderID))" class="btn btn-danger" />
+    <input type="submit" value="Delete" @onclick="(() => RemoveUser(sale.SalesOrderDetailID))" class="btn btn-danger" />
     <input type="submit" value="Cancel" @onclick="(() => Cancel())" class="btn btn-warning" />
 </div>
 @code {
@@ -48,11 +52,12 @@
 
     //[Parameter]
     //public string salesOrderNumber { get; set; }
-    SalesOrderHeaderModel sale = new SalesOrderHeaderModel();
+    FullSalesModel sale = new FullSalesModel();
     protected override async Task OnInitializedAsync()
     {
         var getrequest = SalesClient.GetOneSaleClient(salesOrderId);
         sale.SalesOrderID = getrequest.SalesOrderID;
+        sale.SalesOrderDetailID = getrequest.SalesOrderDetailID;
         sale.OrderDate = getrequest.OrderDate;
         sale.BillToAddressID = getrequest.BillToAddressID;
         sale.ShipToAddressID = getrequest.ShipToAddressID;
@@ -60,9 +65,9 @@
         sale.TotalDue = getrequest.TotalDue;
         sale.SalesOrderNumber = getrequest.SalesOrderNumber;
     }
-    protected void RemoveUser(int id)
+    protected void RemoveUser(int detailId)
     {
-        SalesClient.DeleteSaleClient(id);
+        SalesClient.DeleteSaleClient(detailId);
         NavigationManager.NavigateTo("/sales");
     }
     void Cancel()

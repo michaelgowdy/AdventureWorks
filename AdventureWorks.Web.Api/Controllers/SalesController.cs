@@ -168,11 +168,16 @@ namespace AdventureWorks.Web.Api.Controllers
         {
            using(AppDataConnection db = _db)
             {
-                db.GetTable<SalesOrderHeaderModel>().Where(s => s.SalesOrderID == id).Delete();
-                return Ok();
-
-                //db.GetTable<SalesOrderDetailModel>().Where(s => s.SalesOrderDetailID == id).Delete();
+                //db.GetTable<SalesOrderHeaderModel>().Where(s => s.SalesOrderID == id).Delete();
                 //return Ok();
+
+                //var sale =
+                //    (from d in db.GetTable<SalesOrderDetailModel>().Where(d => d.SalesOrderDetailID == id)
+                //     from h in db.GetTable<SalesOrderHeaderModel>().InnerJoin(h => h.SalesOrderID == d.SalesOrderID)
+                //     select d).DeleteAsync();
+
+                db.GetTable<SalesOrderDetailModel>().Where(s => s.SalesOrderDetailID == id).Delete();
+                return Ok();
             }
         }
 

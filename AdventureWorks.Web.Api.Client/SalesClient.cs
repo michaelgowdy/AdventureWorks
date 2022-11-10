@@ -104,6 +104,7 @@ namespace AdventureWorks.Web.Api.Client
             RestRequest request = new RestRequest($"id/{id}", Method.Delete);
 
             request.AddParameter("id", id);
+            //request.AddParameter("detailId", detailId);
 
             var response = client.Delete(request);
 
