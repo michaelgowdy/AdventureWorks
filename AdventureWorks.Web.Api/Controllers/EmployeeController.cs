@@ -1,5 +1,6 @@
 ﻿using AdventureWorks.Models;
 using AdventureWorks.Models.Models;
+using Azure.Core;
 using LinqToDB;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -72,6 +73,21 @@ namespace AdventureWorks.Web.Api.Controllers
             }
         }
 
+        public void InsertEmployee(int id, string jobTitle, string login, string nationalid, Guid guid)
+        {
+            using(AppDataConnection db = _db)
+            {
+                db.GetTable<EmployeeModel>()
+               .Value(e => e.BusinessEntityID, id)
+               .Value(e => e.JobTitle, jobTitle)
+               .Value(e => e.LoginID, login)
+               .Value(e => e.NationalIDNumber, nationalid)
+               .Value(e => e.rowguid, guid)
+               .Insert();
+            }
+           
+        }
+
         [HttpPost]
         public void AddEmployee(FullEmployeeModel employee)
         {
@@ -84,24 +100,22 @@ namespace AdventureWorks.Web.Api.Controllers
                     .Insert();
 
                 BusinessEntityIDModel added = db.GetTable<BusinessEntityIDModel>().ToList().Last();
-                //var s = from e in _db.GetTable<EmployeeModel>()
-                //        where e.BusinessEntityID == added.BusinessEntityID
-                //        select new FullEmployeeModel();
 
                 db.GetTable<PersonModel>()
                     .Value(p => p.BusinessEntityID, added.BusinessEntityID)
                     .Value(p => p.FirstName, employee.FirstName)
                     .Value(p => p.LastName, employee.LastName)
-                    .Value(p => p.PersonType, "EM")
                     .Insert();
 
-                db.GetTable<EmployeeModel>()
-                    .Value(e => e.BusinessEntityID, added.BusinessEntityID)
-                    .Value(e => e.JobTitle, employee.JobTitle)
-                    .Value(e => e.LoginID, employee.LoginID)
-                    .Value(e => e.NationalIDNumber, employee.NationalIDNumber)
-                    .Value(e => e.rowguid, guid)
-                    .Insert();
+                //InsertEmployee(added.BusinessEntityID, employee.JobTitle, employee.LoginID, employee.NationalIDNumber, guid);
+
+                //db.GetTable<EmployeeModel>()
+                //    .Value(e => e.BusinessEntityID, added.BusinessEntityID)
+                //    .Value(e => e.JobTitle, employee.JobTitle)
+                //    .Value(e => e.LoginID, employee.LoginID)
+                //    .Value(e => e.NationalIDNumber, employee.NationalIDNumber)
+                //    .Value(e => e.rowguid, guid)
+                //    .Insert();
             }
         }
 
@@ -111,10 +125,10 @@ namespace AdventureWorks.Web.Api.Controllers
             using (AppDataConnection db = _db)
             {
                 db.GetTable<PersonModel>()
-                .Where(p => p.BusinessEntityID == employee.BusinessEntityID)
-                .Set(p => p.FirstName, employee.FirstName)
-                .Set(p => p.LastName, employee.LastName)
-                .Update();
+                    .Where(p => p.BusinessEntityID == employee.BusinessEntityID)
+                    .Set(p => p.FirstName, employee.FirstName)
+                    .Set(p => p.LastName, employee.LastName)
+                    .Update();
 
                 db.GetTable<EmployeeModel>()
                     .Where(e => e.BusinessEntityID == employee.BusinessEntityID)

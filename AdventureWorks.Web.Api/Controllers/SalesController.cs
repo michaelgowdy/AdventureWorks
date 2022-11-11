@@ -109,9 +109,8 @@ namespace AdventureWorks.Web.Api.Controllers
         }
 
         [HttpPut]
-        public void UpdateSale(FullSalesModel sale)
+        public IActionResult UpdateSale(FullSalesModel sale)
         {
-            //Guid guid = Guid.NewGuid();
             using (AppDataConnection db = _db)
             {
                 db.GetTable<SalesOrderHeaderModel>()
@@ -133,51 +132,49 @@ namespace AdventureWorks.Web.Api.Controllers
                     .Set(s => s.UnitPrice, sale.UnitPrice)
                     .Set(s => s.UnitPriceDiscount, sale.UnitPriceDiscount)
                     .Update();
+
+                return Ok();
             }
 
         }
 
         [HttpPost]
-        public void AddSale(FullSalesModel sale)
-        {
-            //Guid guid = Guid.NewGuid();
-
+        public async Task<int> AddSale(FullSalesModel sale)
+        {  
             using(AppDataConnection db = _db)
             {
-                db.GetTable<SalesOrderHeaderModel>()
+                return await db.GetTable<SalesOrderHeaderModel>()
                     .Value(s => s.OrderDate, sale.OrderDate)
                     .Value(s => s.BillToAddressID, sale.BillToAddressID)
                     .Value(s => s.ShipToAddressID, sale.ShipToAddressID)
                     .Value(s => s.SubTotal, sale.SubTotal)
                     .Value(s => s.TaxAmt, sale.TaxAmt)
                     .Value(s => s.Freight, sale.Freight)
-                    .Insert();
+                    .InsertAsync();
 
-                db.GetTable<SalesOrderDetailModel>()
-                    .Value(s => s.OrderQty, sale.OrderQty)
-                    .Value(s => s.ProductID, sale.ProductID)
-                    .Value(s => s.SpecialOfferID, sale.SpecialOfferID)
-                    .Value(s => s.UnitPrice, sale.UnitPrice)
-                    .Value(s => s.UnitPriceDiscount, sale.UnitPriceDiscount)
-                    .Insert();
+                //var added = db.GetTable<SalesOrderHeaderModel>().Last();
+
+                //db.GetTable<SalesOrderDetailModel>()
+                //    .Where(s => s.SalesOrderID == added.SalesOrderID)
+                //    .Set(s => s.OrderQty, sale.OrderQty)
+                //    .Set(s => s.ProductID, sale.ProductID)
+                //    .Set(s => s.SpecialOfferID, sale.SpecialOfferID)
+                //    .Set(s => s.UnitPrice, sale.UnitPrice)
+                //    .Set(s => s.UnitPriceDiscount, sale.UnitPriceDiscount)
+                //    .Update();
             }
         }
 
         [HttpDelete("id/{id}")]
-        public IActionResult DeleteSale(int id)
+        public async Task<int> DeleteSale(int id)
         {
            using(AppDataConnection db = _db)
             {
                 //db.GetTable<SalesOrderHeaderModel>().Where(s => s.SalesOrderID == id).Delete();
                 //return Ok();
 
-                //var sale =
-                //    (from d in db.GetTable<SalesOrderDetailModel>().Where(d => d.SalesOrderDetailID == id)
-                //     from h in db.GetTable<SalesOrderHeaderModel>().InnerJoin(h => h.SalesOrderID == d.SalesOrderID)
-                //     select d).DeleteAsync();
-
-                db.GetTable<SalesOrderDetailModel>().Where(s => s.SalesOrderDetailID == id).Delete();
-                return Ok();
+                return await db.GetTable<SalesOrderDetailModel>().Where(s => s.SalesOrderDetailID == id).DeleteAsync();
+                
             }
         }
 

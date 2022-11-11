@@ -81,11 +81,11 @@ namespace AdventureWorks.Web.Api.Client
                 SubTotal = newSale.SubTotal,
                 TaxAmt = newSale.TaxAmt,
                 Freight = newSale.Freight,
-                OrderQty = newSale.OrderQty,
-                ProductID = newSale.ProductID,
-                SpecialOfferID = newSale.SpecialOfferID,
-                UnitPrice = newSale.UnitPrice,
-                UnitPriceDiscount = newSale.UnitPriceDiscount
+                //OrderQty = newSale.OrderQty,
+                //ProductID = newSale.ProductID,
+                //SpecialOfferID = newSale.SpecialOfferID,
+                //UnitPrice = newSale.UnitPrice,
+                //UnitPriceDiscount = newSale.UnitPriceDiscount
             };
 
             RestRequest request = new RestRequest();
@@ -104,7 +104,6 @@ namespace AdventureWorks.Web.Api.Client
             RestRequest request = new RestRequest($"id/{id}", Method.Delete);
 
             request.AddParameter("id", id);
-            //request.AddParameter("detailId", detailId);
 
             var response = client.Delete(request);
 

@@ -151,7 +151,7 @@
                                                 <Storyboard>
                                                     <ColorAnimation
                                                         Storyboard.TargetProperty="(Background).(SolidColorBrush.Color)"
-                                                        To="DeepSkyBlue"
+                                                        To="SteelBlue"
                                                         Duration="0:0:0.1"/>
                                                 </Storyboard>
                                             </BeginStoryboard>

@@ -117,7 +117,8 @@
                         </TextBox.ToolTip>
                     </TextBox>
 
-                    
+
+                    <!--IsEnabled="{Binding CanCreate, UpdateSourceTrigger=PropertyChanged}"-->
                     <Button 
                         x:Name="addUpdateButton" 
                         Grid.Row="7" 
@@ -126,7 +127,6 @@
                         Margin="0,8,0,-38"
                         Padding="5"
                         HorizontalAlignment="Right"
-                        IsEnabled="{Binding CanCreate, UpdateSourceTrigger=PropertyChanged}"
                         Click="AddProduct_Click" Width="110">
                         <Button.Style>
                             <Style TargetType="Button">
@@ -149,18 +149,18 @@
                                     </Setter.Value>
                                 </Setter>
                                 <Style.Triggers>
-                                    <MultiDataTrigger>
+                                    <!--<MultiDataTrigger>
                                         <Setter Property="IsEnabled" Value="False"/>
                                         <Setter Property="Opacity" Value="0.6"/>
                                         <Setter Property="Cursor" Value="No"/>
-                                    </MultiDataTrigger>
+                                    </MultiDataTrigger>-->
                                     <EventTrigger RoutedEvent="MouseEnter">
                                         <EventTrigger.Actions>
                                             <BeginStoryboard>
                                                 <Storyboard>
                                                     <ColorAnimation
                                                         Storyboard.TargetProperty="(Background).(SolidColorBrush.Color)"
-                                                        To="DeepSkyBlue"
+                                                        To="SteelBlue"
                                                         Duration="0:0:0.1"/>
                                                 </Storyboard>
                                             </BeginStoryboard>

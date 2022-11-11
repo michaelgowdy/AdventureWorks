@@ -45,7 +45,7 @@
     <div class="mb-3">
         <label for="SalesOrderNumber" class="form-label">Sales Order Number</label>
         <div class="col-md-4">
-            <InputText class="form-control" @bind-Value="sale.SalesOrderNumber" />
+            <InputText disabled="@IsDisabled" class="form-control" @bind-Value="sale.SalesOrderNumber" />
             <ValidationMessage For=@(() => sale.SalesOrderNumber) />
         </div>
     </div>
@@ -110,7 +110,7 @@
     }
     protected async Task SaveSale()
     {
-        if (salesOrderId != 0)
+        if (Title == "Edit")
         {
             SalesClient.UpdateSaleClient(sale);
         }

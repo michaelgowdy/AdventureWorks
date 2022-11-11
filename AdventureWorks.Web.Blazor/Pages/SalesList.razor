@@ -97,8 +97,11 @@ else
 
     private void DecreasePage()
     {
-        currentPage--;
-        sales = SalesClient.GetSalesClient(currentPage, Convert.ToInt32(selectedSize));
+        if (currentPage > 1)
+        {
+            currentPage--;
+            sales = SalesClient.GetSalesClient(currentPage, Convert.ToInt32(selectedSize));
+        }
     }
 
 
