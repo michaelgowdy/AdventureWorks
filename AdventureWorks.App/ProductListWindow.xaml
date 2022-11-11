@@ -78,7 +78,7 @@
                                         <Storyboard>
                                             <ColorAnimation
                                                         Storyboard.TargetProperty="(Background).(SolidColorBrush.Color)"
-                                                        To="SteelBlue"
+                                                        To="Blue"
                                                         Duration="0:0:0.1"/>
                                         </Storyboard>
                                     </BeginStoryboard>
@@ -149,7 +149,7 @@
                                         <Storyboard>
                                             <ColorAnimation
                                                         Storyboard.TargetProperty="(Background).(SolidColorBrush.Color)"
-                                                        To="SteelBlue"
+                                                        To="Blue"
                                                         Duration="0:0:0.1"/>
                                         </Storyboard>
                                     </BeginStoryboard>
@@ -248,7 +248,7 @@
                                             <Storyboard>
                                                 <ColorAnimation
                                                         Storyboard.TargetProperty="(Background).(SolidColorBrush.Color)"
-                                                        To="SteelBlue"
+                                                        To="Blue"
                                                         Duration="0:0:0.1"/>
                                             </Storyboard>
                                         </BeginStoryboard>
@@ -310,7 +310,7 @@
                                             <Storyboard>
                                                 <ColorAnimation
                                                         Storyboard.TargetProperty="(Background).(SolidColorBrush.Color)"
-                                                        To="SteelBlue"
+                                                        To="Blue"
                                                         Duration="0:0:0.1"/>
                                             </Storyboard>
                                         </BeginStoryboard>
@@ -372,7 +372,7 @@
                                             <Storyboard>
                                                 <ColorAnimation
                                                         Storyboard.TargetProperty="(Background).(SolidColorBrush.Color)"
-                                                        To="SteelBlue"
+                                                        To="Blue"
                                                         Duration="0:0:0.1"/>
                                             </Storyboard>
                                         </BeginStoryboard>

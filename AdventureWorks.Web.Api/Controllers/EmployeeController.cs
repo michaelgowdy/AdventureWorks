@@ -6,6 +6,8 @@ using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Data;
+using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -37,14 +39,15 @@ namespace AdventureWorks.Web.Api.Controllers
                     (from b in db.GetTable<BusinessEntityIDModel>()
                      from p in db.GetTable<PersonModel>().InnerJoin(p => p.BusinessEntityID == b.BusinessEntityID)
                      from e in db.GetTable<EmployeeModel>().InnerJoin(e => e.BusinessEntityID == b.BusinessEntityID)
+                     orderby b.BusinessEntityID
                      select new FullEmployeeModel
                      {
                          BusinessEntityID = b.BusinessEntityID,
                          FirstName = p.FirstName,
                          LastName = p.LastName,
-                         JobTitle = e.JobTitle,
-                         LoginID = e.LoginID,
-                         NationalIDNumber = e.NationalIDNumber
+                         JobTitle = e.JobTitle
+                         //LoginID = e.LoginID,
+                         //NationalIDNumber = e.NationalIDNumber
                      }).ToListAsync();
 
                 return await employees;
@@ -73,39 +76,126 @@ namespace AdventureWorks.Web.Api.Controllers
             }
         }
 
-        public void InsertEmployee(int id, string jobTitle, string login, string nationalid, Guid guid)
-        {
-            using(AppDataConnection db = _db)
-            {
-                db.GetTable<EmployeeModel>()
-               .Value(e => e.BusinessEntityID, id)
-               .Value(e => e.JobTitle, jobTitle)
-               .Value(e => e.LoginID, login)
-               .Value(e => e.NationalIDNumber, nationalid)
-               .Value(e => e.rowguid, guid)
-               .Insert();
-            }
-           
-        }
-
         [HttpPost]
         public void AddEmployee(FullEmployeeModel employee)
         {
             using (AppDataConnection db = _db)
             {
-                Guid guid = Guid.NewGuid();
+                //DataSet ds = new DataSet();
+                //ds.Locale = CultureInfo.InvariantCulture;
+                //FillDataSet(ds);
 
-                db.GetTable<BusinessEntityIDModel>()
-                    .Value(b => b.rowguid, guid)
-                    .Insert();
+                //DataTable businessid = ds.Tables["BusinessEntityID"];
+                //DataTable person = ds.Tables["Person"];
+                //DataTable employees = ds.Tables["Employee"];
 
-                BusinessEntityIDModel added = db.GetTable<BusinessEntityIDModel>().ToList().Last();
+                //var query =
+                //    from bid in businessid.AsEnumerable()
+                //    join p in person.AsEnumerable()
+                //    on bid.Field<int>("BusinessEntityID") equals
+                //        p.Field<int>("BusinessEntityID")
+                //    join e in employees.AsEnumerable()
+                //    on bid.Field<int>("BusinessEntityID") equals
+                //        e.Field<int>("BusinessEntityID")
+                //    select new FullEmployeeModel
+                //    {
+                //        BusinessEntityID = bid.Field<int>("BusinessEntityID"),
+                //        FirstName = p.Field<string>("FirstName"),
+                //        LastName = p.Field<string>("LastName"),
+                //        JobTitle = e.Field<string>("JobTitle")
+                //    };
+
+                //DataTable orderTable = query.CopyToDataTable();
+
+                //var authorsWithSNames =
+                //from b in db.GetTable<Book>()
+                //select new
+                //{
+                //    b.Id,
+                //    b.Title,
+                //    b.FirstName,
+                //    b.MiddleName,
+                //    b.LastName,
+                //    SNames = db.GetTable<Book>()
+                //          .Where(p2 => p2.LastName.StartsWith("S"))
+                //};
+                //var authorsWithSNamesCte = authorsWithSNames
+                //                                     .AsCte("PeopleWithSNames");
+
+
+
+                //var employees =
+                //     (from b in db.GetTable<BusinessEntityIDModel>()
+                //      from p in db.GetTable<PersonModel>().InnerJoin(p => p.BusinessEntityID == b.BusinessEntityID)
+                //      from e in db.GetTable<EmployeeModel>().InnerJoin(e => e.BusinessEntityID == b.BusinessEntityID)
+                //      .Insert
+
+                //      select new FullEmployeeModel
+                //      {
+                //          BusinessEntityID = b.BusinessEntityID,
+                //          FirstName = p.FirstName,
+                //          LastName = p.LastName,
+                //          JobTitle = e.JobTitle
+                //          //LoginID = e.LoginID,
+                //          //NationalIDNumber = e.NationalIDNumber
+                //      });
+
+                //var employeesCte = employees.AsCte("Employees");
+
+
+                //----------------------------------------------------------------------------------------
+
+                Guid guid = new Guid();
+
+                db.GetTable<BusinessEntityIDModel>().Value(b => b.rowguid, guid).Insert();
+
+                BusinessEntityIDModel added =
+                    (from b in db.GetTable<BusinessEntityIDModel>()
+                     orderby b.BusinessEntityID descending
+                     select b).ToList().First();
 
                 db.GetTable<PersonModel>()
                     .Value(p => p.BusinessEntityID, added.BusinessEntityID)
                     .Value(p => p.FirstName, employee.FirstName)
                     .Value(p => p.LastName, employee.LastName)
                     .Insert();
+
+                
+                ////Order order = new Order();
+                ////Order.OrderDate = DateTime.Now();
+                ////dataContext.InsertOnSubmit(order);
+
+                ////OrderItem item1 = new OrderItem();
+                ////Item1.ItemId = 123;
+                //////Note: We set the Order property, which is an Order object
+                ////// We do not set the OrderId property
+                ////// LINQ will know to use the Id that is assigned from the order above
+                ////Item1.Order = order;
+                ////dataContext.InsertOnSubmit(item1);
+
+                ////dataContext.SubmitChanges();
+                //----------------------------------------------------------------------------------------
+
+
+
+
+                //----------------------------------------------------------------------------------------
+                //Guid guid = Guid.NewGuid();
+
+                //db.GetTable<BusinessEntityIDModel>()
+                //    .Value(b => b.rowguid, guid)
+                //    .InsertWithIdentity();
+
+                //BusinessEntityIDModel added = 
+                //    (from b in db.GetTable<BusinessEntityIDModel>()
+                //    orderby b.BusinessEntityID descending
+                //    select b).ToList().First();
+
+                //db.GetTable<PersonModel>()
+                //    .Value(p => p.BusinessEntityID, added.BusinessEntityID)
+                //    .Value(p => p.FirstName, employee.FirstName)
+                //    .Value(p => p.LastName, employee.LastName)
+                //    .Insert();
 
                 //InsertEmployee(added.BusinessEntityID, employee.JobTitle, employee.LoginID, employee.NationalIDNumber, guid);
 

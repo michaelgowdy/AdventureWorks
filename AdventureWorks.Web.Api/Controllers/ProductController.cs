@@ -17,6 +17,10 @@ namespace AdventureWorks.Web.Api.Controllers
     {
         private readonly AppDataConnection _db;
 
+        //public event EventHandler<DataErrorsChangedEventArgs> ErrorsChanged;
+
+        //public bool HasErrors => throw new NotImplementedException();
+
         // Queries
         public ProductController(AppDataConnection db)
         {
@@ -98,6 +102,11 @@ namespace AdventureWorks.Web.Api.Controllers
             }
 
            
+        }
+
+        public IEnumerable GetErrors(string propertyName)
+        {
+            throw new NotImplementedException();
         }
 
 

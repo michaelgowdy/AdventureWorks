@@ -1,4 +1,8 @@
+using AdventureWorks.Models;
+using AdventureWorks.Models.Models;
+using LinqToDB;
 using LinqToDB.AspNet;
+using LinqToDB.AspNet.Logging;
 using LinqToDB.Configuration;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -24,7 +28,8 @@ namespace AdventureWorks.Web.Api
             services.AddLinqToDBContext<AppDataConnection>((provider, options) =>
             {
                 options
-                .UseSqlServer(Configuration.GetConnectionString("Default"));
+                .UseSqlServer(Configuration.GetConnectionString("Default"))
+                .UseDefaultLogging(provider);
             });
         }
 
@@ -34,6 +39,10 @@ namespace AdventureWorks.Web.Api
             using (var scope = app.ApplicationServices.CreateScope())
             {
                 var dataConnection = scope.ServiceProvider.GetService<AppDataConnection>();
+                //dataConnection.CreateTable<BusinessEntityIDModel>();
+                //dataConnection.CreateTable<PersonModel>();
+                //dataConnection.CreateTable<EmployeeModel>();
+                //dataConnection.CreateTable<FullEmployeeModel>();
             }
 
             if (env.IsDevelopment())

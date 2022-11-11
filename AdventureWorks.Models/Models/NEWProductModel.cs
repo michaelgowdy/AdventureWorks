@@ -1,67 +1,19 @@
 ﻿using LinqToDB.Mapping;
 using System;
 using System.Collections;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
-using System.Windows.Input;
 
 namespace AdventureWorks.Models.Models
 {
     [Table(Schema = "Production", Name = "Product")]
-    public class ProductModel : IDataErrorInfo, INotifyPropertyChanged
+    public class NEWProductModel : ModelBase, INotifyDataErrorInfo
     {
-        private readonly Dictionary<string, string> _propertyErrors = new Dictionary<string, string>();
+        private readonly ErrorsViewModel _errorsViewModel;
 
-        public string this[string columnName] => this._propertyErrors.TryGetValue(columnName, out var error) ? error : null;
-
-        public ProductModel()
+        public NEWProductModel()
         {
             this.Validate();
         }
-
-        public string Error => null;
-        //private readonly ErrorsViewModel _errors;
-
-        //public bool HasErrors => _errors.HasErrors;
-        //
-        //public bool CanCreate => !HasErrors;
-
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        public IEnumerable GetErrors(string propertyName)
-        {
-            return _propertyErrors.GetValueOrDefault(propertyName, null);
-        }
-
-        public void AddError(string propertyName, string errorMessage)
-        {
-            if (!_propertyErrors.ContainsKey(propertyName))
-            {
-                _propertyErrors.Add(propertyName, errorMessage);
-            }
-            else
-            {
-                _propertyErrors[propertyName] = errorMessage;
-            }
-
-            OnPropertyChanged(propertyName);
-        }
-
-        public void ClearError(string propertyName)
-        {
-            if (_propertyErrors.ContainsKey(propertyName))
-            {
-                _propertyErrors.Remove(propertyName);
-            }
-            OnPropertyChanged(propertyName);
-        }
-
-        protected void OnPropertyChanged(string propertyName)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
-
 
         private int _productId;
 
@@ -150,8 +102,6 @@ namespace AdventureWorks.Models.Models
         }
 
 
-        private Guid _rowguid;
-
         [Column(Name = "rowguid")]
         public Guid rowguid
         {
@@ -168,25 +118,41 @@ namespace AdventureWorks.Models.Models
         {
             if (string.IsNullOrWhiteSpace(_productNumber))
             {
-                AddError(nameof(ProductNumber), "Product Number is required.");
-                //_errors.AddError(nameof(ProductNumber), "This field is required.");
+                _errorsViewModel.AddError(nameof(ProductNumber), "This field is required.");
             }
             else
             {
-                ClearError(nameof(ProductNumber));
-                //_errors.ClearErrors(nameof(ProductNumber));
+                _errorsViewModel.ClearErrors(nameof(ProductNumber));
             }
 
             if (_listPrice == null)
             {
-                AddError(nameof(ListPrice), "List Price is requried");
-                //_errors.AddError(nameof(ListPrice), "This field is required");
+                _errorsViewModel.AddError(nameof(ListPrice), "This field is required");
             }
             else
             {
-                ClearError(nameof(ListPrice));
-                //_errors.ClearErrors(nameof(ListPrice));
+                _errorsViewModel.ClearErrors(nameof(ListPrice));
             }
         }
+
+        private Guid _rowguid;
+
+        public bool CanCreate => !HasErrors;
+
+        public bool HasErrors => _errorsViewModel.HasErrors;
+
+        public event EventHandler<DataErrorsChangedEventArgs> ErrorsChanged;
+
+        public IEnumerable GetErrors(string propertyName)
+        {
+            return _errorsViewModel.GetErrors(propertyName);
+        }
+
+        private void ErrorsViewModel_ErrorsChanged(object sender, DataErrorsChangedEventArgs e)
+        {
+            ErrorsChanged?.Invoke(this, e);
+            OnPropertyChanged(nameof(CanCreate));
+        }
     }
+
 }

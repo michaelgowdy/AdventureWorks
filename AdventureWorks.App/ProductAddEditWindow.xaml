@@ -11,6 +11,35 @@
         <models:ProductModel/>
     </Window.DataContext>
 
+    <Window.Resources>
+        <Style x:Key="DefaultTextBoxStyle" TargetType="TextBox">
+            <Setter Property="Margin" Value="5" />
+            <Setter Property="VerticalAlignment" Value="Center" />
+        </Style>
+
+        <Style x:Key="ToolTipWithErrorMessageOnErrorStyle" TargetType="TextBox" BasedOn="{StaticResource DefaultTextBoxStyle}">
+            <Style.Triggers>
+                <Trigger Property="Validation.HasError" Value="True">
+                    <Setter Property="ToolTip" Value="{Binding RelativeSource={RelativeSource Self}, Path=(Validation.Errors)[0].ErrorContent}" />
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
+        <Style x:Key="CustomErrorControlOnErrorStyle" TargetType="TextBox" BasedOn="{StaticResource DefaultTextBoxStyle}">
+            <Setter Property="Validation.ErrorTemplate">
+                <Setter.Value>
+                    <ControlTemplate>
+                        <StackPanel>
+                            <AdornedElementPlaceholder x:Name="placeholder" />
+                            <TextBlock FontSize="11" Margin="0, 0, 0, 5" FontStyle="Italic" Foreground="Red"
+                                       Text="{Binding ElementName=placeholder, Path=AdornedElement.(Validation.Errors)[0].ErrorContent}" />
+                        </StackPanel>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Window.Resources>
+    
     <Grid>
         <Border Grid.Column="0" BorderBrush="Black" BorderThickness="1" Margin="5">
             <StackPanel Margin="5">
@@ -38,7 +67,7 @@
                     <TextBox x:Name="addId"
                              Grid.Row="0" 
                              Grid.Column="1" 
-                             Margin="5" 
+                             Margin="5, 0, 0, 15" 
                              Padding="5" 
                              Text="{Binding ProductID, UpdateSourceTrigger=PropertyChanged}"/>
 
@@ -46,7 +75,7 @@
                     <TextBox x:Name="addName" 
                              Grid.Row="1" 
                              Grid.Column="1" 
-                             Margin="5" 
+                             Margin="5, 0, 0, 15" 
                              Padding="5" 
                              Text="{Binding Name, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, ValidatesOnDataErrors=True}">
                         <TextBox.ToolTip>
@@ -60,9 +89,10 @@
                     <TextBox x:Name="addNumber" 
                              Grid.Row="2" 
                              Grid.Column="1" 
-                             Margin="5" 
+                             Margin="5, 0, 0, 15" 
                              Padding="5" 
-                             Text="{Binding ProductNumber, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, ValidatesOnDataErrors=True}">
+                             Text="{Binding ProductNumber, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, ValidatesOnDataErrors=True}"
+                             Style="{StaticResource CustomErrorControlOnErrorStyle}">
                         <TextBox.ToolTip>
                             <ToolTip>
                                 Insert Product Number
@@ -79,7 +109,7 @@
                     <TextBox  x:Name="addColor" 
                               Grid.Row="3" 
                               Grid.Column="1" 
-                              Margin="5" 
+                             Margin="5, 0, 0, 15" 
                               Padding="5" 
                               Text="{Binding Color, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}">
                         <TextBox.ToolTip>
@@ -93,7 +123,7 @@
                     <TextBox x:Name="addSize" 
                              Grid.Row="4" 
                              Grid.Column="1" 
-                             Margin="5" 
+                             Margin="5, 0, 0, 15" 
                              Padding="5" 
                              Text="{Binding Size, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}">
                         <TextBox.ToolTip>
@@ -107,9 +137,10 @@
                     <TextBox x:Name="addPrice" 
                              Grid.Row="5" 
                              Grid.Column="1"
-                             Margin="5" 
+                             Margin="5, 0, 0, 15" 
                              Padding="5" 
-                             Text="{Binding ListPrice, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, ValidatesOnDataErrors=True}">
+                             Text="{Binding ListPrice, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, ValidatesOnDataErrors=True}"
+                             Style="{StaticResource CustomErrorControlOnErrorStyle}">
                         <TextBox.ToolTip>
                             <ToolTip>
                                 Insert Product List Price
@@ -118,7 +149,6 @@
                     </TextBox>
 
 
-                    <!--IsEnabled="{Binding CanCreate, UpdateSourceTrigger=PropertyChanged}"-->
                     <Button 
                         x:Name="addUpdateButton" 
                         Grid.Row="7" 
@@ -127,6 +157,7 @@
                         Margin="0,8,0,-38"
                         Padding="5"
                         HorizontalAlignment="Right"
+                        IsEnabled="{Binding CanCreate, UpdateSourceTrigger=PropertyChanged}"
                         Click="AddProduct_Click" Width="110">
                         <Button.Style>
                             <Style TargetType="Button">
@@ -149,18 +180,18 @@
                                     </Setter.Value>
                                 </Setter>
                                 <Style.Triggers>
-                                    <!--<MultiDataTrigger>
+                                    <MultiDataTrigger>
                                         <Setter Property="IsEnabled" Value="False"/>
                                         <Setter Property="Opacity" Value="0.6"/>
                                         <Setter Property="Cursor" Value="No"/>
-                                    </MultiDataTrigger>-->
+                                    </MultiDataTrigger>
                                     <EventTrigger RoutedEvent="MouseEnter">
                                         <EventTrigger.Actions>
                                             <BeginStoryboard>
                                                 <Storyboard>
                                                     <ColorAnimation
                                                         Storyboard.TargetProperty="(Background).(SolidColorBrush.Color)"
-                                                        To="SteelBlue"
+                                                        To="Blue"
                                                         Duration="0:0:0.1"/>
                                                 </Storyboard>
                                             </BeginStoryboard>
