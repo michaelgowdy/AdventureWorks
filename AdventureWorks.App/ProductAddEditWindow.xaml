@@ -31,7 +31,7 @@
                     <ControlTemplate>
                         <StackPanel>
                             <AdornedElementPlaceholder x:Name="placeholder" />
-                            <TextBlock FontSize="11" Margin="0, 0, 0, 5" FontStyle="Italic" Foreground="Red"
+                            <TextBlock FontSize="11" Margin="0, 0, 0, 5" FontStyle="Normal" Foreground="Red"
                                        Text="{Binding ElementName=placeholder, Path=AdornedElement.(Validation.Errors)[0].ErrorContent}" />
                         </StackPanel>
                     </ControlTemplate>
@@ -63,14 +63,18 @@
                         <RowDefinition/>
                     </Grid.RowDefinitions>
 
+                    
+                    <!--Product ID-->
                     <Label Grid.Row="0" Grid.Column="0" Margin="5" Padding="5" Content="Product ID"/>
                     <TextBox x:Name="addId"
                              Grid.Row="0" 
                              Grid.Column="1" 
                              Margin="5, 0, 0, 15" 
                              Padding="5" 
-                             Text="{Binding ProductID, UpdateSourceTrigger=PropertyChanged}"/>
+                             Text="{Binding ProductID, UpdateSourceTrigger=PropertyChanged}"
+                             IsEnabled="False"/>
 
+                    <!--Name-->
                     <Label Grid.Row="1" Grid.Column="0" Margin="5" Padding="5" Content="Name"/>
                     <TextBox x:Name="addName" 
                              Grid.Row="1" 
@@ -85,6 +89,7 @@
                         </TextBox.ToolTip>
                     </TextBox>
                     
+                    <!--Product Number-->
                     <Label Grid.Row="2" Grid.Column="0" Margin="5" Padding="5" Content="Product Number"/>
                     <TextBox x:Name="addNumber" 
                              Grid.Row="2" 
@@ -99,12 +104,8 @@
                             </ToolTip>
                         </TextBox.ToolTip>
                     </TextBox>
-                    <!--<TextBox Grid.Row="3" 
-                             Grid.Column="1" 
-                             Margin="5" 
-                             Padding="5" 
-                             BorderThickness="0"/>-->
 
+                    <!--Color-->
                     <Label Grid.Row="3" Grid.Column="0" Margin="5" Padding="5" Content="Color"/>
                     <TextBox  x:Name="addColor" 
                               Grid.Row="3" 
@@ -119,6 +120,7 @@
                         </TextBox.ToolTip>
                     </TextBox>
 
+                    <!--Size-->
                     <Label Grid.Row="4" Grid.Column="0" Margin="5" Padding="5" Content="Size"/>
                     <TextBox x:Name="addSize" 
                              Grid.Row="4" 
@@ -133,6 +135,7 @@
                         </TextBox.ToolTip>
                     </TextBox>
 
+                    <!--List Price-->
                     <Label Grid.Row="5" Grid.Column="0" Margin="5" Padding="5" Content="List Price"/>
                     <TextBox x:Name="addPrice" 
                              Grid.Row="5" 
@@ -149,6 +152,7 @@
                     </TextBox>
 
 
+                    <!--Add / Update Button-->
                     <Button 
                         x:Name="addUpdateButton" 
                         Grid.Row="7" 

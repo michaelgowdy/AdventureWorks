@@ -43,7 +43,14 @@ namespace AdventureWorks.Web.Api.Client
         {
             //RestClient client = new RestClient("https://localhost:44351/product");
 
-            var body = new ProductModel { ProductID = product.ProductID, Name = product.Name, ProductNumber = product.ProductNumber, Color = product.Color, Size = product.Size, ListPrice = product.ListPrice };
+            var body = new ProductModel 
+            { 
+                ProductID = product.ProductID, 
+                Name = product.Name, 
+                ProductNumber = product.ProductNumber, 
+                Color = product.Color, Size = product.Size, 
+                ListPrice = product.ListPrice 
+            };
 
             RestRequest request = new RestRequest();
 
@@ -58,7 +65,13 @@ namespace AdventureWorks.Web.Api.Client
         {
             //RestClient client = new RestClient("https://localhost:44351/product");
 
-            var body = new ProductModel { Name = product.Name, ProductNumber = product.ProductNumber, Color = product.Color, Size = product.Size, ListPrice = product.ListPrice };
+            var body = new ProductModel 
+            { 
+                Name = product.Name, 
+                ProductNumber = product.ProductNumber, 
+                Color = product.Color, Size = product.Size, 
+                ListPrice = product.ListPrice 
+            };
 
             RestRequest request = new RestRequest();
 
@@ -72,7 +85,7 @@ namespace AdventureWorks.Web.Api.Client
 
         public static void DeleteProductClient(int id)
         {
-            RestClient client = new RestClient("https://localhost:44351/product");
+            //RestClient client = new RestClient("https://localhost:44351/product");
 
             RestRequest request = new RestRequest($"id/{id}", Method.Delete);
 

@@ -45,9 +45,9 @@ namespace AdventureWorks.Web.Api.Controllers
                          BusinessEntityID = b.BusinessEntityID,
                          FirstName = p.FirstName,
                          LastName = p.LastName,
-                         JobTitle = e.JobTitle
-                         //LoginID = e.LoginID,
-                         //NationalIDNumber = e.NationalIDNumber
+                         JobTitle = e.JobTitle,
+                         LoginID = e.LoginID,
+                         NationalIDNumber = e.NationalIDNumber
                      }).ToListAsync();
 
                 return await employees;
@@ -77,7 +77,7 @@ namespace AdventureWorks.Web.Api.Controllers
         }
 
         [HttpPost]
-        public void AddEmployee(FullEmployeeModel employee)
+        public async Task AddEmployee(FullEmployeeModel employee)
         {
             using (AppDataConnection db = _db)
             {
@@ -145,22 +145,21 @@ namespace AdventureWorks.Web.Api.Controllers
 
                 //----------------------------------------------------------------------------------------
 
-                Guid guid = new Guid();
+                Guid guid = Guid.NewGuid();
 
-                db.GetTable<BusinessEntityIDModel>().Value(b => b.rowguid, guid).Insert();
+                var businessEntityID = await db.GetTable<BusinessEntityIDModel>().Value(b => b.rowguid, guid).InsertWithInt32IdentityAsync();
 
-                BusinessEntityIDModel added =
-                    (from b in db.GetTable<BusinessEntityIDModel>()
-                     orderby b.BusinessEntityID descending
-                     select b).ToList().First();
+                if (businessEntityID.HasValue)
+                {
+                    await db.GetTable<PersonModel>()
+                        .Value(p => p.BusinessEntityID, businessEntityID.Value)
+                        .Value(p => p.FirstName, employee.FirstName)
+                        .Value(p => p.LastName, employee.LastName)
+                        .InsertAsync();
+                }
 
-                db.GetTable<PersonModel>()
-                    .Value(p => p.BusinessEntityID, added.BusinessEntityID)
-                    .Value(p => p.FirstName, employee.FirstName)
-                    .Value(p => p.LastName, employee.LastName)
-                    .Insert();
 
-                
+
                 ////Order order = new Order();
                 ////Order.OrderDate = DateTime.Now();
                 ////dataContext.InsertOnSubmit(order);
@@ -233,7 +232,7 @@ namespace AdventureWorks.Web.Api.Controllers
             //_db.GetTable<FullEmployeeModel>().Where(e => e.BusinessEntityID == id).Delete();
             //return Ok();
 
-            using(AppDataConnection db = _db)
+            using (AppDataConnection db = _db)
             {
                 var employee = _db.GetTable<BusinessEntityIDModel>().Where(e => e.BusinessEntityID == id).ToList();
 

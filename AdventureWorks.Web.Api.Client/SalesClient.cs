@@ -64,33 +64,48 @@ namespace AdventureWorks.Web.Api.Client
 
             request.AddJsonBody(body);
 
+
             var response = client.Put(request);
 
             System.Console.WriteLine(response.StatusCode);
         }
 
+        //     var baseUrl = "someurl from config";
+        //     var client = new RestClient(baseUrl);
+        //     var request = new RestRequest("/api/saverperson/{name}/{fathername}", Method.POST);
+        //     request.RequestFormat = DataFormat.Json;
+        //request.AddParameter("Application/Json", myObject, ParameterType.RequestBody);
+        //request.AddUrlSegment("name","Gaurav");
+        //request.AddUrlSegment("fathername","Lt. Sh. Ramkrishan");
+
+        //var response = client.Execute(request);
+
         public static void AddSaleClient(FullSalesModel newSale)
         {
-            RestClient client = new RestClient("https://localhost:44351/sales");
+            //RestClient client = new RestClient("https://localhost:44351/sales");
 
             var body = new FullSalesModel
-            { 
-                OrderDate = newSale.OrderDate, 
-                BillToAddressID = newSale.BillToAddressID, 
+            {
+                OrderDate = newSale.OrderDate,
+                BillToAddressID = newSale.BillToAddressID,
                 ShipToAddressID = newSale.ShipToAddressID,
                 SubTotal = newSale.SubTotal,
                 TaxAmt = newSale.TaxAmt,
                 Freight = newSale.Freight,
-                //OrderQty = newSale.OrderQty,
-                //ProductID = newSale.ProductID,
-                //SpecialOfferID = newSale.SpecialOfferID,
-                //UnitPrice = newSale.UnitPrice,
-                //UnitPriceDiscount = newSale.UnitPriceDiscount
+                OrderQty = newSale.OrderQty,
+                ProductID = newSale.ProductID,
+                SpecialOfferID = newSale.SpecialOfferID,
+                UnitPrice = newSale.UnitPrice,
+                UnitPriceDiscount = newSale.UnitPriceDiscount
             };
 
             RestRequest request = new RestRequest();
 
+            //request.RequestFormat = DataFormat.Json;
+            //request.AddParameter("Application/Json", body, ParameterType.RequestBody);
+
             request.AddJsonBody(body);
+            //request.AddObject(body);
 
             var response = client.Post(request);
 

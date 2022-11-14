@@ -9,9 +9,37 @@
     <Window.DataContext>
         <models:FullEmployeeModel/>
     </Window.DataContext>
-    
-    <Grid>
 
+    <Window.Resources>
+        <Style x:Key="DefaultTextBoxStyle" TargetType="TextBox">
+            <Setter Property="Margin" Value="5" />
+            <Setter Property="VerticalAlignment" Value="Center" />
+        </Style>
+
+        <Style x:Key="ToolTipWithErrorMessageOnErrorStyle" TargetType="TextBox" BasedOn="{StaticResource DefaultTextBoxStyle}">
+            <Style.Triggers>
+                <Trigger Property="Validation.HasError" Value="True">
+                    <Setter Property="ToolTip" Value="{Binding RelativeSource={RelativeSource Self}, Path=(Validation.Errors)[0].ErrorContent}" />
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
+        <Style x:Key="CustomErrorControlOnErrorStyle" TargetType="TextBox" BasedOn="{StaticResource DefaultTextBoxStyle}">
+            <Setter Property="Validation.ErrorTemplate">
+                <Setter.Value>
+                    <ControlTemplate>
+                        <StackPanel>
+                            <AdornedElementPlaceholder x:Name="placeholder" />
+                            <TextBlock FontSize="11" Margin="0, 0, 0, 5" FontStyle="Normal" Foreground="Red"
+                                       Text="{Binding ElementName=placeholder, Path=AdornedElement.(Validation.Errors)[0].ErrorContent}" />
+                        </StackPanel>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Window.Resources>
+
+    <Grid>
         <Border Grid.Column="0" BorderBrush="Black" BorderThickness="1" Margin="5">
             <StackPanel Margin="5">
                 <Label x:Name="addUpdateWindow" Content="Add New Employee"  Margin="5" Padding="5" HorizontalAlignment="Center" VerticalAlignment="Center"/>
@@ -32,22 +60,28 @@
                         <RowDefinition/>
                     </Grid.RowDefinitions>
 
+                    
+                    <!--Business Entity ID-->
                     <Label Grid.Row="0" Grid.Column="0" Margin="5" Padding="5" Content="Business Entity ID"/>
                     <TextBox x:Name="addId" 
                              Grid.Row="0" 
                              Grid.Column="1"  
-                             Margin="5" 
+                             Margin="5, 0, 0, 15"  
                              Padding="5"  
-                             Text="{Binding BusinessEntityID, UpdateSourceTrigger=PropertyChanged}">
+                             Text="{Binding BusinessEntityID, UpdateSourceTrigger=PropertyChanged}"
+                             IsEnabled="False">
                     </TextBox>
 
+                    
+                    <!--First Name-->
                     <Label Grid.Row="1" Grid.Column="0" Margin="5" Padding="5" Content="First Name"/>
                     <TextBox x:Name="addFirstName" 
                              Grid.Row="1" 
                              Grid.Column="1" 
-                             Margin="5" 
+                             Margin="5, 0, 0, 15"  
                              Padding="5" 
-                             Text="{Binding FirstName, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, ValidatesOnDataErrors=True}">
+                             Text="{Binding FirstName, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, ValidatesOnDataErrors=True}"
+                             Style="{StaticResource CustomErrorControlOnErrorStyle}">
                         <TextBox.ToolTip>
                             <ToolTip>
                                 Insert Employee's First Name
@@ -55,13 +89,16 @@
                         </TextBox.ToolTip>
                     </TextBox>
 
+                    
+                    <!--Last Name-->
                     <Label Grid.Row="2" Grid.Column="0" Margin="5" Padding="5" Content="Last Name"/>
                     <TextBox x:Name="addLastName" 
                              Grid.Row="2" 
                              Grid.Column="1" 
-                             Margin="5" 
+                             Margin="5, 0, 0, 15" 
                              Padding="5" 
-                             Text="{Binding LastName, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, ValidatesOnDataErrors=True}">
+                             Text="{Binding LastName, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, ValidatesOnDataErrors=True}"
+                             Style="{StaticResource CustomErrorControlOnErrorStyle}">
                         <TextBox.ToolTip>
                             <ToolTip>
                                 Insert Employee's Last Name
@@ -69,41 +106,50 @@
                         </TextBox.ToolTip>
                     </TextBox>
 
+                    
+                    <!--Job Title-->
                     <Label Grid.Row="3" Grid.Column="0" Margin="5" Padding="5" Content="Job Title"/>
                     <TextBox x:Name="addJobTitle" 
                              Grid.Row="3" 
                              Grid.Column="1" 
-                             Margin="5" 
+                             Margin="5, 0, 0, 15"  
                              Padding="5"
-                             Text="{Binding JobTitle, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, ValidatesOnDataErrors=True}">
+                             Text="{Binding JobTitle, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, ValidatesOnDataErrors=True}"
+                             Style="{StaticResource CustomErrorControlOnErrorStyle}">
                         <TextBox.ToolTip>
                             <ToolTip>
                                 Insert Employee's Job Title
                             </ToolTip>
                         </TextBox.ToolTip>
                     </TextBox>
+                    
 
+                    <!--Login ID-->
                     <Label Grid.Row="4" Grid.Column="0" Margin="5" Padding="5" Content="Login ID"/>
                     <TextBox x:Name="addLoginID" 
                              Grid.Row="4" 
                              Grid.Column="1" 
-                             Margin="5" 
+                             Margin="5, 0, 0, 15"  
                              Padding="5" 
-                             Text="{Binding LoginID, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, ValidatesOnDataErrors=True}">
+                             Text="{Binding LoginID, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, ValidatesOnDataErrors=True}"
+                             Style="{StaticResource CustomErrorControlOnErrorStyle}">
                         <TextBox.ToolTip>
                             <ToolTip>
                                 Insert Employee's Login ID
                             </ToolTip>
                         </TextBox.ToolTip>
                     </TextBox>
+                    
 
+                    <!--National ID Number-->
                     <Label Grid.Row="5" Grid.Column="0" Margin="5" Padding="5" Content="National ID Number"/>
                     <TextBox x:Name="addNationalIDNumber" 
                              Grid.Row="5" 
                              Grid.Column="1" 
-                             Margin="5" 
+                             Margin="5, 0, 0, 15" 
                              Padding="5" 
-                             Text="{Binding NationalIDNumber, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, ValidatesOnDataErrors=True}">
+                             Text="{Binding NationalIDNumber, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, ValidatesOnDataErrors=True}"
+                             Style="{StaticResource CustomErrorControlOnErrorStyle}">
                         <TextBox.ToolTip>
                             <ToolTip>
                                 Insert Employee's National ID Number
@@ -111,6 +157,8 @@
                         </TextBox.ToolTip>
                     </TextBox>
                     
+
+                    <!--Add / Update Button-->
                     <Button 
                         x:Name="addUpdateButton" 
                         Grid.Row="7" 
@@ -176,7 +224,6 @@
                     <!--<Button x:Name="addUpdateButton" Grid.Row="6" Grid.Column="1" Content="Add" Margin="90, 20, 5, 20" Padding="5" Click="AddEmployee_Click"/>-->
 
                 </Grid>
-
             </StackPanel>
         </Border>
     </Grid>

@@ -1,6 +1,5 @@
 using AdventureWorks.Models.Models;
 using AdventureWorks.Web.Api.Client;
-using AdventureWorks.Web.Blazor.Data;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Hosting;
@@ -30,8 +29,7 @@ namespace AdventureWorks.Web.Blazor
         {
             services.AddRazorPages();
             services.AddServerSideBlazor();
-            services.AddSingleton<WeatherForecastService>();
-            services.AddSingleton<EmployeeClient>();
+            services.AddSingleton<SalesClient>();
             services.AddSingleton<FullEmployeeModel>();
         }
 

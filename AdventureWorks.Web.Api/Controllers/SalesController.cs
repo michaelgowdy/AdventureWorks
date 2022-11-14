@@ -138,31 +138,34 @@ namespace AdventureWorks.Web.Api.Controllers
 
         }
 
+        //public void Post([FromBody] CustomObject customObject, string name, string fatherName)
+        //{
+        //    //customObject is null
+        //}
+
         [HttpPost]
-        public async Task<int> AddSale(FullSalesModel sale)
+        public void AddSale([FromBody] FullSalesModel sale)
         {  
-            using(AppDataConnection db = _db)
-            {
-                return await db.GetTable<SalesOrderHeaderModel>()
+            
+                _db.GetTable<SalesOrderHeaderModel>()
                     .Value(s => s.OrderDate, sale.OrderDate)
                     .Value(s => s.BillToAddressID, sale.BillToAddressID)
                     .Value(s => s.ShipToAddressID, sale.ShipToAddressID)
                     .Value(s => s.SubTotal, sale.SubTotal)
                     .Value(s => s.TaxAmt, sale.TaxAmt)
                     .Value(s => s.Freight, sale.Freight)
-                    .InsertAsync();
+                    .Insert();
 
-                //var added = db.GetTable<SalesOrderHeaderModel>().Last();
+                //var added = _db.GetTable<SalesOrderHeaderModel>().Last();
 
-                //db.GetTable<SalesOrderDetailModel>()
-                //    .Where(s => s.SalesOrderID == added.SalesOrderID)
-                //    .Set(s => s.OrderQty, sale.OrderQty)
-                //    .Set(s => s.ProductID, sale.ProductID)
-                //    .Set(s => s.SpecialOfferID, sale.SpecialOfferID)
-                //    .Set(s => s.UnitPrice, sale.UnitPrice)
-                //    .Set(s => s.UnitPriceDiscount, sale.UnitPriceDiscount)
-                //    .Update();
-            }
+                //_db.GetTable<SalesOrderDetailModel>()
+                //    .Value(s => s.SalesOrderID, added.SalesOrderID)
+                //    .Value(s => s.OrderQty, sale.OrderQty)
+                //    .Value(s => s.ProductID, sale.ProductID)
+                //    .Value(s => s.SpecialOfferID, sale.SpecialOfferID)
+                //    .Value(s => s.UnitPrice, sale.UnitPrice)
+                //    .Value(s => s.UnitPriceDiscount, sale.UnitPriceDiscount)
+                //    .Insert();
         }
 
         [HttpDelete("id/{id}")]
@@ -177,6 +180,10 @@ namespace AdventureWorks.Web.Api.Controllers
                 
             }
         }
+
+
+        // --------------------------------------------------------------------------------------------------------------------
+
 
         //[HttpGet()]
         //public async Task<SalesOrderHeaderModel[]> GetSales(int page, int pageSize)

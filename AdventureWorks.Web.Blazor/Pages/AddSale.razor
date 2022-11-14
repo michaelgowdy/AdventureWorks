@@ -1,5 +1,5 @@
 ﻿@page "/sales/add"
-@page "/sales/edit/{salesOrderId:int}"
+@page "/sales/edit/{salesOrderDetailId:int}"
 
 @using AdventureWorks.Models
 @using AdventureWorks.Models.Models
@@ -7,7 +7,7 @@
 
 @inject NavigationManager NavigationManager
 
-<h3>@Title Sale</h3>
+ <h3>@Title Sale</h3>
 
 <EditForm Model=@sale OnValidSubmit="SaveSale">
     <DataAnnotationsValidator />
@@ -70,6 +70,41 @@
             <ValidationMessage For=@(() => sale.Freight) />
         </div>
     </div>
+    <div class="mb-3">
+        <label for="OrderQty" class="form-label">Order Quantity</label>
+        <div class="col-md-4">
+            <InputNumber class="form-control" @bind-Value="sale.OrderQty" />
+            <ValidationMessage For=@(() => sale.OrderQty) />
+        </div>
+    </div>
+    <div class="mb-3">
+        <label for="ProductID" class="form-label">Product ID</label>
+        <div class="col-md-4">
+            <InputNumber class="form-control" @bind-Value="sale.ProductID" />
+            <ValidationMessage For=@(() => sale.ProductID) />
+        </div>
+    </div>
+    <div class="mb-3">
+        <label for="SpecialOfferID" class="form-label">SpecialOfferID</label>
+        <div class="col-md-4">
+            <InputNumber class="form-control" @bind-Value="sale.SpecialOfferID" />
+            <ValidationMessage For=@(() => sale.SpecialOfferID) />
+        </div>
+    </div>
+    <div class="mb-3">
+        <label for="UnitPrice" class="form-label">Unit Price</label>
+        <div class="col-md-4">
+            <InputNumber class="form-control" @bind-Value="sale.UnitPrice" />
+            <ValidationMessage For=@(() => sale.UnitPrice) />
+        </div>
+    </div>
+    <div class="mb-3">
+        <label for="UnitPriceDiscount" class="form-label">Unit Price Discount</label>
+        <div class="col-md-4">
+            <InputNumber class="form-control" @bind-Value="sale.UnitPriceDiscount" />
+            <ValidationMessage For=@(() => sale.UnitPriceDiscount) />
+        </div>
+    </div>
     <div class="form-group">
         <button type="submit" class="btn btn-primary" @onclick="(() => SaveSale())">Save</button>
         <button class="btn btn-light" @onclick="Cancel">Cancel</button>
@@ -80,18 +115,20 @@
 
 @code {
     [Parameter]
-    public int salesOrderId { get; set; }
+    public int salesOrderDetailId { get; set; }
     protected bool IsDisabled { get; set; }
 
     protected string Title = "Add";
     protected FullSalesModel sale = new FullSalesModel();
+    //protected SalesOrderHeaderModel sale = new SalesOrderHeaderModel();
+
     protected override async Task OnParametersSetAsync()
     {
-        if (salesOrderId != 0)
+        if (salesOrderDetailId != 0)
         {
             Title = "Edit";
 
-            var getrequest = SalesClient.GetOneSaleClient(salesOrderId);
+            var getrequest = SalesClient.GetOneSaleClient(salesOrderDetailId);
             sale.SalesOrderID = getrequest.SalesOrderID;
             sale.OrderDate = getrequest.OrderDate;
             sale.BillToAddressID = getrequest.BillToAddressID;
@@ -100,7 +137,11 @@
             sale.SubTotal = getrequest.SubTotal;
             sale.TaxAmt = getrequest.TaxAmt;
             sale.Freight = getrequest.Freight;
-
+            sale.OrderQty = getrequest.OrderQty;
+            sale.ProductID = getrequest.ProductID;
+            sale.SpecialOfferID = getrequest.SpecialOfferID;
+            sale.UnitPrice = getrequest.UnitPrice;
+            sale.UnitPriceDiscount = getrequest.UnitPriceDiscount;
             IsDisabled = false;
         }
         else
@@ -110,6 +151,8 @@
     }
     protected async Task SaveSale()
     {
+        //SalesClient.AddSaleClient(sale);
+
         if (Title == "Edit")
         {
             SalesClient.UpdateSaleClient(sale);

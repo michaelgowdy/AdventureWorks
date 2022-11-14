@@ -113,7 +113,7 @@ namespace AdventureWorks.App
                 PreviousButton.IsEnabled = true;
             }
 
-            if (ProductDataGrid.ToString() == "")
+            if (ProductDataGrid.HasItems == false)
             {
                 NextButton.IsEnabled = false;
             }

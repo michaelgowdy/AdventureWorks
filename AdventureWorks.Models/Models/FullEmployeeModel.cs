@@ -34,6 +34,14 @@ namespace AdventureWorks.Models.Models
             OnPropertyChanged(propertyName);
         }
 
+        private void ClearError(string propertyName)
+        {
+            if (_propertyErrors.ContainsKey(propertyName))
+            {
+                _propertyErrors.Remove(propertyName);
+            }
+        }
+
         protected void OnPropertyChanged(string propertyName)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
@@ -43,7 +51,6 @@ namespace AdventureWorks.Models.Models
         {
             this.Validate();
         }
-
 
 
         private int _businessEntityId;
@@ -57,6 +64,7 @@ namespace AdventureWorks.Models.Models
                 OnPropertyChanged(nameof(BusinessEntityID));
             }
         }
+
 
         private string _firstName;
 
@@ -73,6 +81,7 @@ namespace AdventureWorks.Models.Models
             }
         }
 
+
         private string _lastName;
 
         public string LastName
@@ -87,6 +96,7 @@ namespace AdventureWorks.Models.Models
                 OnPropertyChanged(nameof(LastName));
             }
         }
+
 
         private string _jobTitle;
 
@@ -103,6 +113,7 @@ namespace AdventureWorks.Models.Models
             }
         }
 
+
         private string _loginId;
 
         public string LoginID
@@ -117,6 +128,7 @@ namespace AdventureWorks.Models.Models
                 OnPropertyChanged(nameof(LoginID));
             }
         }
+
 
         private string _nationalIdNumber;
 
@@ -133,11 +145,12 @@ namespace AdventureWorks.Models.Models
             }
         }
 
+
         private void Validate()
         {
             if (string.IsNullOrWhiteSpace(_firstName))
             {
-                AddError(nameof(FirstName), "This field is required.");
+                AddError(nameof(FirstName), "First Name is required.");
             }
             else
             {
@@ -146,7 +159,7 @@ namespace AdventureWorks.Models.Models
 
             if (string.IsNullOrWhiteSpace(_lastName))
             {
-                AddError(nameof(LastName), "This field is required.");
+                AddError(nameof(LastName), "Last Name is required.");
             }
             else
             {
@@ -155,7 +168,7 @@ namespace AdventureWorks.Models.Models
 
             if (string.IsNullOrWhiteSpace(_jobTitle))
             {
-                AddError(nameof(JobTitle), "This field is required.");
+                AddError(nameof(JobTitle), "Job Title is required.");
             }
             else
             {
@@ -164,7 +177,7 @@ namespace AdventureWorks.Models.Models
 
             if (string.IsNullOrWhiteSpace(_loginId))
             {
-                AddError(nameof(LoginID), "This field is required.");
+                AddError(nameof(LoginID), "Login Id is required.");
             }
             else
             {
@@ -173,19 +186,11 @@ namespace AdventureWorks.Models.Models
 
             if (string.IsNullOrWhiteSpace(_nationalIdNumber))
             {
-                AddError(nameof(NationalIDNumber), "This field is required.");
+                AddError(nameof(NationalIDNumber), "National ID Number is required.");
             }
             else
             {
                 ClearError(nameof(NationalIDNumber));
-            }
-        }
-
-        private void ClearError(string propertyName)
-        {
-            if (_propertyErrors.ContainsKey(propertyName))
-            {
-                _propertyErrors.Remove(propertyName);
             }
         }
     }
