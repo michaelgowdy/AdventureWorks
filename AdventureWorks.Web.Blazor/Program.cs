@@ -23,6 +23,6 @@ namespace AdventureWorks.Web.Blazor
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
                     webBuilder.UseStartup<Startup>();
-                });
+                }); 
     }
 }
