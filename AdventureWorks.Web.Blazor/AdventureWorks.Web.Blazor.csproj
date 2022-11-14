@@ -9,4 +9,4 @@
     <ProjectReference Include="..\AdventureWorks.Web.Api.Client\AdventureWorks.Web.Api.Client.csproj" />
   </ItemGroup>
 
-</Project>
+</Project> 
