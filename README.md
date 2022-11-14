@@ -1,1 +1,1 @@
-# AdventureWorks2019 WPF and BLazor Sample Projects
+# WPF and BLazor Sample Projects using AdventureWorks2019
