@@ -8,7 +8,7 @@ namespace AdventureWorks.Models.Models
     [Table(Schema = "Production", Name = "Product")]
     public class NEWProductModel : ModelBase, INotifyDataErrorInfo
     {
-        private readonly ErrorsViewModel _errorsViewModel;
+        private readonly ErrorsViewModel _errorsViewModel; 
 
         public NEWProductModel()
         {

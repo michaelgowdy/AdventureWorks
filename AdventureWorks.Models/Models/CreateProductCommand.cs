@@ -19,7 +19,7 @@ namespace AdventureWorks.Models.Models
         public bool CanExecute(object parameter) => true;
 
         public void Execute(object parameter)
-        {
+        { 
             Console.WriteLine($"Successfully created '{_productModel.Name}'.");
         }
     }

@@ -9,7 +9,7 @@ namespace AdventureWorks.Models.Models
 {
     public class ErrorsViewModel : INotifyDataErrorInfo
     {
-        private readonly Dictionary<string, string> _propertyErrors = new Dictionary<string, string>();
+        private readonly Dictionary<string, string> _propertyErrors = new Dictionary<string, string>(); 
 
         public string this[string columnName] => this._propertyErrors.TryGetValue(columnName, out var error) ? error : null;
 

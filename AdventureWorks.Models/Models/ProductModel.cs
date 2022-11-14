@@ -13,7 +13,7 @@ namespace AdventureWorks.Models.Models
     {
         private readonly Dictionary<string, string> _propertyErrors = new Dictionary<string, string>();
 
-        public string this[string columnName] => this._propertyErrors.TryGetValue(columnName, out var error) ? error : null;
+        public string this[string columnName] => this._propertyErrors.TryGetValue(columnName, out var error) ? error : null; 
 
         public ProductModel()
         {
