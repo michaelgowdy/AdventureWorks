@@ -135,10 +135,10 @@ namespace AdventureWorks.Models.Models
         }
 
 
-        private double? _listPrice;
+        private decimal? _listPrice;
 
         [Column(Name = "ListPrice")]
-        public double? ListPrice
+        public decimal? ListPrice
         {
             get { return _listPrice; }
             set

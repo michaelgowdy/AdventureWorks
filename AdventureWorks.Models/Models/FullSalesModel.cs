@@ -22,20 +22,20 @@ namespace AdventureWorks.Models.Models
         public int ShipToAddressID { get; set; }
 
         [Required]
-        public double TotalDue { get; set; }
+        public decimal TotalDue { get; set; }
 
         [Required]
         [StringLength(10, ErrorMessage = "Number is too long.")]
         public string SalesOrderNumber { get; set; }
 
         [Required]
-        public double SubTotal { get; set; }
+        public decimal SubTotal { get; set; }
 
         [Required]
-        public double TaxAmt { get; set; }
+        public decimal TaxAmt { get; set; }
 
         [Required]
-        public double Freight { get; set; }
+        public decimal Freight { get; set; }
 
 
 
@@ -49,9 +49,9 @@ namespace AdventureWorks.Models.Models
 
         public int SpecialOfferID { get; set; }
 
-        public double UnitPrice { get; set; }
+        public decimal UnitPrice { get; set; }
 
-        public double UnitPriceDiscount { get; set; }
+        public decimal UnitPriceDiscount { get; set; }
 
         public DateTime ModifiedDate { get; set; }
     }

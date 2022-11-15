@@ -25,7 +25,7 @@ namespace AdventureWorks.Models.Models
 
         [Column(Name = "TotalDue")]
         [Required]
-        public double TotalDue { get; set; }
+        public decimal TotalDue { get; set; }
 
         [Column(Name = "SalesOrderNumber")]
         [Required]
@@ -34,14 +34,14 @@ namespace AdventureWorks.Models.Models
 
         [Column(Name = "SubTotal")]
         [Required]
-        public double SubTotal { get; set; }
+        public decimal SubTotal { get; set; }
 
         [Column(Name = "TaxAmt")]
         [Required]
-        public double TaxAmt { get; set; }
+        public decimal TaxAmt { get; set; }
 
         [Column(Name = "Freight")]
         [Required]
-        public double Freight { get; set; }
+        public decimal Freight { get; set; }
     }
 }

@@ -25,10 +25,10 @@ namespace AdventureWorks.Models.Models
         public int SpecialOfferID { get; set; }
 
         [Column(Name = "UnitPrice")]
-        public double UnitPrice { get; set; }
+        public decimal UnitPrice { get; set; }
 
         [Column(Name = "UnitPriceDiscount")]
-        public double UnitPriceDiscount { get; set; }
+        public decimal UnitPriceDiscount { get; set; }
 
         [Column(Name = "ModifiedDate")]
         public DateTime ModifiedDate { get; set; }
