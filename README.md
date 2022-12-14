@@ -1,1 +1,1 @@
-# WPF and Blazor Sample Applications using AdventureWorks2019
+# WPF and Blazor CRUD Applications using AdventureWorks2019
